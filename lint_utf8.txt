@@ -1,0 +1,181 @@
+﻿
+> epic-babbage@0.1.0 lint
+> eslint
+
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\about\page.tsx
+   34:30   error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  104:122  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  128:86   error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\cart\page.tsx
+  49:86  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  82:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\checkout\page.tsx
+   11:6   warning  'Step' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   47:40  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\checkout\page.tsx:47:40
+  45 |   });
+  46 |   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'card'>('cod');
+> 47 |   const [orderNumber] = useState(`2M-${Date.now().toString().slice(-6)}`);
+     |                                        ^^^^^^^^^^ Cannot call impure function
+  48 |
+  49 |   const subtotal = MOCK_CART.reduce((s, p) => s + p.price, 0);
+  50 |   const deliveryFee = subtotal >= 500 ? 0 : 50;  react-hooks/purity
+  157:27  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @next/next/no-img-element
+  353:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @next/next/no-img-element
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\contact\page.tsx
+    7:59  warning  'Check' is defined but never used                                @typescript-eslint/no-unused-vars
+    8:10  warning  'Metadata' is defined but never used                             @typescript-eslint/no-unused-vars
+   61:17  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  116:60  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\faqs\page.tsx
+  94:95  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\global-error.tsx
+  4:3  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\app\not-found.tsx
+  23:27  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  23:48  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  23:79  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  39:58  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\CategoryPage.tsx
+   5:103  warning  'ArrowRight' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  69:9    warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\FloatingButtons.tsx
+  3:10  warning  'Phone' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\Footer.tsx
+    5:10  warning  'useCartStore' is defined but never used                         @typescript-eslint/no-unused-vars
+  138:20  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\Hero.tsx
+   86:94  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  151:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\InstagramFeed.tsx
+   3:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  62:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\Navbar.tsx
+  18:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\Navbar.tsx:18:5
+  16 |
+  17 |   useEffect(() => {
+> 18 |     setMounted(true);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |     const saved = localStorage.getItem('2m-theme');
+  20 |     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  21 |     if (saved === 'dark' || (!saved && prefersDark)) {              react-hooks/set-state-in-effect
+  78:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\Navbar.tsx:78:21
+  76 |
+  77 |   // Close mobile drawer on route change
+> 78 |   useEffect(() => { setMobileOpen(false); setSearchOpen(false); }, [pathname]);
+     |                     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  79 |
+  80 |   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
+  81 |  react-hooks/set-state-in-effect
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\PDPClient.tsx
+    6:10  warning  'products' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   88:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @next/next/no-img-element
+  121:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @next/next/no-img-element
+  148:29  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\PDPClient.tsx:148:29
+  146 |               <span className="flex items-center gap-1">
+  147 |                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+> 148 |                 {Math.floor(Math.random() * 15) + 5} people viewing now
+      |                             ^^^^^^^^^^^^^ Cannot call impure function
+  149 |               </span>
+  150 |               {product.stockCount && product.stockCount < 20 && (
+  151 |                 <span className="flex items-center gap-1 text-orange-400 font-semibold">  react-hooks/purity
+  399:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @next/next/no-img-element
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\QuickViewModal.tsx
+  68:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\SearchAutocomplete.tsx
+   39:23   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\SearchAutocomplete.tsx:39:23
+  37 |
+  38 |   useEffect(() => {
+> 39 |     if (!debounced) { setResults([]); return; }
+     |                       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  40 |     setLoading(true);
+  41 |     const r = searchLocal(debounced);
+  42 |     setResults(r);  react-hooks/set-state-in-effect
+  100:100  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react/no-unescaped-entities
+  100:108  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react/no-unescaped-entities
+  116:25   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @next/next/no-img-element
+  141:39   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react/no-unescaped-entities
+  141:47   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react/no-unescaped-entities
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\Testimonials.tsx
+    5:16   warning  'Quote' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   21:74   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   21:83   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+   30:9    warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  101:82   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  101:88   error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  101:118  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\TrendingProducts.tsx
+  162:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\TrendingProducts.tsx:162:21
+  160 |
+  161 |   // Reset page on tab change
+> 162 |   useEffect(() => { setPage(1); }, [activeTab]);
+      |                     ^^^^^^^ Avoid calling setState() directly within an effect
+  163 |
+  164 |   // Infinite scroll observer
+  165 |   useEffect(() => {  react-hooks/set-state-in-effect
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\components\TrustBar.tsx
+  23:39  warning  'delay' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Mahmoud El Sadat\Documents\antigravity\epic-babbage\src\lib\store.ts
+  65:11  warning  'WishlistStore' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 52 problems (28 errors, 24 warnings)
+

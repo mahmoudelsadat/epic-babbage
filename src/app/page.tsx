@@ -9,6 +9,7 @@ import Testimonials from '@/components/Testimonials';
 import InstagramFeed from '@/components/InstagramFeed';
 import Footer from '@/components/Footer';
 import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
+import BackToTop from '@/components/BackToTop';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -32,6 +33,7 @@ export default function HomePage() {
         <InstagramFeed />
       </main>
       <Footer />
+      <BackToTop />
       <FloatingButtons />
       <MobileBottomNav />
     </>

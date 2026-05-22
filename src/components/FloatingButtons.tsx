@@ -1,6 +1,6 @@
 'use client';
 
-import { Phone, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -48,7 +48,7 @@ export default function FloatingButtons() {
 
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/201000000000?text=Hi%2C%20I%20have%20a%20question%20about%20a%20product%20at%202M%20Premium%20Pharmacy"
+        href="https://wa.me/201115160947?text=Hi%2C%20I%20have%20a%20question%20about%20a%20product%20at%202M%20Premium%20Pharmacy"
         target="_blank"
         rel="noopener noreferrer"
         id="whatsapp-float-btn"

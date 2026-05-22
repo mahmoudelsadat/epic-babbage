@@ -31,7 +31,7 @@ export default function AboutPage() {
           <div className="container-2m text-center">
             <div className="section-label mx-auto w-fit mb-4">Our Story</div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
-              Built for Egypt's<br />
+              Built for Egypt&apos;s<br />
               <span className="text-gradient-red">Health Seekers</span>
             </h1>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
@@ -52,9 +52,9 @@ export default function AboutPage() {
                 const Icon = v.icon;
                 return (
                   <div
-                    key={v.title}
-                    className="p-6 rounded-2xl border border-white/6 group hover:border-white/15 transition-all duration-300"
-                    style={{ background: '#111', transitionDelay: `${i * 60}ms` }}
+                     key={v.title}
+                     className="p-6 rounded-2xl border border-white/6 group hover:border-white/15 transition-all duration-300"
+                     style={{ background: '#111', transitionDelay: `${i * 60}ms` }}
                   >
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
@@ -101,7 +101,7 @@ export default function AboutPage() {
                   <span className="text-gradient-gold">Every Time</span>
                 </h2>
                 <p className="text-gray-300 leading-relaxed mb-6">
-                  Every product on 2M Premium Pharmacy is sourced directly from official, authorized distributors. We don't cut corners — ever.
+                  Every product on 2M Premium Pharmacy is sourced directly from official, authorized distributors. We don&apos;t cut corners — ever.
                 </p>
                 <ul className="space-y-3">
                   {[
@@ -125,10 +125,10 @@ export default function AboutPage() {
                 <div className="text-7xl mb-4">🛡️</div>
                 <h3 className="text-white text-2xl font-black mb-3">Authenticity Guarantee</h3>
                 <p className="text-gray-400 text-sm mb-6">
-                  Not satisfied with the authenticity of a product? Contact us and we'll make it right — full refund, no questions asked.
+                  Not satisfied with the authenticity of a product? Contact us and we&apos;ll make it right — full refund, no questions asked.
                 </p>
                 <a
-                  href="https://wa.me/201000000000"
+                  href="https://wa.me/201115160947"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-primary"

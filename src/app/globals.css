@@ -8,6 +8,7 @@
 @theme inline {
   /* Brand */
   --color-brand-red:       #C8102E;
+  --color-brand-red-dark:  #A80D26;
   --color-brand-red-soft:  #fce8ec;
   --color-brand-gold:      #B8922A;
   --color-brand-gold-soft: #fdf6e8;
@@ -498,3 +499,144 @@ input[type="number"]::-webkit-outer-spin-button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ─── Custom Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar              { width: 4px; height: 4px; }
+::-webkit-scrollbar-track        { background: var(--color-surface-2, #F3F0EB); }
+::-webkit-scrollbar-thumb        { background: var(--color-brand-red, #C8102E); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover  { background: var(--color-brand-red-dark, #A80D26); }
+
+/* ─── Dark Mode ────────────────────────────────────────────── */
+.dark {
+  --color-page-bg:       #0E0E0B;
+  --color-surface:       #161612;
+  --color-surface-2:     #1E1E1A;
+  --color-surface-3:     #252520;
+  --color-text-primary:  #F5F3EF;
+  --color-text-secondary:#B0ABA4;
+  --color-text-muted:    #6B6560;
+  --color-border:        #2A2A25;
+  --color-border-soft:   #222220;
+}
+.dark body                       { background: #0E0E0B; color: #F5F3EF; }
+.dark .announcement-bar          { background: #060700; }
+.dark .glass-dark                { background: rgba(14,14,11,0.92); }
+.dark .product-card              { background: #161612; border-color: #2A2A25; }
+.dark .product-card-image        { background: #1E1E1A; }
+.dark .card                      { background: #161612; border-color: #2A2A25; }
+.dark nav                        { border-bottom-color: #2A2A25; }
+
+/* ─── Body Theme Transition ────────────────────────────────── */
+body, body *, nav, nav *, .product-card, .card {
+  transition: background-color 0.28s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.28s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── RTL / Arabic Layout Overrides ────────────────────────── */
+[dir="rtl"] {
+  font-family: var(--font-arabic), 'Cairo', Arial, sans-serif !important;
+}
+[dir="rtl"] body {
+  font-family: var(--font-arabic), 'Cairo', Arial, sans-serif !important;
+}
+[dir="rtl"] .section-label::before {
+  margin-left: 0.5rem;
+  margin-right: 0;
+  content: none;
+}
+[dir="rtl"] .section-label::after {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: #C8102E;
+  border-radius: 1px;
+  margin-right: 0.5rem;
+}
+
+/* ─── Premium Textarea & Input Floating Label System ──────── */
+.floating-textarea-group {
+  position: relative;
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+.floating-textarea {
+  width: 100%;
+  min-height: 110px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1rem 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+  outline: none;
+  resize: vertical;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.floating-textarea:focus {
+  border-color: var(--color-brand-red);
+  box-shadow: 0 0 0 4px rgba(200, 16, 46, 0.08);
+}
+.floating-textarea-label {
+  position: absolute;
+  top: 0.45rem;
+  left: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  transition: all var(--transition-fast);
+}
+[dir="rtl"] .floating-textarea-label {
+  left: auto;
+  right: 1rem;
+}
+.textarea-char-counter {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ─── Premium Button Micro-animations ──────────────────────── */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-22deg);
+  pointer-events: none;
+}
+.btn-shimmer:hover::after {
+  left: 150%;
+  transition: left 0.95s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-elevated {
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
+}
+.btn-elevated:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+.btn-elevated:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+

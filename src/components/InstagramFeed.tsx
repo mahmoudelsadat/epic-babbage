@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { ArrowRight, Heart } from 'lucide-react';
 
 function InstagramIcon({ size = 16, className = '' }: { size?: number; className?: string }) {
@@ -18,7 +17,7 @@ const INSTAGRAM_POSTS = [
   { id: '2', image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300&q=80', likes: 487, caption: 'Skincare routine essentials ✨' },
   { id: '3', image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&q=80', likes: 231, caption: 'Daily wellness tips 🌿' },
   { id: '4', image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=300&q=80', likes: 654, caption: 'Protein for your goals 💪' },
-  { id: '5', image: 'https://images.unsplash.com/photo-1559181567-c3190bfbf715?w=300&q=80', likes: 189, caption: 'Omega-3 benefits explained 🐟' },
+  { id: '5', image: 'https://images.unsplash.com/photo-1616679911721-eff6eec18fcd?w=300&q=80', likes: 189, caption: 'Omega-3 benefits explained 🐟' },
   { id: '6', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300&q=80', likes: 403, caption: 'Best SPF picks for Egypt ☀️' },
 ];
 

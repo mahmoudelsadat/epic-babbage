@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { testimonials } from '@/lib/data';
-import { Star, Quote, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 
 function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
   return (
@@ -18,7 +18,7 @@ function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
       </div>
 
       {/* Quote */}
-      <p className="text-[0.9rem] text-[#1C1917] leading-relaxed flex-1">"{t.text}"</p>
+      <p className="text-[0.9rem] text-[#1C1917] leading-relaxed flex-1">&ldquo;{t.text}&rdquo;</p>
 
       {/* Product label */}
       <div className="text-[11px] font-semibold text-[#C8102E] bg-[#fce8ec] rounded-full px-3 py-1 w-fit">
@@ -98,7 +98,7 @@ export default function Testimonials() {
               Based on <span className="font-bold text-[#1C1917]">10,000+</span> verified reviews
             </div>
           </div>
-          <div className="ml-auto hidden sm:block text-xs text-[#A8A39C] italic">"Egypt's most trusted pharmacy brand"</div>
+          <div className="ml-auto hidden sm:block text-xs text-[#A8A39C] italic">&ldquo;Egypt&apos;s most trusted pharmacy brand&rdquo;</div>
         </div>
 
         {/* Desktop: 3-col */}

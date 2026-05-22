@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ShoppingCart, Heart, Star, Shield, Truck, RefreshCw, ChevronRight, Plus, Minus, Share2, Check, Zap, MessageCircle } from 'lucide-react';
-import { products } from '@/lib/data';
 import type { Product } from '@/lib/data';
 
 function StarRating({ rating, reviewCount, large }: { rating: number; reviewCount: number; large?: boolean }) {
@@ -32,6 +32,11 @@ export default function PDPClient({ product, related }: PDPClientProps) {
   const [activeTab, setActiveTab] = useState('description');
   const [activeImage, setActiveImage] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [viewersCount, setViewersCount] = useState(8);
+
+  useEffect(() => {
+    setViewersCount(Math.floor(Math.random() * 15) + 5);
+  }, []);
 
   const discount = product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0;
 
@@ -145,7 +150,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
             <div className="flex items-center gap-3 mt-3 mb-5 text-xs text-gray-400">
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                {Math.floor(Math.random() * 15) + 5} people viewing now
+                {viewersCount} people viewing now
               </span>
               {product.stockCount && product.stockCount < 20 && (
                 <span className="flex items-center gap-1 text-orange-400 font-semibold">
@@ -252,7 +257,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
 
             {/* WhatsApp CTA */}
             <a
-              href={`https://wa.me/201000000000?text=Hi%2C%20I%27m%20interested%20in%20${encodeURIComponent(product.name)}%20at%202M%20Premium%20Pharmacy`}
+              href={`https://wa.me/201115160947?text=Hi%2C%20I%27m%20interested%20in%20${encodeURIComponent(product.name)}%20at%202M%20Premium%20Pharmacy`}
               target="_blank"
               rel="noopener noreferrer"
               id="pdp-whatsapp-cta"

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display, Cairo } from 'next/font/google';
+import { Toaster } from 'sonner';
+import { LanguageProvider } from '@/lib/LanguageContext';
 import './globals.css';
 
 const inter = Inter({
@@ -67,14 +69,33 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${playfair.variable} ${cairo.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#060700" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="2M Pharmacy" />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-dvh flex flex-col antialiased">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+        <Toaster
+          position="top-right"
+          richColors
+          toastOptions={{
+            style: {
+              fontFamily: 'var(--font-inter)',
+              fontSize: '0.875rem',
+            },
+          }}
+        />
       </body>
     </html>
   );

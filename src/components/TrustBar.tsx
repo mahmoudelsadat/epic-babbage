@@ -20,7 +20,7 @@ function useCountUp(target: number, duration = 1600, start = false) {
   return count;
 }
 
-function Stat({ value, suffix, label, delay, color }: { value: number; suffix: string; label: string; delay: number; color: string }) {
+function Stat({ value, suffix, label, color }: { value: number; suffix: string; label: string; color: string }) {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const count = useCountUp(value, 1800, visible);
@@ -65,8 +65,8 @@ export default function TrustBar() {
       <div className="container-2m">
         {/* Stats row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-          {STATS_CONFIG.map((s, i) => (
-            <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} delay={i * 80} color={s.color} />
+          {STATS_CONFIG.map((s) => (
+            <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} color={s.color} />
           ))}
         </div>
 

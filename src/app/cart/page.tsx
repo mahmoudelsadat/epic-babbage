@@ -46,7 +46,7 @@ export default function CartPage() {
         <main className="min-h-screen flex flex-col items-center justify-center py-20" style={{ background: '#060700' }}>
           <div className="text-7xl mb-6">🛒</div>
           <h1 className="text-3xl font-black text-white mb-3">Your cart is empty</h1>
-          <p className="text-gray-400 mb-8 text-center max-w-sm">Looks like you haven't added anything yet. Browse our premium products!</p>
+          <p className="text-gray-400 mb-8 text-center max-w-sm">Looks like you haven&apos;t added anything yet. Browse our premium products!</p>
           <Link href="/pharmacy" className="btn btn-primary px-10">
             Start Shopping <ArrowRight size={16} />
           </Link>

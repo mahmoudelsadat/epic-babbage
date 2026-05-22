@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { SlidersHorizontal, X, ChevronDown, ChevronUp, Grid3X3, List, Star, Heart, ShoppingCart, Zap, ArrowRight } from 'lucide-react';
+import { SlidersHorizontal, X, ChevronDown, ChevronUp, Grid3X3, List, Star, Heart, ShoppingCart, Zap } from 'lucide-react';
 import { products, categories, type Product } from '@/lib/data';
 
 interface FilterState {

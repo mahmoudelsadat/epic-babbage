@@ -1,9 +1,15 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Heart, Star, ArrowRight, Zap, Check } from 'lucide-react';
+import Image from 'next/image';
+import { ShoppingCart, Heart, Star, ArrowRight, Zap, Check, Eye } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { products, type Product } from '@/lib/data';
+import { useCartStore, useWishlistStore } from '@/lib/store';
+import { formatEGP, calcDiscount } from '@/lib/utils';
+import { toast } from 'sonner';
+import QuickViewModal from './QuickViewModal';
 
 const TABS = [
   { label: 'All Products', value: 'all' },
@@ -21,7 +27,7 @@ function StarRating({ rating, reviewCount }: { rating: number; reviewCount: numb
           <Star key={s} size={11} className={s <= Math.round(rating) ? 'fill-[#B8922A] text-[#B8922A]' : 'text-[#D4CCC0]'} />
         ))}
       </div>
-      <span className="text-[11px] text-[#A8A39C]">({reviewCount.toLocaleString()})</span>
+      <span className="text-[11px] text-[var(--color-text-muted)]">({reviewCount.toLocaleString()})</span>
     </div>
   );
 }
@@ -33,17 +39,43 @@ const BADGE_MAP: Record<string, { label: string; className: string }> = {
   'pharmacist-pick': { label: '✅ RX PICK', className: 'badge badge-sky' },
 };
 
-function ProductCard({ product }: { product: Product }) {
-  const [wishlisted, setWishlisted] = useState(false);
+function ProductCard({ product, onQuickView }: { product: Product; onQuickView: (p: Product) => void }) {
+  const addItem = useCartStore((s) => s.addItem);
+  const toggle = useWishlistStore((s) => s.toggle);
+  const wishlisted = useWishlistStore((s) => s.has(product.id));
   const [added, setAdded] = useState(false);
-  const discount = product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0;
+  const discount = product.originalPrice ? calcDiscount(product.price, product.originalPrice) : 0;
   const badge = product.badge ? BADGE_MAP[product.badge] : null;
 
+  const handleAddToCart = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    addItem(product, 1);
+    setAdded(true);
+    toast.success('Added to cart!', { description: product.name, duration: 2000 });
+    setTimeout(() => setAdded(false), 2000);
+  }, [addItem, product]);
+
   return (
-    <div className="product-card group">
+    <motion.div
+      className="product-card group"
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.2 }}
+      whileHover={{ y: -4 }}
+    >
       {/* Image */}
       <div className="product-card-image">
-        <img src={product.image} alt={product.name} loading="lazy" />
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={300}
+          height={300}
+          className="w-full h-full object-contain p-2"
+          loading="lazy"
+          sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
+        />
 
         {/* Badges */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5">
@@ -52,13 +84,15 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Wishlist */}
-        <button
-          onClick={(e) => { e.preventDefault(); setWishlisted(!wishlisted); }}
-          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white border border-[#E4E0D8] shadow-sm flex items-center justify-center transition-all duration-200 hover:scale-110 hover:border-[#C8102E]"
+        <motion.button
+          onClick={(e) => { e.preventDefault(); toggle(product.id); }}
+          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white border border-[var(--color-border)] shadow-sm flex items-center justify-center"
+          whileTap={{ scale: 0.85 }}
+          whileHover={{ scale: 1.1 }}
           aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart size={13} className={wishlisted ? 'fill-[#C8102E] text-[#C8102E]' : 'text-[#A8A39C]'} />
-        </button>
+          <Heart size={13} className={wishlisted ? 'fill-[var(--color-brand-red)] text-[var(--color-brand-red)]' : 'text-[var(--color-text-muted)]'} />
+        </motion.button>
 
         {/* Low stock */}
         {product.stockCount && product.stockCount < 15 && (
@@ -67,45 +101,73 @@ function ProductCard({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* Quick Add */}
-        <div className="product-card-actions">
-          <button
-            onClick={(e) => { e.preventDefault(); setAdded(true); setTimeout(() => setAdded(false), 1800); }}
-            className={`btn w-full text-xs py-2.5 ${added ? 'bg-[#6B8F71] border-[#6B8F71] text-white' : 'btn-primary'}`}
+        {/* Hover actions */}
+        <div className="product-card-actions flex gap-2">
+          <motion.button
+            onClick={handleAddToCart}
+            className={`btn flex-1 text-xs py-2.5 ${added ? 'bg-[var(--color-sage)] border-[var(--color-sage)] text-white' : 'btn-primary'}`}
+            whileTap={{ scale: 0.96 }}
           >
             {added ? <><Check size={12} /> Added!</> : <><ShoppingCart size={12} /> Add to Cart</>}
-          </button>
+          </motion.button>
+          <motion.button
+            onClick={(e) => { e.preventDefault(); onQuickView(product); }}
+            className="w-10 rounded-lg border border-white/60 bg-white/80 text-[var(--color-text-secondary)] flex items-center justify-center"
+            whileTap={{ scale: 0.9 }}
+            aria-label="Quick view"
+          >
+            <Eye size={14} />
+          </motion.button>
         </div>
       </div>
 
       {/* Body */}
       <Link href={`/product/${product.slug}`} className="block">
         <div className="product-card-body">
-          <p className="text-[11px] text-[#A8A39C] font-semibold uppercase tracking-wider mb-1">{product.brand}</p>
-          <h3 className="text-[0.875rem] font-semibold text-[#1C1917] leading-snug mb-2 line-clamp-2 group-hover:text-[#C8102E] transition-colors">
+          <p className="text-[11px] text-[var(--color-text-muted)] font-semibold uppercase tracking-wider mb-1">{product.brand}</p>
+          <h3 className="text-[0.875rem] font-semibold text-[var(--color-text-primary)] leading-snug mb-2 line-clamp-2 group-hover:text-[var(--color-brand-red)] transition-colors">
             {product.name}
           </h3>
           <StarRating rating={product.rating} reviewCount={product.reviewCount} />
           <div className="flex items-center gap-2 mt-2.5">
-            <span className="text-[1.05rem] font-black text-[#1C1917]">EGP {product.price.toLocaleString()}</span>
+            <span className="text-[1.05rem] font-black text-[var(--color-text-primary)]">{formatEGP(product.price)}</span>
             {product.originalPrice && (
-              <span className="text-xs text-[#A8A39C] line-through">EGP {product.originalPrice.toLocaleString()}</span>
+              <span className="text-xs text-[var(--color-text-muted)] line-through">{formatEGP(product.originalPrice)}</span>
             )}
           </div>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 }
 
+const PAGE_SIZE = 8;
+
 export default function TrendingProducts() {
   const [activeTab, setActiveTab] = useState('all');
+  const [page, setPage] = useState(1);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const filtered = useMemo(() => {
-    if (activeTab === 'all') return products;
-    if (activeTab === 'sale') return products.filter((p) => p.badge === 'sale' || p.originalPrice);
-    return products.filter((p) => p.category === activeTab);
-  }, [activeTab]);
+  const allFiltered = products.filter((p) => {
+    if (activeTab === 'all') return true;
+    if (activeTab === 'sale') return !!(p.badge === 'sale' || p.originalPrice);
+    return p.category === activeTab;
+  });
+
+  const displayed = allFiltered.slice(0, page * PAGE_SIZE);
+  const hasMore = displayed.length < allFiltered.length;
+
+  // Infinite scroll observer
+  useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el || !hasMore) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setPage((p) => p + 1);
+    }, { threshold: 0.5 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [hasMore, displayed.length]);
 
   return (
     <section className="py-16 bg-white">
@@ -116,7 +178,7 @@ export default function TrendingProducts() {
             <div className="section-label">Best Sellers</div>
             <h2 className="section-title">Trending Products</h2>
           </div>
-          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[#6B6560] hover:text-[#C8102E] transition-colors group">
+          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-brand-red)] transition-colors group">
             View All <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
@@ -124,35 +186,62 @@ export default function TrendingProducts() {
         {/* Filter Tabs */}
         <div className="flex items-center gap-2 mb-7 overflow-x-auto pb-1 scrollbar-hide">
           {TABS.map((tab) => (
-            <button
+            <motion.button
               key={tab.value}
               id={`filter-${tab.value}`}
-              onClick={() => setActiveTab(tab.value)}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-[0.8rem] font-semibold transition-all duration-200 ${
+              onClick={() => {
+                setActiveTab(tab.value);
+                setPage(1);
+              }}
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-[0.8rem] font-semibold transition-colors duration-200 ${
                 activeTab === tab.value
-                  ? 'bg-[#C8102E] text-white shadow-sm'
-                  : 'bg-[#F3F0EB] text-[#6B6560] hover:bg-[#EBE8E1] hover:text-[#1C1917]'
+                  ? 'bg-[var(--color-brand-red)] text-white shadow-sm'
+                  : 'bg-[var(--color-surface-2)] text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-3)] hover:text-[var(--color-text-primary)]'
               }`}
+              whileTap={{ scale: 0.95 }}
             >
               {tab.label}
-            </button>
+            </motion.button>
           ))}
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-          {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={activeTab}
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5"
+          >
+            {displayed.map((product) => (
+              <ProductCard key={product.id} product={product} onQuickView={setQuickViewProduct} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
-        {/* CTA */}
-        <div className="mt-10 text-center">
-          <Link href="/pharmacy" id="products-view-all" className="btn btn-ghost px-8 py-3">
-            View All Products <ArrowRight size={15} />
-          </Link>
-        </div>
+        {/* Infinite scroll trigger */}
+        {hasMore && (
+          <div ref={loadMoreRef} className="flex justify-center pt-10">
+            <div className="flex gap-2">
+              {[0,1,2].map((i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 rounded-full bg-[var(--color-brand-red)]"
+                  animate={{ scale: [1, 1.4, 1], opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {!hasMore && displayed.length > PAGE_SIZE && (
+          <p className="text-center text-sm text-[var(--color-text-muted)] pt-8">
+            All {allFiltered.length} products shown
+          </p>
+        )}
       </div>
+
+      {/* Quick View Modal */}
+      <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
     </section>
   );
 }

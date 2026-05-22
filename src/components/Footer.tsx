@@ -1,5 +1,11 @@
+'use client';
+
 import Link from 'next/link';
-import { Phone, Mail, MapPin, ArrowRight, Shield, Truck, CreditCard, RefreshCw } from 'lucide-react';
+import { ArrowRight, Shield, Truck, CreditCard, RefreshCw, Mail, MapPin } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { newsletterSchema, type NewsletterFormValues } from '@/lib/schemas';
+import { toast } from 'sonner';
 
 function InstagramIcon({ size = 16 }: { size?: number }) {
   return (
@@ -32,7 +38,6 @@ const footerLinks = {
     { label: 'Delivery Information', href: '/delivery' },
     { label: 'Returns & Exchanges', href: '/returns' },
     { label: 'FAQs', href: '/faqs' },
-    { label: 'Contact Us', href: '/contact' },
     { label: 'Track Your Order', href: '/track' },
   ],
   company: [
@@ -45,11 +50,51 @@ const footerLinks = {
 };
 
 const TRUST_FOOTER = [
-  { icon: Shield, label: '100% Authentic', color: '#4A90C4' },
-  { icon: Truck, label: 'Egypt-Wide', color: '#6B8F71' },
-  { icon: CreditCard, label: 'Secure Payment', color: '#B8922A' },
-  { icon: RefreshCw, label: 'Easy Returns', color: '#D4856A' },
+  { icon: Shield,     label: '100% Authentic',  color: 'var(--color-sky)' },
+  { icon: Truck,      label: 'Egypt-Wide',       color: 'var(--color-sage)' },
+  { icon: CreditCard, label: 'Secure Payment',   color: 'var(--color-brand-gold)' },
+  { icon: RefreshCw,  label: 'Easy Returns',     color: 'var(--color-peach)' },
 ];
+
+function NewsletterForm() {
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<NewsletterFormValues>({
+    resolver: zodResolver(newsletterSchema),
+  });
+
+  const onSubmit = async (data: NewsletterFormValues) => {
+    try {
+      await fetch('/api/newsletter', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
+      toast.success('You\'re subscribed! 🎉', { description: 'Wellness tips & exclusive offers are on their way.' });
+      reset();
+    } catch {
+      toast.error('Something went wrong. Please try again.');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3 w-full lg:w-auto max-w-md" noValidate>
+      <div className="flex-1 min-w-0">
+        <input
+          id="newsletter-email"
+          type="email"
+          placeholder="Your email address"
+          {...register('email')}
+          className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-[#6B6560] focus:outline-none focus:border-[var(--color-brand-red)]/60 border"
+          style={{ background: 'rgba(255,255,255,0.06)', borderColor: errors.email ? '#C8102E' : 'rgba(255,255,255,0.10)' }}
+        />
+        {errors.email && <p className="text-[10px] text-red-400 mt-1">{errors.email.message}</p>}
+      </div>
+      <button
+        id="newsletter-submit"
+        type="submit"
+        disabled={isSubmitting}
+        className="btn btn-primary px-5 flex-shrink-0 text-sm"
+      >
+        {isSubmitting ? '...' : <>Subscribe <ArrowRight size={14} /></>}
+      </button>
+    </form>
+  );
+}
 
 export default function Footer() {
   return (
@@ -63,18 +108,7 @@ export default function Footer() {
               <h3 className="text-xl font-bold text-white mb-1">Get Wellness Tips & Exclusive Offers</h3>
               <p className="text-[0.875rem] text-[#9E9890]">Join 10,000+ health-conscious Egyptians. No spam, ever.</p>
             </div>
-            <div className="flex gap-3 w-full lg:w-auto max-w-md">
-              <input
-                id="newsletter-email"
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-sm text-white placeholder-[#6B6560] focus:outline-none focus:border-[#C8102E]/60 min-w-0"
-                style={{ background: 'rgba(255,255,255,0.06)' }}
-              />
-              <button id="newsletter-submit" className="btn btn-primary px-5 flex-shrink-0 text-sm">
-                Subscribe <ArrowRight size={14} />
-              </button>
-            </div>
+            <NewsletterForm />
           </div>
         </div>
       </div>
@@ -83,24 +117,27 @@ export default function Footer() {
       <div className="container-2m py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
 
-          {/* Brand */}
+          {/* Brand column */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-sm"
-                style={{ background: 'linear-gradient(135deg, #C8102E, #A00D24)' }}>
-                2M
+            {/* Updated logo — #060700, bigger */}
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: '#060700' }}
+              >
+                <span className="text-white font-black text-lg tracking-tight leading-none">2M</span>
               </div>
               <div>
                 <div className="font-black text-white text-base leading-none">2M Pharmacy</div>
-                <div className="text-[10px] text-[#6B6560] font-medium tracking-wider uppercase mt-0.5">Premium Health</div>
+                <div className="text-[10px] text-[#6B6560] font-semibold tracking-[0.12em] uppercase mt-1">Premium Health</div>
               </div>
             </div>
 
             <p className="text-[0.875rem] text-[#9E9890] leading-relaxed mb-6 max-w-xs">
-              Egypt's trusted destination for authentic health, wellness, and beauty products. Curated by pharmacists, delivered to your door.
+              Egypt&apos;s trusted destination for authentic health, wellness, and beauty products. Curated by pharmacists, delivered to your door.
             </p>
 
-            {/* Trust */}
+            {/* Trust grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {TRUST_FOOTER.map(({ icon: Icon, label, color }) => (
                 <div key={label} className="flex items-center gap-2 text-[0.8rem] text-[#9E9890]">
@@ -110,23 +147,24 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Social */}
+            {/* Social links — no phone */}
             <div className="flex items-center gap-2.5">
               {[
-                { href: 'https://www.instagram.com/2m_pharmcy', Icon: InstagramIcon, id: 'footer-instagram', hoverBg: 'hover:bg-pink-500/10 hover:border-pink-400/30', label: 'Instagram' },
-                { href: 'https://www.facebook.com/people/2M-Pharmacy/100068944428141/', Icon: FacebookIcon, id: 'footer-facebook', hoverBg: 'hover:bg-blue-500/10 hover:border-blue-400/30', label: 'Facebook' },
-                { href: 'https://wa.me/201000000000', Icon: Phone, id: 'footer-whatsapp', hoverBg: 'hover:bg-green-500/10 hover:border-green-400/30', label: 'WhatsApp' },
-              ].map(({ href, Icon, id, hoverBg, label }) => (
-                <a key={id} href={href} target="_blank" rel="noopener noreferrer" id={id}
-                  className={`w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 text-[#9E9890] hover:text-white transition-all duration-200 ${hoverBg}`}
-                  aria-label={label}>
+                { href: 'https://www.instagram.com/2m_pharmcy', Icon: InstagramIcon, id: 'footer-instagram', label: 'Instagram', hover: 'hover:bg-pink-500/10 hover:border-pink-400/30' },
+                { href: 'https://www.facebook.com/people/2M-Pharmacy/100068944428141/', Icon: FacebookIcon, id: 'footer-facebook', label: 'Facebook', hover: 'hover:bg-blue-500/10 hover:border-blue-400/30' },
+              ].map(({ href, Icon, id, label, hover }) => (
+                <a
+                  key={id} href={href} target="_blank" rel="noopener noreferrer" id={id}
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 text-[#9E9890] hover:text-white transition-all duration-200 ${hover}`}
+                  aria-label={label}
+                >
                   <Icon size={15} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Links */}
+          {/* Link columns */}
           {[
             { title: 'Shop', links: footerLinks.shop },
             { title: 'Customer Service', links: footerLinks.service },
@@ -145,9 +183,6 @@ export default function Footer() {
               </ul>
               {col.title === 'Company' && (
                 <div className="mt-6 space-y-2">
-                  <a href="https://wa.me/201000000000" className="flex items-center gap-2 text-[0.8rem] text-[#9E9890] hover:text-[#43e97b] transition-colors">
-                    <Phone size={11} /> +20 100 000 0000
-                  </a>
                   <a href="mailto:info@2mpharmacy.com" className="flex items-center gap-2 text-[0.8rem] text-[#9E9890] hover:text-white transition-colors">
                     <Mail size={11} /> info@2mpharmacy.com
                   </a>

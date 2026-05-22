@@ -91,10 +91,10 @@ export default function FAQsPage() {
               Frequently Asked <span className="text-gradient-red">Questions</span>
             </h1>
             <p className="text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">
-              Everything you need to know about ordering, delivery, payments, and returns. Can't find your answer?
+              Everything you need to know about ordering, delivery, payments, and returns. Can&apos;t find your answer?
             </p>
             <a
-              href="https://wa.me/201000000000"
+              href="https://wa.me/201115160947"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-6 text-sm text-green-400 hover:text-green-300 transition-colors"
@@ -140,7 +140,7 @@ export default function FAQsPage() {
               <h3 className="text-white font-black text-xl mb-2">Still have a question?</h3>
               <p className="text-gray-400 text-sm mb-5">Our team is available Sat–Thu, 9am–9pm Cairo time.</p>
               <a
-                href="https://wa.me/201000000000"
+                href="https://wa.me/201115160947"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary"
