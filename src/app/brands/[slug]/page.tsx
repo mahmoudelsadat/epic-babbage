@@ -40,7 +40,7 @@ export default async function BrandPage({ params }: Props) {
         {/* Header */}
         <section className="py-14 bg-white border-b border-[var(--color-border)]">
           <div className="container-2m">
-            <Link href="/brands" className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-brand-red)] transition-colors mb-6">
+            <Link href="/brands" className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-brand-primary)] transition-colors mb-6">
               <ArrowLeft size={14} /> All Brands
             </Link>
             <div className="flex items-center gap-5">
@@ -85,7 +85,7 @@ export default async function BrandPage({ params }: Props) {
                     </div>
                     <div className="product-card-body">
                       <p className="text-[11px] text-[var(--color-text-muted)] font-semibold uppercase tracking-wider mb-1">{p.brand}</p>
-                      <h2 className="text-sm font-semibold text-[var(--color-text-primary)] line-clamp-2 mb-2 group-hover:text-[var(--color-brand-red)] transition-colors">{p.name}</h2>
+                      <h2 className="text-sm font-semibold text-[var(--color-text-primary)] line-clamp-2 mb-2 group-hover:text-[var(--color-brand-primary)] transition-colors">{p.name}</h2>
                       <div className="flex items-center gap-1 mb-2">
                         {[1,2,3,4,5].map((s) => (
                           <Star key={s} size={10} className={s <= Math.round(p.rating) ? 'fill-[#B8922A] text-[#B8922A]' : 'text-[#D4CCC0]'} />

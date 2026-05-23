@@ -31,7 +31,7 @@ export default function BrandsPage() {
                   <Link
                     key={brand.name}
                     href={`/brands/${slugify(brand.name)}`}
-                    className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-[var(--color-border)] hover:border-[var(--color-brand-red)] hover:shadow-md transition-all duration-200 group"
+                    className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-[var(--color-border)] hover:border-[var(--color-brand-primary)] hover:shadow-md transition-all duration-200 group"
                     style={{ boxShadow: '0 1px 4px rgba(28,25,23,0.05)' }}
                   >
                     <div className="text-2xl w-10 h-10 flex items-center justify-center bg-[var(--color-surface-2)] rounded-xl flex-shrink-0 border border-[var(--color-border-soft)]">
@@ -43,7 +43,7 @@ export default function BrandsPage() {
                         {count > 0 ? `${count} products` : 'Explore'}
                       </div>
                     </div>
-                    <ArrowRight size={13} className="flex-shrink-0 text-[var(--color-text-muted)] group-hover:text-[var(--color-brand-red)] transition-colors" />
+                    <ArrowRight size={13} className="flex-shrink-0 text-[var(--color-text-muted)] group-hover:text-[var(--color-brand-primary)] transition-colors" />
                   </Link>
                 );
               })}

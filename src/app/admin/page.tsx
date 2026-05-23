@@ -63,13 +63,13 @@ export default function AdminPage() {
           
           {/* Decorative ambient background glows */}
           <div className="absolute -top-12 -left-12 w-64 h-64 bg-[var(--color-brand-gold)]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-[var(--color-brand-red)]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-[var(--color-brand-primary)]/5 rounded-full blur-3xl pointer-events-none" />
 
           {/* Secure Portal Card */}
           <div className="card shadow-2xl rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]/90 backdrop-blur-xl relative z-10 overflow-hidden">
             
             {/* Top decorative stripe (Gold for Admins) */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-[var(--color-brand-gold)] to-[var(--color-brand-red)] animate-pulse" />
+            <div className="h-1.5 w-full bg-gradient-to-r from-[var(--color-brand-gold)] to-[var(--color-brand-primary)] animate-pulse" />
             
             <div className="p-8">
               {/* Header */}
@@ -102,7 +102,7 @@ export default function AdminPage() {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder={isRtl ? 'أدخل كلمة المرور (الافتراضية: admin123)' : 'Enter password (Default: admin123)'}
                       className={`w-full bg-[var(--color-surface-2)] border ${
-                        error ? 'border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-gold)] focus:ring-[var(--color-brand-gold)]/5'
+                        error ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-gold)] focus:ring-[var(--color-brand-gold)]/5'
                       } rounded-xl ${isRtl ? 'pl-10 pr-10' : 'pl-10 pr-10'} py-3.5 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
                     />
                     <button
@@ -119,7 +119,7 @@ export default function AdminPage() {
                     <motion.p 
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-[11px] text-[var(--color-brand-red)] font-bold mt-2 flex items-center gap-1.5"
+                      className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-2 flex items-center gap-1.5"
                     >
                       <AlertTriangle size={12} />
                       {error}

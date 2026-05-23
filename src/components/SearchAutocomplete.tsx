@@ -110,7 +110,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
           dir={isRtl ? 'rtl' : 'ltr'}
           className={`w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl ${
             isRtl ? 'pr-10 pl-10' : 'pl-10 pr-10'
-          } py-3 text-xs font-bold text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all duration-200 shadow-sm`}
+          } py-3 text-xs font-bold text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all duration-200 shadow-sm`}
         />
         
         {query && (
@@ -137,7 +137,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
               <button
                 key={idx}
                 onClick={() => handlePillClick(word)}
-                className="bg-[var(--color-surface-2)] border border-[var(--color-border-soft)] hover:border-[var(--color-brand-red)]/30 hover:bg-[var(--color-brand-red)]/5 hover:text-[var(--color-brand-red)] text-[10px] font-black px-3 py-1.5 rounded-lg transition-all"
+                className="bg-[var(--color-surface-2)] border border-[var(--color-border-soft)] hover:border-[var(--color-brand-primary)]/30 hover:bg-[var(--color-brand-primary)]/5 hover:text-[var(--color-brand-primary)] text-[10px] font-black px-3 py-1.5 rounded-lg transition-all"
               >
                 {word}
               </button>
@@ -165,7 +165,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
                 onClick={() => setActiveCategory('all')}
                 className={`px-2.5 py-1 text-[9px] font-black uppercase rounded-lg border transition-all ${
                   activeCategory === 'all'
-                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-red)] shadow-sm'
+                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-primary)] shadow-sm'
                     : 'bg-transparent border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
                 }`}
               >
@@ -175,7 +175,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
                 onClick={() => setActiveCategory('pharmacy')}
                 className={`px-2.5 py-1 text-[9px] font-black uppercase rounded-lg border transition-all flex items-center gap-1 ${
                   activeCategory === 'pharmacy'
-                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-red)] shadow-sm'
+                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-primary)] shadow-sm'
                     : 'bg-transparent border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
                 }`}
               >
@@ -185,7 +185,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
                 onClick={() => setActiveCategory('beauty')}
                 className={`px-2.5 py-1 text-[9px] font-black uppercase rounded-lg border transition-all flex items-center gap-1 ${
                   activeCategory === 'beauty'
-                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-red)] shadow-sm'
+                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-primary)] shadow-sm'
                     : 'bg-transparent border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
                 }`}
               >
@@ -195,7 +195,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
                 onClick={() => setActiveCategory('wellness')}
                 className={`px-2.5 py-1 text-[9px] font-black uppercase rounded-lg border transition-all flex items-center gap-1 ${
                   activeCategory === 'wellness'
-                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-red)] shadow-sm'
+                    ? 'bg-[var(--color-surface)] border-[var(--color-border-soft)] text-[var(--color-brand-primary)] shadow-sm'
                     : 'bg-transparent border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
                 }`}
               >
@@ -237,11 +237,11 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
                       </div>
                       
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-black text-[var(--color-text-primary)] truncate group-hover:text-[var(--color-brand-red)] transition-colors">
+                        <p className="text-xs font-black text-[var(--color-text-primary)] truncate group-hover:text-[var(--color-brand-primary)] transition-colors">
                           {p.name}
                         </p>
                         <p className="text-[10px] text-[var(--color-text-muted)] font-bold mt-0.5">
-                          {p.brand} · <span className="text-[var(--color-brand-red)]">{formatEGP(p.price)}</span>
+                          {p.brand} · <span className="text-[var(--color-brand-primary)]">{formatEGP(p.price)}</span>
                         </p>
                       </div>
                     </Link>
@@ -255,7 +255,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
                           duration: 2000 
                         }); 
                       }}
-                      className="w-8 h-8 flex-shrink-0 rounded-xl bg-[var(--color-brand-red)] text-white flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100 hover:scale-105 active:scale-95 transition-all"
+                      className="w-8 h-8 flex-shrink-0 rounded-xl bg-[var(--color-brand-primary)] text-white flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100 hover:scale-105 active:scale-95 transition-all"
                       aria-label={`Add ${p.name} to cart`}
                     >
                       <ShoppingCart size={13} />
@@ -269,7 +269,7 @@ export default function SearchAutocomplete({ onClose }: SearchAutocompleteProps)
                 <Link
                   href={`/pharmacy?search=${encodeURIComponent(query)}`}
                   onClick={() => { setOpen(false); onClose?.(); }}
-                  className="flex items-center justify-center gap-2 w-full py-2.5 text-xs font-black text-[var(--color-brand-red)] hover:bg-[var(--color-brand-red)]/5 rounded-xl transition-all"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 text-xs font-black text-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary)]/5 rounded-xl transition-all"
                 >
                   <span>{t('seeAllResults')} &ldquo;{query}&rdquo;</span>
                   <ArrowRight size={13} className={isRtl ? 'rotate-180' : ''} />

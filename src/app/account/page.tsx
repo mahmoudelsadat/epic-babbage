@@ -90,10 +90,10 @@ export default function AccountPage() {
         <div className="max-w-6xl mx-auto px-4">
           
           {/* Main User Dashboard Header */}
-          <div className="mb-10 bg-gradient-to-r from-[var(--color-brand-red)]/10 via-[var(--color-brand-gold)]/5 to-[var(--color-brand-red)]/5 rounded-3xl p-6 md:p-8 border border-[var(--color-border-soft)] relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div className="mb-10 bg-gradient-to-r from-[var(--color-brand-primary)]/10 via-[var(--color-brand-gold)]/5 to-[var(--color-brand-primary)]/5 rounded-3xl p-6 md:p-8 border border-[var(--color-border-soft)] relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-brand-gold)]/5 rounded-full blur-3xl pointer-events-none" />
             <div className="flex items-center gap-5 relative z-10">
-              <div className="w-16 h-16 rounded-2xl bg-[var(--color-surface)] border-2 border-[var(--color-brand-gold)] flex items-center justify-center text-[var(--color-brand-red)] shadow-lg font-black text-2xl uppercase">
+              <div className="w-16 h-16 rounded-2xl bg-[var(--color-surface)] border-2 border-[var(--color-brand-gold)] flex items-center justify-center text-[var(--color-brand-primary)] shadow-lg font-black text-2xl uppercase">
                 {userName.charAt(0)}
               </div>
               <div>
@@ -114,7 +114,7 @@ export default function AccountPage() {
 
             <button
               onClick={handleLogout}
-              className="px-4 py-2.5 rounded-xl border border-[var(--color-brand-red)]/20 hover:bg-[var(--color-brand-red)]/5 text-[var(--color-brand-red)] text-xs font-black uppercase tracking-wider flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0 relative z-10 shadow-sm"
+              className="px-4 py-2.5 rounded-xl border border-[var(--color-brand-primary)]/20 hover:bg-[var(--color-brand-primary)]/5 text-[var(--color-brand-primary)] text-xs font-black uppercase tracking-wider flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0 relative z-10 shadow-sm"
             >
               <LogOut size={14} />
               {t('logout')}
@@ -131,7 +131,7 @@ export default function AccountPage() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-brand-gold)]/5 rounded-full blur-2xl pointer-events-none" />
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-black text-[var(--color-text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
-                    <Heart size={14} className="text-[var(--color-brand-red)]" />
+                    <Heart size={14} className="text-[var(--color-brand-primary)]" />
                     {t('healthPoints')}
                   </span>
                   <Sparkles size={16} className="text-[var(--color-brand-gold)] animate-pulse" />
@@ -150,7 +150,7 @@ export default function AccountPage() {
                     initial={{ width: 0 }}
                     animate={{ width: `${(loyaltyPoints / 500) * 100}%` }}
                     transition={{ duration: 1, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-[var(--color-brand-red)] to-[var(--color-brand-gold)]"
+                    className="h-full bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-gold)]"
                   />
                 </div>
 
@@ -192,7 +192,7 @@ export default function AccountPage() {
                   {t('addressPlaceholder')}
                 </p>
                 
-                <button className="text-[11px] font-black text-[var(--color-brand-red)] hover:underline uppercase tracking-wider flex items-center gap-1">
+                <button className="text-[11px] font-black text-[var(--color-brand-primary)] hover:underline uppercase tracking-wider flex items-center gap-1">
                   {isRtl ? 'تعديل العنوان الافتراضي' : 'Edit Default Address'}
                   <ChevronRight size={12} className={isRtl ? 'rotate-180' : ''} />
                 </button>
@@ -207,7 +207,7 @@ export default function AccountPage() {
               <div className="card border border-[var(--color-border)] p-6 rounded-2xl bg-[var(--color-surface)] shadow-lg relative overflow-hidden">
                 <div className="flex items-center justify-between mb-6 border-b border-[var(--color-border-soft)] pb-3">
                   <div className="flex items-center gap-2">
-                    <Package size={16} className="text-[var(--color-brand-red)]" />
+                    <Package size={16} className="text-[var(--color-brand-primary)]" />
                     <h3 className="text-sm font-black text-[var(--color-text-primary)] font-display uppercase tracking-wider">
                       {t('activeOrders')}
                     </h3>
@@ -231,7 +231,7 @@ export default function AccountPage() {
                     <span className="text-[10px] uppercase font-bold text-[var(--color-text-muted)] block mb-1">
                       {isRtl ? 'القيمة الإجمالية للطلب' : 'Total Order Value'}
                     </span>
-                    <p className="text-xs font-black text-[var(--color-brand-red)]">
+                    <p className="text-xs font-black text-[var(--color-brand-primary)]">
                       EGP 890.00
                     </p>
                   </div>
@@ -250,7 +250,7 @@ export default function AccountPage() {
                     
                     {/* Active dynamic connector line */}
                     <motion.div 
-                      className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-[var(--color-brand-red)] to-[var(--color-brand-gold)] -translate-y-1/2 z-0 rounded-full"
+                      className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-gold)] -translate-y-1/2 z-0 rounded-full"
                       initial={{ width: 0 }}
                       animate={{ 
                         width: isRtl 
@@ -269,7 +269,7 @@ export default function AccountPage() {
                     <div className="flex flex-col items-center z-10 relative">
                       <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
                         activeStep >= 1 
-                          ? 'bg-[var(--color-brand-red)] border-[var(--color-brand-red)] text-white shadow-md' 
+                          ? 'bg-[var(--color-brand-primary)] border-[var(--color-brand-primary)] text-white shadow-md' 
                           : 'bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text-muted)]'
                       }`}>
                         <ShoppingBag size={14} />
@@ -327,7 +327,7 @@ export default function AccountPage() {
                     </p>
                     <button
                       onClick={handleSimulateDelivery}
-                      className="btn-shimmer btn-elevated bg-[var(--color-brand-red)] hover:bg-[var(--color-brand-red)]/90 text-white text-xs font-black uppercase tracking-wider py-2.5 px-6 rounded-lg transition-transform active:scale-95 flex items-center gap-1.5"
+                      className="btn-shimmer btn-elevated bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary)]/90 text-white text-xs font-black uppercase tracking-wider py-2.5 px-6 rounded-lg transition-transform active:scale-95 flex items-center gap-1.5"
                     >
                       <span>🤝</span>
                       {isRtl ? 'تأكيد استلام الشحنة والتقاط الهدية' : 'Confirm Order Delivery & Claim Reward'}

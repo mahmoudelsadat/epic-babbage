@@ -31,21 +31,21 @@ const footerLinks = {
     { label: 'Beauty', href: '/beauty' },
     { label: 'Wellness', href: '/wellness' },
     { label: 'Personal Care', href: '/personal-care' },
-    { label: 'Offers & Deals', href: '/offers' },
+    { label: 'Offers & Deals', href: '/pharmacy' },
     { label: 'All Brands', href: '/brands' },
   ],
   service: [
-    { label: 'Delivery Information', href: '/delivery' },
-    { label: 'Returns & Exchanges', href: '/returns' },
+    { label: 'Delivery Information', href: '/faqs' },
+    { label: 'Returns & Exchanges', href: '/faqs' },
     { label: 'FAQs', href: '/faqs' },
-    { label: 'Track Your Order', href: '/track' },
+    { label: 'Track Your Order', href: '/account' },
   ],
   company: [
     { label: 'About Us', href: '/about' },
-    { label: 'Wellness Blog', href: '/blog' },
-    { label: 'Authenticity Policy', href: '/authenticity' },
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Wellness Blog', href: '/about' },
+    { label: 'Authenticity Policy', href: '/about' },
+    { label: 'Privacy Policy', href: '/about' },
+    { label: 'Terms & Conditions', href: '/about' },
   ],
 };
 
@@ -79,8 +79,8 @@ function NewsletterForm() {
           type="email"
           placeholder="Your email address"
           {...register('email')}
-          className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-[#6B6560] focus:outline-none focus:border-[var(--color-brand-red)]/60 border"
-          style={{ background: 'rgba(255,255,255,0.06)', borderColor: errors.email ? '#C8102E' : 'rgba(255,255,255,0.10)' }}
+          className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-[#6B6560] focus:outline-none focus:border-[var(--color-brand-primary)]/60 border"
+          style={{ background: 'rgba(255,255,255,0.06)', borderColor: errors.email ? 'var(--color-brand-primary)' : 'rgba(255,255,255,0.10)' }}
         />
         {errors.email && <p className="text-[10px] text-red-400 mt-1">{errors.email.message}</p>}
       </div>

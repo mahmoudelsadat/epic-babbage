@@ -191,7 +191,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 whileTap={{ scale: 0.95 }}
               >
                 {/* Visual shiny effect on logo */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-brand-red)]/20 to-[var(--color-brand-gold)]/20" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-brand-primary)]/20 to-[var(--color-brand-gold)]/20" />
                 <span className="text-white font-black text-lg tracking-tight leading-none relative z-10">2M</span>
               </motion.div>
               <div className="hidden sm:block">
@@ -221,7 +221,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                       href={link.href}
                       className={`relative flex items-center gap-1 px-4 py-2.5 text-xs font-black tracking-wider transition-all duration-200 rounded-xl ${
                         link.label === 'OFFERS'
-                          ? 'text-[var(--color-brand-red)] hover:bg-[var(--color-brand-red)]/10'
+                          ? 'text-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary)]/10'
                           : active
                           ? 'text-[var(--color-text-primary)] bg-[var(--color-surface-2)] shadow-inner'
                           : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-2)]'
@@ -233,7 +233,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                       {active && link.label !== 'OFFERS' && (
                         <motion.div
                           layoutId="active-nav-dot"
-                          className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[var(--color-brand-red)]"
+                          className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[var(--color-brand-primary)]"
                         />
                       )}
                       
@@ -250,14 +250,14 @@ export default function Navbar({ cartCount }: NavbarProps) {
                           animate={{ opacity: 1, y: 4, scale: 1 }}
                           exit={{ opacity: 0, y: 12, scale: 0.98 }}
                           transition={{ duration: 0.2, ease: 'easeOut' }}
-                          className={`absolute top-full ${isRtl ? 'right-0' : 'left-0'} w-[540px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 grid grid-cols-5 gap-6 shadow-2xl backdrop-blur-xl relative z-50`}
+                          className={`absolute top-full ${isRtl ? 'right-0' : 'left-0'} w-[540px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 grid grid-cols-5 gap-6 shadow-2xl backdrop-blur-xl z-50`}
                           style={{
                             boxShadow: '0 25px 50px -12px rgba(28,25,23,0.15)',
                             borderColor: 'var(--color-border-soft)'
                           }}
                         >
                           {/* Accent border top strip */}
-                          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-brand-red)] to-[var(--color-brand-gold)] rounded-t-2xl" />
+                          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-gold)] rounded-t-2xl" />
 
                           {/* Column 1: Subcategories List (3/5 width) */}
                           <div className="col-span-3 space-y-4">
@@ -272,18 +272,18 @@ export default function Navbar({ cartCount }: NavbarProps) {
                                   className="group flex items-center justify-between px-3 py-2 rounded-xl hover:bg-[var(--color-surface-2)] border border-transparent hover:border-[var(--color-border-soft)] transition-all duration-150"
                                 >
                                   <div className="flex flex-col">
-                                    <span className="text-xs font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-brand-red)] transition-colors">
+                                    <span className="text-xs font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-brand-primary)] transition-colors">
                                       {sub.label}
                                     </span>
                                   </div>
-                                  <ChevronDown size={12} className={`text-[var(--color-text-muted)] group-hover:text-[var(--color-brand-red)] transition-all ${isRtl ? 'rotate-90' : '-rotate-90'}`} />
+                                  <ChevronDown size={12} className={`text-[var(--color-text-muted)] group-hover:text-[var(--color-brand-primary)] transition-all ${isRtl ? 'rotate-90' : '-rotate-90'}`} />
                                 </Link>
                               ))}
                             </div>
                           </div>
 
                           {/* Column 2: Seasonal featured Deal (2/5 width) */}
-                          <div className="col-span-2 flex flex-col justify-between bg-gradient-to-br from-[var(--color-brand-red)]/5 to-[var(--color-brand-gold)]/5 rounded-xl border border-[var(--color-border-soft)] p-4 relative overflow-hidden">
+                          <div className="col-span-2 flex flex-col justify-between bg-gradient-to-br from-[var(--color-brand-primary)]/5 to-[var(--color-brand-gold)]/5 rounded-xl border border-[var(--color-border-soft)] p-4 relative overflow-hidden">
                             {/* Decorative gold ring */}
                             <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-[var(--color-brand-gold)]/5 rounded-full blur-xl pointer-events-none" />
                             
@@ -304,7 +304,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
                             <Link
                               href={getMegamenuDeal(link.label).link}
-                              className="mt-4 w-full bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-brand-red)] hover:text-white text-[10px] font-black uppercase tracking-wider py-2.5 rounded-lg text-center shadow-sm hover:scale-[1.02] transition-all flex items-center justify-center gap-1.5 text-[var(--color-text-primary)]"
+                              className="mt-4 w-full bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-brand-primary)] hover:text-white text-[10px] font-black uppercase tracking-wider py-2.5 rounded-lg text-center shadow-sm hover:scale-[1.02] transition-all flex items-center justify-center gap-1.5 text-[var(--color-text-primary)]"
                             >
                               <span>{isRtl ? 'اكتشف الآن' : 'Explore Deal'}</span>
                               <span>⚡</span>
@@ -354,7 +354,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 href="/account"
                 id="nav-account-btn"
                 className={`p-2.5 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-2)] rounded-xl transition-colors relative flex items-center justify-center ${
-                  userLoggedIn ? 'text-[var(--color-brand-red)] bg-[var(--color-brand-red)]/5 border border-[var(--color-brand-red)]/10' : ''
+                  userLoggedIn ? 'text-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 border border-[var(--color-brand-primary)]/10' : ''
                 }`}
                 aria-label="My account"
               >
@@ -369,7 +369,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 <Link
                   href="/cart"
                   id="nav-cart-btn"
-                  className="relative flex items-center gap-2 pl-3 pr-4 py-2.5 bg-[var(--color-brand-red)] text-white rounded-xl hover:bg-[var(--color-brand-red)]/90 text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md hover:-translate-y-0.5 active:translate-y-0 btn-shimmer"
+                  className="relative flex items-center gap-2 pl-3 pr-4 py-2.5 bg-[var(--color-brand-primary)] text-white rounded-xl hover:bg-[var(--color-brand-primary)]/90 text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md hover:-translate-y-0.5 active:translate-y-0 btn-shimmer"
                   aria-label={`Cart — ${displayCount} items`}
                 >
                   <ShoppingCart size={14} className="shrink-0" />
@@ -381,7 +381,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
-                        className="w-5 h-5 text-[9px] font-black bg-white text-[var(--color-brand-red)] rounded-full flex items-center justify-center leading-none shadow-sm"
+                        className="w-5 h-5 text-[9px] font-black bg-white text-[var(--color-brand-primary)] rounded-full flex items-center justify-center leading-none shadow-sm"
                       >
                         {displayCount}
                       </motion.span>
@@ -471,14 +471,14 @@ export default function Navbar({ cartCount }: NavbarProps) {
                       href={link.href}
                       className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-150 ${
                         link.label === 'OFFERS'
-                          ? 'text-[var(--color-brand-red)] bg-[var(--color-brand-red)]/5 border border-[var(--color-brand-red)]/10'
+                          ? 'text-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 border border-[var(--color-brand-primary)]/10'
                           : active
-                          ? 'text-[var(--color-brand-red)] bg-[var(--color-brand-red)]/5 border border-[var(--color-brand-red)]/10'
+                          ? 'text-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 border border-[var(--color-brand-primary)]/10'
                           : 'text-[var(--color-text-primary)] hover:bg-[var(--color-surface-2)]'
                       }`}
                     >
                       <span>{isRtl ? link.labelAr : link.label}</span>
-                      {active && <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-brand-red)]" />}
+                      {active && <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-brand-primary)]" />}
                     </Link>
                   );
                 })}

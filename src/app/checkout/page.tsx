@@ -34,7 +34,7 @@ function StepIndicator({ current, step, label }: { current: number; step: number
     <div className={`flex items-center gap-2 ${active ? 'text-[var(--color-text-primary)] font-black' : done ? 'text-[var(--color-brand-gold)]' : 'text-[var(--color-text-muted)]'}`}>
       <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black border-2 transition-all duration-300 ${
         done ? 'bg-[var(--color-brand-gold)] border-[var(--color-brand-gold)] text-black shadow-sm' :
-        active ? 'bg-[var(--color-brand-red)] border-[var(--color-brand-red)] text-white shadow-md' :
+        active ? 'bg-[var(--color-brand-primary)] border-[var(--color-brand-primary)] text-white shadow-md' :
         'border-[var(--color-border)] text-[var(--color-text-muted)]'
       }`}>
         {done ? <Check size={13} /> : step}
@@ -86,8 +86,8 @@ export default function CheckoutPage() {
             </h1>
             <p className="text-xs text-[var(--color-text-secondary)] font-semibold mb-6">
               {isRtl 
-                ? <>طلبك ذو الرقم <span className="text-[var(--color-brand-red)] font-black">{orderNumber}</span> قيد المراجعة والتحضير وسيتواصل معك الصيدلي فوراً.</>
-                : <>Your order <span className="text-[var(--color-brand-red)] font-bold">{orderNumber}</span> has been received and is being prepared by our pharmacists.</>
+                ? <>طلبك ذو الرقم <span className="text-[var(--color-brand-primary)] font-black">{orderNumber}</span> قيد المراجعة والتحضير وسيتواصل معك الصيدلي فوراً.</>
+                : <>Your order <span className="text-[var(--color-brand-primary)] font-bold">{orderNumber}</span> has been received and is being prepared by our pharmacists.</>
               }
             </p>
 
@@ -126,7 +126,7 @@ export default function CheckoutPage() {
               
               <div className="flex justify-between text-xs font-black pt-2">
                 <span className="text-[var(--color-text-primary)] uppercase">{isRtl ? 'الإجمالي النهائي' : 'Final Total'}</span>
-                <span className="text-[var(--color-brand-red)] text-base">EGP {total.toLocaleString()}</span>
+                <span className="text-[var(--color-brand-primary)] text-base">EGP {total.toLocaleString()}</span>
               </div>
             </div>
 
@@ -193,7 +193,7 @@ export default function CheckoutPage() {
                         <div className={`flex-1 min-w-0 ${isRtl ? 'text-right' : 'text-left'}`}>
                           <p className="text-[10px] text-[var(--color-brand-gold)] uppercase font-black tracking-wider">{p.brand}</p>
                           <p className="text-xs font-bold text-[var(--color-text-primary)] line-clamp-2 mt-0.5">{p.name}</p>
-                          <p className="text-xs font-black text-[var(--color-brand-red)] mt-1.5">EGP {p.price.toLocaleString()}</p>
+                          <p className="text-xs font-black text-[var(--color-brand-primary)] mt-1.5">EGP {p.price.toLocaleString()}</p>
                         </div>
                       </div>
                     ))}
@@ -213,7 +213,7 @@ export default function CheckoutPage() {
               {step === 2 && (
                 <div className="card border border-[var(--color-border)] bg-[var(--color-surface)] p-6 rounded-2xl shadow-lg">
                   <h2 className="text-lg font-black text-[var(--color-text-primary)] font-display mb-6 uppercase tracking-wider flex items-center gap-2">
-                    <MapPin size={18} className="text-[var(--color-brand-red)]" /> 
+                    <MapPin size={18} className="text-[var(--color-brand-primary)]" /> 
                     {isRtl ? 'بيانات الشحن والتوصيل' : 'Delivery Details'}
                   </h2>
                   
@@ -229,7 +229,7 @@ export default function CheckoutPage() {
                           required
                           value={form.name}
                           onChange={(e) => setForm({ ...form, name: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                         />
                       </div>
                       {/* Phone */}
@@ -241,7 +241,7 @@ export default function CheckoutPage() {
                           placeholder="e.g. 01115160947"
                           value={form.phone}
                           onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                         />
                       </div>
                       {/* Alt Phone */}
@@ -251,7 +251,7 @@ export default function CheckoutPage() {
                           type="tel"
                           value={form.altPhone}
                           onChange={(e) => setForm({ ...form, altPhone: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                         />
                       </div>
                       {/* Email */}
@@ -261,7 +261,7 @@ export default function CheckoutPage() {
                           type="email"
                           value={form.email}
                           onChange={(e) => setForm({ ...form, email: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                         />
                       </div>
                     </div>
@@ -275,7 +275,7 @@ export default function CheckoutPage() {
                           required
                           value={form.governorate}
                           onChange={(e) => setForm({ ...form, governorate: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-brand-red)] transition-all cursor-pointer"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-brand-primary)] transition-all cursor-pointer"
                         >
                           <option value="">{isRtl ? 'اختر محافظة...' : 'Select Governorate...'}</option>
                           {GOVERNORATES_EN.map((g, idx) => (
@@ -293,7 +293,7 @@ export default function CheckoutPage() {
                           required
                           value={form.city}
                           onChange={(e) => setForm({ ...form, city: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                         />
                       </div>
                     </div>
@@ -307,7 +307,7 @@ export default function CheckoutPage() {
                         required
                         value={form.address}
                         onChange={(e) => setForm({ ...form, address: e.target.value })}
-                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                       />
                     </div>
 
@@ -316,7 +316,7 @@ export default function CheckoutPage() {
                       <div className="flex justify-between items-center mb-1.5">
                         <label className="block text-[10px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider">{t('orderNotes')}</label>
                         <span className={`text-[9px] font-black ${
-                          form.notes.length >= maxNotesLength ? 'text-[var(--color-brand-red)]' : 'text-[var(--color-text-muted)]'
+                          form.notes.length >= maxNotesLength ? 'text-[var(--color-brand-primary)]' : 'text-[var(--color-text-muted)]'
                         }`}>
                           {form.notes.length} / {maxNotesLength} {t('charactersLeft')}
                         </span>
@@ -327,7 +327,7 @@ export default function CheckoutPage() {
                         placeholder={t('notesPlaceholder')}
                         value={form.notes}
                         onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all resize-none leading-relaxed"
+                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all resize-none leading-relaxed"
                       />
                     </div>
 
@@ -357,7 +357,7 @@ export default function CheckoutPage() {
               {step === 3 && (
                 <div className="card border border-[var(--color-border)] bg-[var(--color-surface)] p-6 rounded-2xl shadow-lg">
                   <h2 className="text-lg font-black text-[var(--color-text-primary)] font-display mb-6 uppercase tracking-wider flex items-center gap-2">
-                    <CreditCard size={18} className="text-[var(--color-brand-red)]" /> 
+                    <CreditCard size={18} className="text-[var(--color-brand-primary)]" /> 
                     {isRtl ? 'طريقة الدفع المفضلة' : 'Payment Method'}
                   </h2>
 
@@ -367,12 +367,12 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod('cod')}
                       className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all duration-200 ${
                         paymentMethod === 'cod'
-                          ? 'border-[var(--color-brand-red)] bg-[var(--color-brand-red)]/5 shadow-inner'
+                          ? 'border-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 shadow-inner'
                           : 'border-[var(--color-border)] bg-[var(--color-surface-2)]/30 hover:border-[var(--color-border-soft)]'
                       }`}
                     >
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === 'cod' ? 'border-[var(--color-brand-red)]' : 'border-[var(--color-text-muted)]'}`}>
-                        {paymentMethod === 'cod' && <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-brand-red)]" />}
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === 'cod' ? 'border-[var(--color-brand-primary)]' : 'border-[var(--color-text-muted)]'}`}>
+                        {paymentMethod === 'cod' && <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-brand-primary)]" />}
                       </div>
                       <div className="text-3xl">💵</div>
                       <div className={`text-right ${isRtl ? 'text-right' : 'text-left'}`}>
@@ -395,12 +395,12 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod('card')}
                       className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all duration-200 ${
                         paymentMethod === 'card' 
-                          ? 'border-[var(--color-brand-red)] bg-[var(--color-brand-red)]/5 shadow-inner' 
+                          ? 'border-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 shadow-inner' 
                           : 'border-[var(--color-border)] bg-[var(--color-surface-2)]/30 hover:border-[var(--color-border-soft)]'
                       }`}
                     >
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === 'card' ? 'border-[var(--color-brand-red)]' : 'border-[var(--color-text-muted)]'}`}>
-                        {paymentMethod === 'card' && <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-brand-red)]" />}
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === 'card' ? 'border-[var(--color-brand-primary)]' : 'border-[var(--color-text-muted)]'}`}>
+                        {paymentMethod === 'card' && <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-brand-primary)]" />}
                       </div>
                       <div className="text-3xl">💳</div>
                       <div className={`text-right ${isRtl ? 'text-right' : 'text-left'}`}>
@@ -428,8 +428,8 @@ export default function CheckoutPage() {
                       </p>
                       <p className="text-[var(--color-text-secondary)] font-semibold leading-relaxed">
                         {isRtl 
-                          ? <>ستقوم بدفع مبلغ <strong className="text-[var(--color-brand-red)]">EGP {total.toLocaleString()}</strong> عند التوصيل لمنزلك. يرجى تجهيز المبلغ المطلوب بدقة لتسريع التسليم.</>
-                          : <>You will pay <strong className="text-[var(--color-brand-red)]">EGP {total.toLocaleString()}</strong> in cash when the delivery personnel arrives. Please prepare the exact amount.</>
+                          ? <>ستقوم بدفع مبلغ <strong className="text-[var(--color-brand-primary)]">EGP {total.toLocaleString()}</strong> عند التوصيل لمنزلك. يرجى تجهيز المبلغ المطلوب بدقة لتسريع التسليم.</>
+                          : <>You will pay <strong className="text-[var(--color-brand-primary)]">EGP {total.toLocaleString()}</strong> in cash when the delivery personnel arrives. Please prepare the exact amount.</>
                         }
                       </p>
                     </div>
@@ -501,7 +501,7 @@ export default function CheckoutPage() {
                     </div>
                     <div className="flex justify-between text-xs font-black pt-2 border-t border-[var(--color-border-soft)]/60">
                       <span className="text-[var(--color-text-primary)] uppercase">{isRtl ? 'الإجمالي' : 'Total'}</span>
-                      <span className="text-[var(--color-brand-red)] text-sm">EGP {total.toLocaleString()}</span>
+                      <span className="text-[var(--color-brand-primary)] text-sm">EGP {total.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>

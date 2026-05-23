@@ -21,7 +21,7 @@ export default function GlobalError({
           </p>
           <button
             onClick={reset}
-            style={{ background: '#C8102E', color: '#fff', border: 'none', borderRadius: '10px', padding: '0.75rem 2rem', fontWeight: 700, cursor: 'pointer', fontSize: '0.9rem' }}
+            style={{ background: 'var(--color-brand-primary)', color: '#fff', border: 'none', borderRadius: '10px', padding: '0.75rem 2rem', fontWeight: 700, cursor: 'pointer', fontSize: '0.9rem' }}
           >
             Refresh Page
           </button>

@@ -255,7 +255,7 @@ export default function AdminDashboardPage() {
   if (!authorized) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center bg-[var(--color-page-bg)]">
-        <span className="w-12 h-12 border-4 border-[var(--color-brand-red)]/30 border-t-[var(--color-brand-red)] rounded-full animate-spin" />
+        <span className="w-12 h-12 border-4 border-[var(--color-brand-primary)]/30 border-t-[var(--color-brand-primary)] rounded-full animate-spin" />
       </div>
     );
   }
@@ -291,7 +291,7 @@ export default function AdminDashboardPage() {
             
             <button
               onClick={handleLogout}
-              className="px-4 py-2.5 rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-brand-red)]/5 hover:border-[var(--color-brand-red)]/20 text-[var(--color-text-primary)] hover:text-[var(--color-brand-red)] text-xs font-black uppercase tracking-wider flex items-center gap-2 transition-all"
+              className="px-4 py-2.5 rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-brand-primary)]/5 hover:border-[var(--color-brand-primary)]/20 text-[var(--color-text-primary)] hover:text-[var(--color-brand-primary)] text-xs font-black uppercase tracking-wider flex items-center gap-2 transition-all"
             >
               <LogOut size={14} />
               {t('logout')}
@@ -379,7 +379,7 @@ export default function AdminDashboardPage() {
             {/* SVG Weekly Sales Graph Chart */}
             <div className="lg:col-span-1 card border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg rounded-2xl p-6 flex flex-col justify-between">
               <div className="flex items-center gap-2 mb-6 pb-2 border-b border-[var(--color-border-soft)]">
-                <BarChart2 size={16} className="text-[var(--color-brand-red)]" />
+                <BarChart2 size={16} className="text-[var(--color-brand-primary)]" />
                 <h3 className="text-sm font-black text-[var(--color-text-primary)] uppercase tracking-wider font-display">
                   {isRtl ? 'تحليلات الإيرادات' : 'Revenue Analytics'}
                 </h3>
@@ -408,7 +408,7 @@ export default function AdminDashboardPage() {
                         
                         {/* Solid Bar */}
                         <motion.div 
-                          className="w-full bg-gradient-to-t from-[var(--color-brand-red)] to-[var(--color-brand-gold)] rounded-t-md cursor-pointer hover:brightness-110 shadow-sm"
+                          className="w-full bg-gradient-to-t from-[var(--color-brand-primary)] to-[var(--color-brand-gold)] rounded-t-md cursor-pointer hover:brightness-110 shadow-sm"
                           initial={{ height: 0 }}
                           animate={{ height: `${heightPercent * 1.3}px` }} // Scaled relative height
                           transition={{ delay: idx * 0.1, duration: 0.6 }}
@@ -434,7 +434,7 @@ export default function AdminDashboardPage() {
                     {t('recentOrders')}
                   </h3>
                 </div>
-                <button className="text-[10px] font-black text-[var(--color-brand-red)] hover:underline flex items-center gap-1">
+                <button className="text-[10px] font-black text-[var(--color-brand-primary)] hover:underline flex items-center gap-1">
                   <RefreshCw size={10} />
                   {isRtl ? 'تحديث تلقائي نشط' : 'Live Sync Active'}
                 </button>
@@ -488,17 +488,17 @@ export default function AdminDashboardPage() {
 
           {/* 3. Inventory Catalog Browser */}
           <div className="card border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg rounded-2xl p-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-[var(--color-border-soft)]">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 pb-4 border-b border-[var(--color-border-soft)]">
               <div className="flex items-center justify-between w-full md:w-auto gap-4">
                 <div className="flex items-center gap-2">
-                  <Database size={16} className="text-[var(--color-brand-red)]" />
+                  <Database size={16} className="text-[var(--color-brand-primary)]" />
                   <h3 className="text-sm font-black text-[var(--color-text-primary)] uppercase tracking-wider font-display">
                     {isRtl ? 'متصفح المخزون الرقمي' : 'Digital Apothecary & Inventory'}
                   </h3>
                 </div>
                 <button
                   onClick={handleAddClick}
-                  className="px-3.5 py-1.5 bg-[var(--color-brand-red)] hover:bg-[var(--color-brand-red-dark)] text-white text-xs font-black uppercase rounded-xl flex items-center gap-1.5 shadow-md btn-shimmer transition-all"
+                  className="px-3.5 py-1.5 bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary-dark)] text-white text-xs font-black uppercase rounded-xl flex items-center gap-1.5 shadow-md btn-shimmer transition-all"
                 >
                   <Plus size={13} />
                   <span>{isRtl ? 'إضافة منتج' : 'Add Product'}</span>
@@ -506,7 +506,7 @@ export default function AdminDashboardPage() {
               </div>
 
               {/* Filtering Controls */}
-              <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+              <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
                 {/* Search */}
                 <div className="relative flex-grow sm:flex-grow-0">
                   <Search size={14} className={`absolute ${isRtl ? 'right-3' : 'left-3'} top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]`} />
@@ -515,7 +515,7 @@ export default function AdminDashboardPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={isRtl ? 'ابحث بالاسم أو رمز SKU...' : 'Search Name or SKU...'}
-                    className={`bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl ${isRtl ? 'pl-4 pr-9' : 'pl-9 pr-4'} py-2 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] transition-all`}
+                    className={`bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl ${isRtl ? 'pl-4 pr-9' : 'pl-9 pr-4'} py-2 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] transition-all`}
                   />
                 </div>
 
@@ -539,7 +539,7 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* Inventory Table */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto pb-4">
               <table className="w-full text-[11px] text-[var(--color-text-secondary)] font-medium text-left">
                 <thead>
                   <tr className="border-b border-[var(--color-border-soft)] text-[10px] font-black text-[var(--color-text-muted)] uppercase tracking-wider">
@@ -581,7 +581,7 @@ export default function AdminDashboardPage() {
                             </button>
                             <button
                               onClick={() => handleDeleteProduct(item.sku)}
-                              className="p-1.5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-brand-red)] hover:bg-[var(--color-brand-red)]/5 text-[var(--color-text-secondary)] hover:text-[var(--color-brand-red)] transition-colors"
+                              className="p-1.5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary)]/5 text-[var(--color-text-secondary)] hover:text-[var(--color-brand-primary)] transition-colors"
                               title={isRtl ? 'حذف' : 'Delete'}
                             >
                               <Trash2 size={13} />
@@ -630,7 +630,7 @@ export default function AdminDashboardPage() {
               style={{ direction: isRtl ? 'rtl' : 'ltr' }}
             >
               {/* Top Accent line */}
-              <div className="h-1.5 bg-gradient-to-r from-[var(--color-brand-red)] to-[var(--color-brand-gold)] w-full" />
+              <div className="h-1.5 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-gold)] w-full" />
               
               {/* Header */}
               <div className="flex justify-between items-center p-5 border-b border-[var(--color-border-soft)]">
@@ -757,7 +757,7 @@ export default function AdminDashboardPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 py-3 bg-[var(--color-brand-red)] hover:bg-[var(--color-brand-red-dark)] text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-md btn-shimmer transition-all"
+                    className="flex-1 py-3 bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary-dark)] text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-md btn-shimmer transition-all"
                   >
                     {editingItem 
                       ? (isRtl ? 'تحديث المنتج' : 'Update Product') 

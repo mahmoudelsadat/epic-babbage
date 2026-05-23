@@ -98,14 +98,14 @@ export default function LoginPage() {
         <div className="w-full max-w-[460px] relative">
           
           {/* Decorative ambient blobs */}
-          <div className="absolute -top-12 -left-12 w-64 h-64 bg-[var(--color-brand-red)]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-12 -left-12 w-64 h-64 bg-[var(--color-brand-primary)]/5 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-[var(--color-brand-gold)]/5 rounded-full blur-3xl pointer-events-none" />
 
           {/* Portal Card */}
           <div className="card shadow-2xl rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]/90 backdrop-blur-xl relative z-10 overflow-hidden">
             
             {/* Top decorative branding tag */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-[var(--color-brand-red)] to-[var(--color-brand-gold)]" />
+            <div className="h-1.5 w-full bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-gold)]" />
             
             <div className="p-8">
               {/* Header */}
@@ -175,19 +175,19 @@ export default function LoginPage() {
                       className="overflow-hidden"
                     >
                       <div className="relative">
-                        <User size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
+                        <User size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
                         <input
                           type="text"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           placeholder={t('fullName')}
-                          className={`w-full bg-[var(--color-surface)] border ${
-                            errors.name ? 'border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/5'
-                          } rounded-xl pl-10 pr-4 rtl:pl-4 rtl:pr-10 py-3 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
+                          className={`w-full h-12 bg-[var(--color-surface)] border ${
+                            errors.name ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
+                          } rounded-xl ps-11 pe-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
                         />
                       </div>
                       {errors.name && (
-                        <p className="text-[11px] text-[var(--color-brand-red)] font-bold mt-1.5 flex items-center gap-1">
+                        <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
                           ⚠️ {errors.name}
                         </p>
                       )}
@@ -198,19 +198,19 @@ export default function LoginPage() {
                 {/* Email Address */}
                 <div>
                   <div className="relative">
-                    <Mail size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
+                    <Mail size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={t('email')}
-                      className={`w-full bg-[var(--color-surface)] border ${
-                        errors.email ? 'border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/5'
-                      } rounded-xl pl-10 pr-4 rtl:pl-4 rtl:pr-10 py-3 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
+                      className={`w-full h-12 bg-[var(--color-surface)] border ${
+                        errors.email ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
+                      } rounded-xl ps-11 pe-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
                     />
                   </div>
                   {errors.email && (
-                    <p className="text-[11px] text-[var(--color-brand-red)] font-bold mt-1.5 flex items-center gap-1">
+                    <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
                       ⚠️ {errors.email}
                     </p>
                   )}
@@ -219,27 +219,27 @@ export default function LoginPage() {
                 {/* Password */}
                 <div>
                   <div className="relative">
-                    <Lock size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
+                    <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder={isRtl ? 'كلمة المرور' : 'Password'}
-                      className={`w-full bg-[var(--color-surface)] border ${
-                        errors.password ? 'border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/5'
-                      } rounded-xl pl-10 pr-10 rtl:pl-10 rtl:pr-10 py-3 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
+                      className={`w-full h-12 bg-[var(--color-surface)] border ${
+                        errors.password ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
+                      } rounded-xl ps-11 pe-11 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute end-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
+                      className="absolute end-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
                       aria-label="Toggle password view"
                     >
                       {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
                   {errors.password && (
-                    <p className="text-[11px] text-[var(--color-brand-red)] font-bold mt-1.5 flex items-center gap-1">
+                    <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
                       ⚠️ {errors.password}
                     </p>
                   )}
@@ -256,19 +256,19 @@ export default function LoginPage() {
                       className="overflow-hidden"
                     >
                       <div className="relative">
-                        <Lock size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
+                        <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
                         <input
                           type={showPassword ? 'text' : 'password'}
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder={isRtl ? 'تأكيد كلمة المرور' : 'Confirm Password'}
-                          className={`w-full bg-[var(--color-surface)] border ${
-                            errors.confirmPassword ? 'border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-red)] focus:ring-[var(--color-brand-red)]/5'
-                          } rounded-xl pl-10 pr-4 rtl:pl-4 rtl:pr-10 py-3 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
+                          className={`w-full h-12 bg-[var(--color-surface)] border ${
+                            errors.confirmPassword ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
+                          } rounded-xl ps-11 pe-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
                         />
                       </div>
                       {errors.confirmPassword && (
-                        <p className="text-[11px] text-[var(--color-brand-red)] font-bold mt-1.5 flex items-center gap-1">
+                        <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
                           ⚠️ {errors.confirmPassword}
                         </p>
                       )}
@@ -302,7 +302,7 @@ export default function LoginPage() {
                   }
                   <button
                     onClick={() => { setIsLogin(!isLogin); setErrors({}); }}
-                    className="text-[var(--color-brand-red)] font-bold hover:underline"
+                    className="text-[var(--color-brand-primary)] font-bold hover:underline"
                   >
                     {isLogin 
                       ? (isRtl ? 'أنشئ حساباً الآن' : 'Create an account')
@@ -314,7 +314,7 @@ export default function LoginPage() {
                 {/* Admin Access Redirect */}
                 <Link
                   href="/admin"
-                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[var(--color-brand-gold)] uppercase tracking-wider mt-4 hover:text-[var(--color-brand-red)] transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[var(--color-brand-gold)] uppercase tracking-wider mt-4 hover:text-[var(--color-brand-primary)] transition-colors"
                 >
                   <ShieldCheck size={12} />
                   {t('adminPortal')}

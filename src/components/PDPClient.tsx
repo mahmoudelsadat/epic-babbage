@@ -97,7 +97,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
               />
               {discount > 0 && (
                 <div className="absolute top-4 left-4">
-                  <span className="badge badge-red text-sm px-3 py-1">-{discount}%</span>
+                  <span className="badge badge-primary text-sm px-3 py-1">-{discount}%</span>
                 </div>
               )}
               {product.badge === 'pharmacist-pick' && (
@@ -119,7 +119,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
                   key={i}
                   onClick={() => setActiveImage(i)}
                   className={`w-20 h-20 rounded-xl overflow-hidden transition-all duration-200 ${
-                    activeImage === i ? 'ring-2 ring-[#C8102E] opacity-100' : 'opacity-50 hover:opacity-75'
+                    activeImage === i ? 'ring-2 ring-[var(--color-brand-primary)] opacity-100' : 'opacity-50 hover:opacity-75'
                   }`}
                   style={{ background: '#111' }}
                 >
@@ -223,9 +223,9 @@ export default function PDPClient({ product, related }: PDPClientProps) {
               <button
                 id="pdp-wishlist"
                 onClick={() => setWishlisted(!wishlisted)}
-                className={`btn btn-ghost flex-1 text-xs py-2.5 ${wishlisted ? 'border-[#C8102E] text-[#C8102E]' : ''}`}
+                className={`btn btn-ghost flex-1 text-xs py-2.5 ${wishlisted ? 'border-[var(--color-brand-primary)] text-[var(--color-brand-primary)]' : ''}`}
               >
-                <Heart size={14} className={wishlisted ? 'fill-[#C8102E]' : ''} />
+                <Heart size={14} className={wishlisted ? 'fill-[var(--color-brand-primary)]' : ''} />
                 {wishlisted ? 'Saved' : 'Save to Wishlist'}
               </button>
               <button
@@ -282,7 +282,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-shrink-0 px-5 py-3 text-sm font-semibold transition-all duration-200 border-b-2 -mb-px ${
                   activeTab === tab.id
-                    ? 'border-[#C8102E] text-white'
+                    ? 'border-[var(--color-brand-primary)] text-white'
                     : 'border-transparent text-gray-400 hover:text-white'
                 }`}
               >
@@ -358,7 +358,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
                 {MOCK_REVIEWS.map((review, i) => (
                   <div key={i} className="p-4 rounded-xl border border-white/7" style={{ background: '#0E0E0E' }}>
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C8102E] to-[#8B0000] flex items-center justify-center text-xs font-bold text-white">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-brand-primary)] to-[#8B0000] flex items-center justify-center text-xs font-bold text-white">
                         {review.name[0]}
                       </div>
                       <div>

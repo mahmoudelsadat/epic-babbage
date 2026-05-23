@@ -46,7 +46,7 @@ function Stat({ value, suffix, label, color }: { value: number; suffix: string; 
 
 const STATS_CONFIG = [
   { ...trustStats[0], color: '#4A90C4' },
-  { ...trustStats[1], color: '#C8102E' },
+  { ...trustStats[1], color: 'var(--color-brand-primary)' },
   { ...trustStats[2], color: '#6B8F71' },
   { ...trustStats[3], color: '#B8922A' },
 ];

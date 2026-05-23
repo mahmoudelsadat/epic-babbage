@@ -21,7 +21,7 @@ function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
       <p className="text-[0.9rem] text-[#1C1917] leading-relaxed flex-1">&ldquo;{t.text}&rdquo;</p>
 
       {/* Product label */}
-      <div className="text-[11px] font-semibold text-[#C8102E] bg-[#fce8ec] rounded-full px-3 py-1 w-fit">
+      <div className="text-[11px] font-semibold text-[var(--color-brand-primary)] bg-[#fce8ec] rounded-full px-3 py-1 w-fit">
         {t.product}
       </div>
 
@@ -74,11 +74,11 @@ export default function Testimonials() {
           </div>
           <div className="flex items-center gap-2">
             <button id="testimonials-prev" onClick={prev}
-              className="w-9 h-9 rounded-full border border-[#E4E0D8] bg-white flex items-center justify-center text-[#6B6560] hover:text-[#C8102E] hover:border-[#C8102E]/30 transition-all duration-200 shadow-sm">
+              className="w-9 h-9 rounded-full border border-[#E4E0D8] bg-white flex items-center justify-center text-[#6B6560] hover:text-[var(--color-brand-primary)] hover:border-[var(--color-brand-primary)]/30 transition-all duration-200 shadow-sm">
               <ChevronLeft size={16} />
             </button>
             <button id="testimonials-next" onClick={next}
-              className="w-9 h-9 rounded-full border border-[#E4E0D8] bg-white flex items-center justify-center text-[#6B6560] hover:text-[#C8102E] hover:border-[#C8102E]/30 transition-all duration-200 shadow-sm">
+              className="w-9 h-9 rounded-full border border-[#E4E0D8] bg-white flex items-center justify-center text-[#6B6560] hover:text-[var(--color-brand-primary)] hover:border-[var(--color-brand-primary)]/30 transition-all duration-200 shadow-sm">
               <ChevronRight size={16} />
             </button>
           </div>
@@ -115,7 +115,7 @@ export default function Testimonials() {
         <div className="flex justify-center gap-1.5 mt-7">
           {testimonials.map((_, i) => (
             <button key={i} onClick={() => { setAutoplay(false); setCurrent(i); }}
-              className={`rounded-full transition-all duration-300 ${i === current ? 'w-6 h-2 bg-[#C8102E]' : 'w-2 h-2 bg-[#D4CCC0] hover:bg-[#A8A39C]'}`}
+              className={`rounded-full transition-all duration-300 ${i === current ? 'w-6 h-2 bg-[var(--color-brand-primary)]' : 'w-2 h-2 bg-[#D4CCC0] hover:bg-[#A8A39C]'}`}
               aria-label={`Go to review ${i + 1}`} />
           ))}
         </div>

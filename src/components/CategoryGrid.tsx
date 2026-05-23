@@ -35,7 +35,7 @@ export default function CategoryGrid() {
             <h2 className="section-title">Shop by Category</h2>
             <p className="section-subtitle mt-1">Find exactly what you need across our curated departments</p>
           </div>
-          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[#6B6560] hover:text-[#C8102E] transition-colors group">
+          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[#6B6560] hover:text-[var(--color-brand-primary)] transition-colors group">
             All <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>

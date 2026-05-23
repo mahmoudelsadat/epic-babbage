@@ -65,7 +65,7 @@ export default function ContactPage() {
               {isRtl ? 'تواصل معنا' : 'Get in Touch'}
             </div>
             <h1 className="text-4xl sm:text-5xl font-black text-white mb-4 font-display tracking-tight">
-              {isRtl ? <>نحن هنا <span className="text-gradient-red">لمساعدتك</span></> : <>We&apos;re Here to <span className="text-gradient-red">Help</span></>}
+              {isRtl ? <>نحن هنا <span className="text-gradient-primary">لمساعدتك</span></> : <>We&apos;re Here to <span className="text-gradient-primary">Help</span></>}
             </h1>
             <p className="text-gray-400 max-w-lg mx-auto text-xs sm:text-sm font-semibold leading-relaxed">
               {isRtl 
@@ -150,7 +150,7 @@ export default function ContactPage() {
                           required
                           value={form.name}
                           onChange={(e) => setForm({ ...form, name: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                         />
                       </div>
                       
@@ -164,7 +164,7 @@ export default function ContactPage() {
                           placeholder="e.g. 01115160947"
                           value={form.phone}
                           onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                          className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                         />
                       </div>
                     </div>
@@ -179,7 +179,7 @@ export default function ContactPage() {
                         required
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all"
+                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all"
                       />
                     </div>
 
@@ -191,7 +191,7 @@ export default function ContactPage() {
                       <select
                         value={form.subject}
                         onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-brand-red)] transition-all cursor-pointer"
+                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-brand-primary)] transition-all cursor-pointer"
                       >
                         <option value="">{isRtl ? 'اختر موضوعاً...' : 'Select a topic...'}</option>
                         <option>{isRtl ? 'سؤال عن منتج أو مكمل' : 'Product Question'}</option>
@@ -209,7 +209,7 @@ export default function ContactPage() {
                           {t('message')} *
                         </label>
                         <span className={`text-[9px] font-black ${
-                          form.message.length >= maxMessageLength ? 'text-[var(--color-brand-red)]' : 'text-[var(--color-text-muted)]'
+                          form.message.length >= maxMessageLength ? 'text-[var(--color-brand-primary)]' : 'text-[var(--color-text-muted)]'
                         }`}>
                           {form.message.length} / {maxMessageLength} {t('charactersLeft')}
                         </span>
@@ -221,7 +221,7 @@ export default function ContactPage() {
                         placeholder={t('messagePlaceholder')}
                         value={form.message}
                         onChange={(e) => setForm({ ...form, message: e.target.value })}
-                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-red)] focus:ring-4 focus:ring-[var(--color-brand-red)]/5 transition-all resize-none leading-relaxed"
+                        className="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-3 py-3 text-xs text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-4 focus:ring-[var(--color-brand-primary)]/5 transition-all resize-none leading-relaxed"
                       />
                     </div>
 
@@ -263,7 +263,7 @@ export default function ContactPage() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <MapPin size={16} className="text-[var(--color-brand-red)] mt-0.5 shrink-0" />
+                      <MapPin size={16} className="text-[var(--color-brand-primary)] mt-0.5 shrink-0" />
                       <div>
                         <div className="text-xs font-black text-[var(--color-text-primary)] uppercase tracking-wide">
                           {isRtl ? 'نطاق التغطية والفرع' : 'Delivery Coverage'}

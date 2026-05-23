@@ -69,7 +69,7 @@ export default function Hero() {
       <div
         aria-hidden="true"
         className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-[0.06] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #C8102E 0%, transparent 70%)', transform: 'translate(30%, -30%)' }}
+        style={{ background: 'radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }}
       />
       <div
         aria-hidden="true"
@@ -84,8 +84,8 @@ export default function Hero() {
           <div className="max-w-xl text-start">
             {/* Trust chip */}
             <div className="hero-reveal flex items-center gap-2 mb-6" style={{ transitionDelay: '0ms' }}>
-              <span className="badge badge-red-soft text-[11px] px-3 py-1 flex items-center">
-                <Star size={9} className="inline me-1 fill-[#C8102E] text-[#C8102E]" />
+              <span className="badge badge-primary-soft text-[11px] px-3 py-1 flex items-center">
+                <Star size={9} className="inline me-1 fill-[var(--color-brand-primary)] text-[var(--color-brand-primary)]" />
                 {isRtl ? 'الأكثر ثقة في مصر' : "Egypt's Most Trusted"}
               </span>
               <span className="badge badge-light text-[11px] px-3 py-1">{isRtl ? 'القاهرة 🇪🇬' : '🇪🇬 Cairo'}</span>
@@ -100,7 +100,7 @@ export default function Hero() {
                 <>
                   صحتك وعافيتك
                   <br />
-                  <span className="text-gradient-red">بأعلى جودة</span>
+                  <span className="text-gradient-primary">بأعلى جودة</span>
                   <br />
                   <span style={{ color: '#B8922A', fontStyle: 'italic' }}>تصلك لباب بيتك.</span>
                 </>
@@ -108,7 +108,7 @@ export default function Hero() {
                 <>
                   Premium Health
                   <br />
-                  <span className="text-gradient-red">& Wellness</span>
+                  <span className="text-gradient-primary">& Wellness</span>
                   <br />
                   <span style={{ color: '#B8922A', fontStyle: 'italic' }}>Delivered.</span>
                 </>

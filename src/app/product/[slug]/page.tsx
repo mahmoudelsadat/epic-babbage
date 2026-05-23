@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = products.find((p) => p.slug === slug);
   if (!product) return { title: 'Product Not Found' };
   return {
-    title: `${product.name} | 2M Premium Pharmacy`,
+    title: product.name,
     description: `${product.description} Shop authentic ${product.brand} products with Egypt-wide delivery.`,
     openGraph: {
       title: product.name,

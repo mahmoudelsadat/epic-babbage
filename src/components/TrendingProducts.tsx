@@ -33,7 +33,7 @@ function StarRating({ rating, reviewCount }: { rating: number; reviewCount: numb
 }
 
 const BADGE_MAP: Record<string, { label: string; className: string }> = {
-  sale:              { label: 'SALE',      className: 'badge badge-red' },
+  sale:              { label: 'SALE',      className: 'badge badge-primary' },
   new:               { label: 'NEW',       className: 'badge badge-sage' },
   hot:               { label: '🔥 HOT',    className: 'badge badge-gold-soft' },
   'pharmacist-pick': { label: '✅ RX PICK', className: 'badge badge-sky' },
@@ -80,7 +80,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
         {/* Badges */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5">
           {badge && <span className={badge.className}>{badge.label}</span>}
-          {discount > 0 && <span className="badge badge-red">-{discount}%</span>}
+          {discount > 0 && <span className="badge badge-primary">-{discount}%</span>}
         </div>
 
         {/* Wishlist */}
@@ -91,7 +91,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
           whileHover={{ scale: 1.1 }}
           aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart size={13} className={wishlisted ? 'fill-[var(--color-brand-red)] text-[var(--color-brand-red)]' : 'text-[var(--color-text-muted)]'} />
+          <Heart size={13} className={wishlisted ? 'fill-[var(--color-brand-primary)] text-[var(--color-brand-primary)]' : 'text-[var(--color-text-muted)]'} />
         </motion.button>
 
         {/* Low stock */}
@@ -124,15 +124,15 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
       {/* Body */}
       <Link href={`/product/${product.slug}`} className="block">
         <div className="product-card-body">
-          <p className="text-[11px] text-[var(--color-text-muted)] font-semibold uppercase tracking-wider mb-1">{product.brand}</p>
-          <h3 className="text-[0.875rem] font-semibold text-[var(--color-text-primary)] leading-snug mb-2 line-clamp-2 group-hover:text-[var(--color-brand-red)] transition-colors">
+          <p className="text-[11px] text-[var(--color-text-muted)] dark:text-slate-300 font-semibold uppercase tracking-wider mb-1">{product.brand}</p>
+          <h3 className="text-[0.875rem] font-semibold text-[var(--color-text-primary)] dark:text-white leading-snug mb-2 line-clamp-2 group-hover:text-[var(--color-brand-primary)] transition-colors">
             {product.name}
           </h3>
           <StarRating rating={product.rating} reviewCount={product.reviewCount} />
           <div className="flex items-center gap-2 mt-2.5">
-            <span className="text-[1.05rem] font-black text-[var(--color-text-primary)]">{formatEGP(product.price)}</span>
+            <span className="text-[1.05rem] font-black text-[var(--color-text-primary)] dark:text-white">{formatEGP(product.price)}</span>
             {product.originalPrice && (
-              <span className="text-xs text-[var(--color-text-muted)] line-through">{formatEGP(product.originalPrice)}</span>
+              <span className="text-xs text-[var(--color-text-muted)] dark:text-slate-400 line-through">{formatEGP(product.originalPrice)}</span>
             )}
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function TrendingProducts() {
   }, [hasMore, displayed.length]);
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-[var(--color-page-bg)] transition-colors">
       <div className="container-2m">
         {/* Header */}
         <div className="section-header">
@@ -178,7 +178,7 @@ export default function TrendingProducts() {
             <div className="section-label">Best Sellers</div>
             <h2 className="section-title">Trending Products</h2>
           </div>
-          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-brand-red)] transition-colors group">
+          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-brand-primary)] transition-colors group">
             View All <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
@@ -195,7 +195,7 @@ export default function TrendingProducts() {
               }}
               className={`flex-shrink-0 px-4 py-2 rounded-full text-[0.8rem] font-semibold transition-colors duration-200 ${
                 activeTab === tab.value
-                  ? 'bg-[var(--color-brand-red)] text-white shadow-sm'
+                  ? 'bg-[var(--color-brand-primary)] text-white shadow-sm'
                   : 'bg-[var(--color-surface-2)] text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-3)] hover:text-[var(--color-text-primary)]'
               }`}
               whileTap={{ scale: 0.95 }}
@@ -224,7 +224,7 @@ export default function TrendingProducts() {
               {[0,1,2].map((i) => (
                 <motion.div
                   key={i}
-                  className="w-2 h-2 rounded-full bg-[var(--color-brand-red)]"
+                  className="w-2 h-2 rounded-full bg-[var(--color-brand-primary)]"
                   animate={{ scale: [1, 1.4, 1], opacity: [0.4, 1, 0.4] }}
                   transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
                 />

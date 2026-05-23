@@ -72,7 +72,7 @@ export function MobileBottomNav() {
 
   const navItems = [
     { id: 'home', label: 'Home', icon: '🏠', href: '/' },
-    { id: 'search', label: 'Search', icon: '🔍', href: '/search' },
+    { id: 'search', label: 'Search', icon: '🔍', href: '/pharmacy' },
     { id: 'categories', label: 'Shop', icon: '🛍️', href: '/pharmacy' },
     { id: 'cart', label: 'Cart', icon: '🛒', href: '/cart', badge: 0 },
     { id: 'account', label: 'Account', icon: '👤', href: '/account' },
@@ -95,16 +95,16 @@ export function MobileBottomNav() {
             <span className={`text-lg transition-transform duration-200 ${active === item.id ? 'scale-110' : 'scale-100'}`}>
               {item.icon}
             </span>
-            <span className={`text-[10px] font-semibold ${active === item.id ? 'text-[#C8102E]' : 'text-[#A8A39C]'}`}>
+            <span className={`text-[10px] font-semibold ${active === item.id ? 'text-[var(--color-brand-primary)]' : 'text-[#A8A39C]'}`}>
               {item.label}
             </span>
             {item.badge !== undefined && item.badge > 0 && (
-              <span className="absolute -top-1 right-2 w-4 h-4 bg-[#C8102E] text-white text-[9px] font-black rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 right-2 w-4 h-4 bg-[var(--color-brand-primary)] text-white text-[9px] font-black rounded-full flex items-center justify-center">
                 {item.badge}
               </span>
             )}
             {active === item.id && (
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#C8102E] rounded-full" />
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[var(--color-brand-primary)] rounded-full" />
             )}
           </Link>
         ))}

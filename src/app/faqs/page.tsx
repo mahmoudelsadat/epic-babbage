@@ -53,7 +53,7 @@ function FAQItem({ faq }: { faq: { q: string; a: string } }) {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className={`border rounded-xl overflow-hidden transition-all duration-300 ${open ? 'border-[#C8102E]/30' : 'border-white/6 hover:border-white/12'}`}
+      className={`border rounded-xl overflow-hidden transition-all duration-300 ${open ? 'border-[var(--color-brand-primary)]/30' : 'border-white/6 hover:border-white/12'}`}
       style={{ background: open ? 'rgba(200,16,46,0.04)' : '#0E0E0E' }}
     >
       <button
@@ -62,7 +62,7 @@ function FAQItem({ faq }: { faq: { q: string; a: string } }) {
       >
         <span className={`font-semibold text-sm leading-snug ${open ? 'text-white' : 'text-gray-200'}`}>{faq.q}</span>
         {open
-          ? <ChevronUp size={16} className="text-[#C8102E] flex-shrink-0" />
+          ? <ChevronUp size={16} className="text-[var(--color-brand-primary)] flex-shrink-0" />
           : <ChevronDown size={16} className="text-gray-500 flex-shrink-0" />
         }
       </button>
@@ -88,7 +88,7 @@ export default function FAQsPage() {
           <div className="container-2m">
             <div className="section-label mx-auto w-fit mb-4">Support</div>
             <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
-              Frequently Asked <span className="text-gradient-red">Questions</span>
+              Frequently Asked <span className="text-gradient-primary">Questions</span>
             </h1>
             <p className="text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">
               Everything you need to know about ordering, delivery, payments, and returns. Can&apos;t find your answer?
@@ -115,7 +115,7 @@ export default function FAQsPage() {
                   onClick={() => setActiveCategory(i)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                     activeCategory === i
-                      ? 'bg-[#C8102E] text-white'
+                      ? 'bg-[var(--color-brand-primary)] text-white'
                       : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
                   }`}
                 >

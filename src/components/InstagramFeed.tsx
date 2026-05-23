@@ -31,14 +31,14 @@ export default function InstagramFeed() {
             <div className="section-label">Social</div>
             <h2 className="section-title">
               Follow Us on{' '}
-              <span className="text-gradient-red">Instagram</span>
+              <span className="text-gradient-primary">Instagram</span>
             </h2>
             <a
               href="https://www.instagram.com/2m_pharmcy"
               target="_blank"
               rel="noopener noreferrer"
               id="instagram-handle"
-              className="inline-flex items-center gap-2 mt-2 text-sm text-[#6B6560] hover:text-[#C8102E] transition-colors"
+              className="inline-flex items-center gap-2 mt-2 text-sm text-[#6B6560] hover:text-[var(--color-brand-primary)] transition-colors"
             >
               <InstagramIcon size={14} />
               <span className="font-semibold">@2m_pharmcy</span>

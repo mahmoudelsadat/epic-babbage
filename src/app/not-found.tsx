@@ -52,7 +52,7 @@ export default function NotFound() {
                   </div>
                   <div className="product-card-body">
                     <p className="text-[11px] text-[var(--color-text-muted)] font-semibold uppercase tracking-wider mb-1">{p.brand}</p>
-                    <h3 className="text-sm font-semibold text-[var(--color-text-primary)] line-clamp-2 mb-2 group-hover:text-[var(--color-brand-red)] transition-colors">{p.name}</h3>
+                    <h3 className="text-sm font-semibold text-[var(--color-text-primary)] line-clamp-2 mb-2 group-hover:text-[var(--color-brand-primary)] transition-colors">{p.name}</h3>
                     <span className="text-base font-black text-[var(--color-text-primary)]">{formatEGP(p.price)}</span>
                   </div>
                 </Link>

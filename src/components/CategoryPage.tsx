@@ -70,7 +70,7 @@ function ProductCard({ product }: { product: Product }) {
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1">
-          {discount > 0 && <span className="badge badge-red">-{discount}%</span>}
+          {discount > 0 && <span className="badge badge-primary">-{discount}%</span>}
           {product.badge === 'new' && <span className="badge" style={{ background: '#1a3a1a', color: '#43e97b', border: '1px solid rgba(67,233,123,0.3)', padding: '0.2rem 0.65rem', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700 }}>NEW</span>}
           {product.badge === 'pharmacist-pick' && <span className="badge" style={{ background: 'rgba(79,172,254,0.1)', color: '#4facfe', border: '1px solid rgba(79,172,254,0.3)', padding: '0.2rem 0.65rem', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700 }}>✅ PICK</span>}
           {product.badge === 'hot' && <span className="badge badge-gold">🔥 HOT</span>}
@@ -81,7 +81,7 @@ function ProductCard({ product }: { product: Product }) {
           className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
           style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)' }}
         >
-          <Heart size={13} className={wishlisted ? 'fill-[#C8102E] text-[#C8102E]' : 'text-white'} />
+          <Heart size={13} className={wishlisted ? 'fill-[var(--color-brand-primary)] text-[var(--color-brand-primary)]' : 'text-white'} />
         </button>
 
         {product.stockCount && product.stockCount < 15 && (
@@ -230,10 +230,10 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
             <div className="sticky top-24">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
-                  <SlidersHorizontal size={14} className="text-[#C8102E]" /> Filters
+                  <SlidersHorizontal size={14} className="text-[var(--color-brand-primary)]" /> Filters
                 </h2>
                 {activeFilterCount > 0 && (
-                  <button onClick={clearFilters} className="text-xs text-[#C8102E] hover:text-red-400 transition-colors flex items-center gap-1">
+                  <button onClick={clearFilters} className="text-xs text-[var(--color-brand-primary)] hover:text-red-400 transition-colors flex items-center gap-1">
                     <X size={11} /> Clear ({activeFilterCount})
                   </button>
                 )}
@@ -243,7 +243,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                 <label className="flex items-center gap-2.5 cursor-pointer group mb-2">
                   <div
                     onClick={() => setFilters((f) => ({ ...f, inStockOnly: !f.inStockOnly }))}
-                    className={`w-9 h-5 rounded-full transition-all duration-200 relative flex-shrink-0 cursor-pointer ${filters.inStockOnly ? 'bg-[#C8102E]' : 'bg-white/15'}`}
+                    className={`w-9 h-5 rounded-full transition-all duration-200 relative flex-shrink-0 cursor-pointer ${filters.inStockOnly ? 'bg-[var(--color-brand-primary)]' : 'bg-white/15'}`}
                   >
                     <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${filters.inStockOnly ? 'left-4' : 'left-0.5'}`} />
                   </div>
@@ -252,7 +252,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                 <label className="flex items-center gap-2.5 cursor-pointer group">
                   <div
                     onClick={() => setFilters((f) => ({ ...f, onSaleOnly: !f.onSaleOnly }))}
-                    className={`w-9 h-5 rounded-full transition-all duration-200 relative flex-shrink-0 cursor-pointer ${filters.onSaleOnly ? 'bg-[#C8102E]' : 'bg-white/15'}`}
+                    className={`w-9 h-5 rounded-full transition-all duration-200 relative flex-shrink-0 cursor-pointer ${filters.onSaleOnly ? 'bg-[var(--color-brand-primary)]' : 'bg-white/15'}`}
                   >
                     <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${filters.onSaleOnly ? 'left-4' : 'left-0.5'}`} />
                   </div>
@@ -266,7 +266,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                     type="number"
                     value={filters.priceMin}
                     onChange={(e) => setFilters((f) => ({ ...f, priceMin: Number(e.target.value) }))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-[#C8102E]/50"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-[var(--color-brand-primary)]/50"
                     placeholder="Min"
                   />
                   <span className="text-gray-500 text-xs">–</span>
@@ -274,7 +274,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                     type="number"
                     value={filters.priceMax}
                     onChange={(e) => setFilters((f) => ({ ...f, priceMax: Number(e.target.value) }))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-[#C8102E]/50"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-[var(--color-brand-primary)]/50"
                     placeholder="Max"
                   />
                 </div>
@@ -284,7 +284,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                   max={5000}
                   value={filters.priceMax}
                   onChange={(e) => setFilters((f) => ({ ...f, priceMax: Number(e.target.value) }))}
-                  className="w-full accent-[#C8102E] cursor-pointer"
+                  className="w-full accent-[var(--color-brand-primary)] cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-gray-500 mt-1">
                   <span>EGP 0</span><span>EGP 5,000</span>
@@ -298,7 +298,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                       key={r}
                       onClick={() => setFilters((f) => ({ ...f, rating: r }))}
                       className={`flex items-center gap-2 w-full px-2 py-1.5 rounded-lg text-xs transition-all duration-150 ${
-                        filters.rating === r ? 'bg-[#C8102E]/20 text-white border border-[#C8102E]/30' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                        filters.rating === r ? 'bg-[var(--color-brand-primary)]/20 text-white border border-[var(--color-brand-primary)]/30' : 'text-gray-400 hover:bg-white/5 hover:text-white'
                       }`}
                     >
                       {r === 0 ? (
@@ -322,7 +322,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                         onClick={() => toggleBrand(brand)}
                         className={`w-4 h-4 rounded border transition-all duration-150 flex items-center justify-center flex-shrink-0 ${
                           filters.brands.includes(brand)
-                            ? 'bg-[#C8102E] border-[#C8102E]'
+                            ? 'bg-[var(--color-brand-primary)] border-[var(--color-brand-primary)]'
                             : 'border-white/20 group-hover:border-white/40'
                         }`}
                       >
@@ -347,7 +347,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                   className="lg:hidden flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-300 hover:text-white hover:bg-white/10 transition-all"
                 >
                   <SlidersHorizontal size={13} />
-                  Filters {activeFilterCount > 0 && <span className="badge badge-red text-[10px] px-1.5 py-0.5">{activeFilterCount}</span>}
+                  Filters {activeFilterCount > 0 && <span className="badge badge-primary text-[10px] px-1.5 py-0.5">{activeFilterCount}</span>}
                 </button>
                 <p className="text-xs text-gray-400">
                   <span className="text-white font-bold">{filtered.length}</span> products
@@ -359,15 +359,15 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value)}
-                  className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-gray-300 focus:outline-none focus:border-[#C8102E]/50 cursor-pointer"
+                  className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-gray-300 focus:outline-none focus:border-[var(--color-brand-primary)]/50 cursor-pointer"
                 >
                   {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value} style={{ background: '#111' }}>{o.label}</option>)}
                 </select>
 
                 {/* View toggle */}
                 <div className="hidden sm:flex items-center gap-1 bg-white/5 rounded-lg p-1 border border-white/10">
-                  <button onClick={() => setView('grid')} className={`p-1.5 rounded-md transition-all ${view === 'grid' ? 'bg-[#C8102E] text-white' : 'text-gray-400 hover:text-white'}`}><Grid3X3 size={13} /></button>
-                  <button onClick={() => setView('list')} className={`p-1.5 rounded-md transition-all ${view === 'list' ? 'bg-[#C8102E] text-white' : 'text-gray-400 hover:text-white'}`}><List size={13} /></button>
+                  <button onClick={() => setView('grid')} className={`p-1.5 rounded-md transition-all ${view === 'grid' ? 'bg-[var(--color-brand-primary)] text-white' : 'text-gray-400 hover:text-white'}`}><Grid3X3 size={13} /></button>
+                  <button onClick={() => setView('list')} className={`p-1.5 rounded-md transition-all ${view === 'list' ? 'bg-[var(--color-brand-primary)] text-white' : 'text-gray-400 hover:text-white'}`}><List size={13} /></button>
                 </div>
               </div>
             </div>
@@ -421,7 +421,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
             <FilterSection title="Availability">
               <label className="flex items-center gap-2.5 cursor-pointer group mb-2">
                 <div onClick={() => setFilters((f) => ({ ...f, inStockOnly: !f.inStockOnly }))}
-                  className={`w-9 h-5 rounded-full transition-all duration-200 relative flex-shrink-0 cursor-pointer ${filters.inStockOnly ? 'bg-[#C8102E]' : 'bg-white/15'}`}>
+                  className={`w-9 h-5 rounded-full transition-all duration-200 relative flex-shrink-0 cursor-pointer ${filters.inStockOnly ? 'bg-[var(--color-brand-primary)]' : 'bg-white/15'}`}>
                   <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${filters.inStockOnly ? 'left-4' : 'left-0.5'}`} />
                 </div>
                 <span className="text-sm text-gray-300">In Stock Only</span>

@@ -15,7 +15,7 @@ const values = [
   { icon: Truck, title: 'Fast Delivery', description: 'Egypt-wide delivery to all 27 governorates. 2–5 business days to your door.', color: '#43e97b' },
   { icon: Heart, title: 'Customer First', description: 'Your health and satisfaction drive every decision we make.', color: '#f093fb' },
   { icon: Users, title: 'Community', description: '10,000+ satisfied customers who trust us for their wellness journey.', color: '#f5a623' },
-  { icon: Award, title: 'Premium Standard', description: 'International brands, globally certified, at competitive Egyptian prices.', color: '#C8102E' },
+  { icon: Award, title: 'Premium Standard', description: 'International brands, globally certified, at competitive Egyptian prices.', color: 'var(--color-brand-primary)' },
 ];
 
 export default function AboutPage() {
@@ -32,7 +32,7 @@ export default function AboutPage() {
             <div className="section-label mx-auto w-fit mb-4">Our Story</div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
               Built for Egypt&apos;s<br />
-              <span className="text-gradient-red">Health Seekers</span>
+              <span className="text-gradient-primary">Health Seekers</span>
             </h1>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
               2M Premium Pharmacy was founded with a single mission: give every Egyptian access to authentic, premium health and wellness products — with the trust and expertise of a real pharmacy, delivered to your door.
@@ -82,7 +82,7 @@ export default function AboutPage() {
                 { value: '100%', label: 'Authentic Products' },
               ].map((s) => (
                 <div key={s.label}>
-                  <div className="text-3xl sm:text-4xl font-black text-gradient-red mb-1">{s.value}</div>
+                  <div className="text-3xl sm:text-4xl font-black text-gradient-primary mb-1">{s.value}</div>
                   <div className="text-sm text-gray-400">{s.label}</div>
                 </div>
               ))}
@@ -119,7 +119,7 @@ export default function AboutPage() {
                 </ul>
               </div>
               <div
-                className="p-8 rounded-3xl border border-[#C8102E]/20 text-center"
+                className="p-8 rounded-3xl border border-[var(--color-brand-primary)]/20 text-center"
                 style={{ background: 'rgba(200,16,46,0.05)' }}
               >
                 <div className="text-7xl mb-4">🛡️</div>

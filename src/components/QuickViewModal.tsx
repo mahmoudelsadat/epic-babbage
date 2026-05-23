@@ -79,7 +79,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewProps) {
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-[11px] font-bold text-[var(--color-text-muted)] uppercase tracking-widest">{product.brand}</span>
                   {product.badge && (
-                    <span className="badge badge-red text-[10px]">{product.badge.toUpperCase()}</span>
+                    <span className="badge badge-primary text-[10px]">{product.badge.toUpperCase()}</span>
                   )}
                 </div>
 
@@ -102,7 +102,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewProps) {
                   {product.originalPrice && (
                     <>
                       <span className="text-sm text-[var(--color-text-muted)] line-through">{formatEGP(product.originalPrice)}</span>
-                      <span className="badge badge-red">-{discount}%</span>
+                      <span className="badge badge-primary">-{discount}%</span>
                     </>
                   )}
                 </div>
@@ -137,10 +137,10 @@ export default function QuickViewModal({ product, onClose }: QuickViewProps) {
                   </button>
                   <button
                     onClick={() => toggle(product.id)}
-                    className="w-11 h-11 rounded-xl border border-[var(--color-border)] flex items-center justify-center transition-all hover:border-[var(--color-brand-red)]"
+                    className="w-11 h-11 rounded-xl border border-[var(--color-border)] flex items-center justify-center transition-all hover:border-[var(--color-brand-primary)]"
                     aria-label="Toggle wishlist"
                   >
-                    <Heart size={16} className={wishlisted ? 'fill-[var(--color-brand-red)] text-[var(--color-brand-red)]' : 'text-[var(--color-text-muted)]'} />
+                    <Heart size={16} className={wishlisted ? 'fill-[var(--color-brand-primary)] text-[var(--color-brand-primary)]' : 'text-[var(--color-text-muted)]'} />
                   </button>
                 </div>
 
@@ -148,7 +148,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewProps) {
                 <Link
                   href={`/product/${product.slug}`}
                   onClick={onClose}
-                  className="flex items-center justify-center gap-1.5 text-xs font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-brand-red)] transition-colors"
+                  className="flex items-center justify-center gap-1.5 text-xs font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-brand-primary)] transition-colors"
                 >
                   View Full Details <ArrowRight size={12} />
                 </Link>

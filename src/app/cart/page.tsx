@@ -171,7 +171,7 @@ export default function CartPage() {
                           value={promoCode}
                           onChange={(e) => { setPromoCode(e.target.value); setPromoError(''); }}
                           placeholder="Promo code"
-                          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#C8102E]/50"
+                          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[var(--color-brand-primary)]/50"
                         />
                         <button onClick={handlePromo} className="btn btn-ghost px-4 py-2 text-xs">
                           <Tag size={12} /> Apply
