@@ -50,10 +50,10 @@ const footerLinks = {
 };
 
 const TRUST_FOOTER = [
-  { icon: Shield,     label: '100% Authentic',  color: 'var(--color-sky)' },
-  { icon: Truck,      label: 'Egypt-Wide',       color: 'var(--color-sage)' },
-  { icon: CreditCard, label: 'Secure Payment',   color: 'var(--color-brand-gold)' },
-  { icon: RefreshCw,  label: 'Easy Returns',     color: 'var(--color-peach)' },
+  { icon: Shield,     label: '100% Authentic',  color: 'var(--color-brand-primary)' },
+  { icon: Truck,      label: 'Egypt-Wide',       color: 'var(--color-brand-accent)' },
+  { icon: CreditCard, label: 'Secure Payment',   color: '#667EC9' },
+  { icon: RefreshCw,  label: 'Easy Returns',     color: '#2FA9A0' },
 ];
 
 function NewsletterForm() {
@@ -79,8 +79,8 @@ function NewsletterForm() {
           type="email"
           placeholder="Your email address"
           {...register('email')}
-          className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-[#6B6560] focus:outline-none focus:border-[var(--color-brand-primary)]/60 border"
-          style={{ background: 'rgba(255,255,255,0.06)', borderColor: errors.email ? 'var(--color-brand-primary)' : 'rgba(255,255,255,0.10)' }}
+          className="w-full rounded-lg px-4 py-3 text-sm text-[#1A2332] placeholder-[#8B95A5] focus:outline-none focus:border-[var(--color-brand-primary)]/60 border"
+          style={{ background: 'rgba(255,255,255,0.95)', borderColor: errors.email ? 'var(--color-brand-primary)' : 'rgba(13,115,119,0.15)' }}
         />
         {errors.email && <p className="text-[10px] text-red-400 mt-1">{errors.email.message}</p>}
       </div>
@@ -98,15 +98,15 @@ function NewsletterForm() {
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#1C1917', color: '#F8F7F4' }}>
+    <footer style={{ background: '#0D5962', color: '#E8F0F2' }}>
 
       {/* Newsletter Strip */}
-      <div style={{ borderBottom: '1px solid rgba(248,247,244,0.07)' }}>
+      <div style={{ borderBottom: '1px solid rgba(232,240,242,0.1)' }}>
         <div className="container-2m py-12">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div>
               <h3 className="text-xl font-bold text-white mb-1">Get Wellness Tips & Exclusive Offers</h3>
-              <p className="text-[0.875rem] text-[#9E9890]">Join 10,000+ health-conscious Egyptians. No spam, ever.</p>
+              <p className="text-[0.875rem] text-[#A8D4D8]">Join 10,000+ health-conscious Egyptians. No spam, ever.</p>
             </div>
             <NewsletterForm />
           </div>
@@ -119,35 +119,36 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="lg:col-span-2">
-            {/* Updated logo — #060700, bigger */}
-            <div className="flex items-center gap-3 mb-4">
+            {/* Updated logo */}
+            <div className="flex items-center gap-3 mb-5">
               <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: '#060700' }}
+                className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-hidden"
+                style={{ background: 'var(--color-brand-primary)' }}
               >
-                <span className="text-white font-black text-lg tracking-tight leading-none">2M</span>
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+                <span className="text-white font-black text-2xl tracking-tight leading-none relative z-10">2M</span>
               </div>
               <div>
-                <div className="font-black text-white text-base leading-none">2M Pharmacy</div>
-                <div className="text-[10px] text-[#6B6560] font-semibold tracking-[0.12em] uppercase mt-1">Premium Health</div>
+                <div className="font-black text-white text-[1.4rem] leading-none tracking-tight">2M Pharmacy</div>
+                <div className="text-[11px] text-[#A8D4D8] font-semibold tracking-[0.1em] uppercase mt-1.5">Premium Health</div>
               </div>
             </div>
 
-            <p className="text-[0.875rem] text-[#9E9890] leading-relaxed mb-6 max-w-xs">
+            <p className="text-[0.875rem] text-[#A8D4D8] leading-relaxed mb-6 max-w-xs">
               Egypt&apos;s trusted destination for authentic health, wellness, and beauty products. Curated by pharmacists, delivered to your door.
             </p>
 
             {/* Trust grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {TRUST_FOOTER.map(({ icon: Icon, label, color }) => (
-                <div key={label} className="flex items-center gap-2 text-[0.8rem] text-[#9E9890]">
+                <div key={label} className="flex items-center gap-2 text-[0.8rem] text-[#A8D4D8]">
                   <Icon size={13} style={{ color }} />
                   {label}
                 </div>
               ))}
             </div>
 
-            {/* Social links — no phone */}
+            {/* Social links */}
             <div className="flex items-center gap-2.5">
               {[
                 { href: 'https://www.instagram.com/2m_pharmcy', Icon: InstagramIcon, id: 'footer-instagram', label: 'Instagram', hover: 'hover:bg-pink-500/10 hover:border-pink-400/30' },
@@ -155,7 +156,7 @@ export default function Footer() {
               ].map(({ href, Icon, id, label, hover }) => (
                 <a
                   key={id} href={href} target="_blank" rel="noopener noreferrer" id={id}
-                  className={`w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 text-[#9E9890] hover:text-white transition-all duration-200 ${hover}`}
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 text-[#A8D4D8] hover:text-white transition-all duration-200 ${hover}`}
                   aria-label={label}
                 >
                   <Icon size={15} />
@@ -175,7 +176,7 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="text-[0.875rem] text-[#9E9890] hover:text-white transition-colors duration-150 hover:pl-1 block">
+                    <Link href={l.href} className="text-[0.875rem] text-[#A8D4D8] hover:text-white transition-colors duration-150 hover:pl-1 block">
                       {l.label}
                     </Link>
                   </li>
@@ -183,10 +184,7 @@ export default function Footer() {
               </ul>
               {col.title === 'Company' && (
                 <div className="mt-6 space-y-2">
-                  <a href="mailto:info@2mpharmacy.com" className="flex items-center gap-2 text-[0.8rem] text-[#9E9890] hover:text-white transition-colors">
-                    <Mail size={11} /> info@2mpharmacy.com
-                  </a>
-                  <div className="flex items-center gap-2 text-[0.8rem] text-[#9E9890]">
+                  <div className="flex items-center gap-2 text-[0.8rem] text-[#A8D4D8]">
                     <MapPin size={11} /> Egypt — Nationwide Delivery
                   </div>
                 </div>
@@ -197,14 +195,14 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div style={{ borderTop: '1px solid rgba(248,247,244,0.06)' }}>
+      <div style={{ borderTop: '1px solid rgba(232,240,242,0.1)' }}>
         <div className="container-2m py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[0.78rem] text-[#6B6560]">
+          <p className="text-[0.78rem] text-[#A8D4D8]">
             © {new Date().getFullYear()} 2M Premium Pharmacy. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
             {['💵 COD', '💳 Visa', '💳 Mastercard', '⚡ InstaPay'].map((p) => (
-              <span key={p} className="text-[0.75rem] text-[#6B6560]">{p}</span>
+              <span key={p} className="text-[0.75rem] text-[#A8D4D8]">{p}</span>
             ))}
           </div>
         </div>

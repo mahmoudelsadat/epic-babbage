@@ -51,7 +51,7 @@ export default function CheckoutPage() {
     name: '', phone: '', altPhone: '', email: '',
     governorate: '', city: '', address: '', notes: '',
   });
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'card'>('cod');
+  const [paymentMethod, setPaymentMethod] = useState<'instapay' | 'vodafone' | 'ecash'>('instapay');
   const [orderNumber] = useState(() => `2M-${Date.now().toString().slice(-6)}`);
 
   const subtotal = MOCK_CART.reduce((s, p) => s + p.price, 0);
@@ -101,23 +101,21 @@ export default function CheckoutPage() {
               <div className="flex justify-between text-xs font-bold border-b border-[var(--color-border-soft)] pb-2">
                 <span className="text-[var(--color-text-secondary)]">{isRtl ? 'طريقة الدفع' : 'Payment Method'}</span>
                 <span className="text-[var(--color-text-primary)]">
-                  {paymentMethod === 'cod' 
-                    ? (isRtl ? 'الدفع عند الاستلام' : 'Cash on Delivery') 
-                    : (isRtl ? 'بطاقة الائتمان' : 'Credit Card')
-                  }
+                  {paymentMethod === 'instapay' && 'InstaPay'}
+                  {paymentMethod === 'vodafone' && 'Vodafone Cash'}
+                  {paymentMethod === 'ecash' && 'e& Cash'}
                 </span>
               </div>
-              
-              {paymentMethod === 'cod' && (
-                <div
-                  className="p-3 rounded-xl text-[10px] font-bold text-amber-600 bg-amber-500/5 border border-amber-500/10 text-center"
-                >
-                  💵 {isRtl 
-                    ? <>ستقوم بدفع <strong className="text-amber-700 text-xs">EGP {total.toLocaleString()}</strong> نقداً عند استلام شحنتك.</>
-                    : <>You will pay <strong className="text-amber-700 text-xs">EGP {total.toLocaleString()}</strong> in cash when your order arrives.</>
+
+              <div className="p-3 rounded-xl text-[10px] font-bold bg-emerald-500/5 border border-emerald-500/15 text-center">
+                <p className="text-emerald-600 mb-1 font-black">✅ {isRtl ? 'تم استلام إشعار التحويل' : 'Transfer Confirmation'}</p>
+                <p className="text-[var(--color-text-secondary)] font-semibold leading-relaxed">
+                  {isRtl
+                    ? <>سيتم مراجعة تحويلك وتأكيد الطلب رقم <strong className="text-[var(--color-brand-primary)] font-black">{orderNumber}</strong> فور التحقق من المبلغ.</>  
+                    : <>Your transfer will be reviewed and order <strong className="text-[var(--color-brand-primary)] font-black">{orderNumber}</strong> will be confirmed once payment is verified.</>
                   }
-                </div>
-              )}
+                </p>
+              </div>
               
               <div className="flex justify-between text-xs font-bold border-b border-[var(--color-border-soft)] pb-2">
                 <span className="text-[var(--color-text-secondary)]">{isRtl ? 'التوصيل المتوقع' : 'Estimated Delivery'}</span>
@@ -353,105 +351,191 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* Step 3 — Payment */}
+              {/* Step 3 — Payment via Egyptian Mobile Transfers */}
               {step === 3 && (
                 <div className="card border border-[var(--color-border)] bg-[var(--color-surface)] p-6 rounded-2xl shadow-lg">
-                  <h2 className="text-lg font-black text-[var(--color-text-primary)] font-display mb-6 uppercase tracking-wider flex items-center gap-2">
-                    <CreditCard size={18} className="text-[var(--color-brand-primary)]" /> 
-                    {isRtl ? 'طريقة الدفع المفضلة' : 'Payment Method'}
+                  <h2 className="text-lg font-black text-[var(--color-text-primary)] font-display mb-2 uppercase tracking-wider flex items-center gap-2">
+                    <Sparkles size={18} className="text-[var(--color-brand-gold)]" />
+                    {isRtl ? 'طريقة الدفع' : 'Payment Method'}
                   </h2>
+                  <p className="text-[10px] text-[var(--color-text-muted)] font-semibold mb-6">
+                    {isRtl
+                      ? 'نقبل فقط التحويل الإلكتروني عبر InstaPay أو Vodafone Cash أو e& Cash — لا نقبل كاش أو بطاقات بنكية.'
+                      : 'We accept electronic transfers only via InstaPay, Vodafone Cash, or e& Cash — no cash or cards accepted.'}
+                  </p>
 
-                  <div className="space-y-3.5 mb-6">
-                    {/* Cash on Delivery option */}
+                  {/* Payment method selector cards */}
+                  <div className="space-y-3 mb-6">
+
+                    {/* InstaPay */}
                     <button
-                      onClick={() => setPaymentMethod('cod')}
-                      className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all duration-200 ${
-                        paymentMethod === 'cod'
-                          ? 'border-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 shadow-inner'
-                          : 'border-[var(--color-border)] bg-[var(--color-surface-2)]/30 hover:border-[var(--color-border-soft)]'
+                      onClick={() => setPaymentMethod('instapay')}
+                      className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
+                        paymentMethod === 'instapay'
+                          ? 'border-[#5B2D8E] bg-purple-500/5 shadow-inner'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface-2)]/30 hover:border-purple-300'
                       }`}
                     >
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === 'cod' ? 'border-[var(--color-brand-primary)]' : 'border-[var(--color-text-muted)]'}`}>
-                        {paymentMethod === 'cod' && <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-brand-primary)]" />}
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                        paymentMethod === 'instapay' ? 'border-[#5B2D8E]' : 'border-[var(--color-text-muted)]'
+                      }`}>
+                        {paymentMethod === 'instapay' && <div className="w-2.5 h-2.5 rounded-full bg-[#5B2D8E]" />}
                       </div>
-                      <div className="text-3xl">💵</div>
-                      <div className={`text-right ${isRtl ? 'text-right' : 'text-left'}`}>
-                        <div className="font-black text-xs text-[var(--color-text-primary)]">
-                          {isRtl ? 'الدفع عند الاستلام (COD)' : 'Cash on Delivery (COD)'}
-                        </div>
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#5B2D8E] to-[#8B5CF6] flex items-center justify-center flex-shrink-0 shadow-md">
+                        <span className="text-white font-black text-[10px] leading-none text-center">insta<br/>pay</span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-black text-xs text-[var(--color-text-primary)]">InstaPay</div>
                         <div className="text-[10px] text-[var(--color-text-secondary)] font-semibold mt-0.5">
-                          {isRtl ? 'ادفع نقداً في يد مندوب الشحن بمجرد تسلم طلبيتك' : 'Pay in cash when your order arrives at your door'}
+                          {isRtl ? 'تحويل فوري عبر تطبيق البنك الخاص بك' : 'Instant transfer via your bank app'}
                         </div>
+                        <div className="text-[10px] text-purple-600 font-black mt-1">@2mpharmacy</div>
                       </div>
-                      <div className={`${isRtl ? 'mr-auto' : 'ml-auto'}`}>
-                        <span className="text-[9px] font-black uppercase bg-[var(--color-brand-gold)]/10 text-[var(--color-brand-gold)] border border-[var(--color-brand-gold)]/20 px-2 py-0.5 rounded">
-                          {isRtl ? 'موصى به' : 'Recommended'}
+                      {paymentMethod === 'instapay' && (
+                        <span className="text-[9px] font-black uppercase bg-purple-500/10 text-purple-600 border border-purple-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
+                          {isRtl ? 'محدد' : 'Selected'}
                         </span>
-                      </div>
+                      )}
                     </button>
 
-                    {/* Card option (Visa/Mastercard) */}
+                    {/* Vodafone Cash */}
                     <button
-                      onClick={() => setPaymentMethod('card')}
-                      className={`w-full flex items-center gap-4 p-5 rounded-2xl border-2 transition-all duration-200 ${
-                        paymentMethod === 'card' 
-                          ? 'border-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 shadow-inner' 
-                          : 'border-[var(--color-border)] bg-[var(--color-surface-2)]/30 hover:border-[var(--color-border-soft)]'
+                      onClick={() => setPaymentMethod('vodafone')}
+                      className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
+                        paymentMethod === 'vodafone'
+                          ? 'border-red-600 bg-red-500/5 shadow-inner'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface-2)]/30 hover:border-red-300'
                       }`}
                     >
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === 'card' ? 'border-[var(--color-brand-primary)]' : 'border-[var(--color-text-muted)]'}`}>
-                        {paymentMethod === 'card' && <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-brand-primary)]" />}
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                        paymentMethod === 'vodafone' ? 'border-red-600' : 'border-[var(--color-text-muted)]'
+                      }`}>
+                        {paymentMethod === 'vodafone' && <div className="w-2.5 h-2.5 rounded-full bg-red-600" />}
                       </div>
-                      <div className="text-3xl">💳</div>
-                      <div className={`text-right ${isRtl ? 'text-right' : 'text-left'}`}>
-                        <div className="font-black text-xs text-[var(--color-text-primary)]">
-                          {isRtl ? 'بطاقات مدى والائتمان' : 'Credit / Debit Card'}
-                        </div>
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 to-red-500 flex items-center justify-center flex-shrink-0 shadow-md">
+                        <span className="text-white font-black text-[9px] leading-none text-center">Voda<br/>fone<br/>Cash</span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-black text-xs text-[var(--color-text-primary)]">Vodafone Cash</div>
                         <div className="text-[10px] text-[var(--color-text-secondary)] font-semibold mt-0.5">
-                          {isRtl ? 'فيزا وماستركارد — خادم تشفير معاملات بنكي آمن' : 'Visa, Mastercard — secure bank-level encrypted payment gateway'}
+                          {isRtl ? 'تحويل من محفظة Vodafone Cash' : 'Transfer from your Vodafone Cash wallet'}
                         </div>
+                        <div className="text-[10px] text-red-600 font-black mt-1">01115160947</div>
                       </div>
-                      <div className={`${isRtl ? 'mr-auto' : 'ml-auto'} flex items-center gap-1.5`}>
-                        <Shield size={12} className="text-[#4facfe]" />
-                        <span className="text-[9px] text-[#4facfe] font-black uppercase">Secure</span>
-                      </div>
+                      {paymentMethod === 'vodafone' && (
+                        <span className="text-[9px] font-black uppercase bg-red-500/10 text-red-600 border border-red-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
+                          {isRtl ? 'محدد' : 'Selected'}
+                        </span>
+                      )}
                     </button>
+
+                    {/* e& Cash */}
+                    <button
+                      onClick={() => setPaymentMethod('ecash')}
+                      className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
+                        paymentMethod === 'ecash'
+                          ? 'border-[#FF6600] bg-orange-500/5 shadow-inner'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface-2)]/30 hover:border-orange-300'
+                      }`}
+                    >
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                        paymentMethod === 'ecash' ? 'border-[#FF6600]' : 'border-[var(--color-text-muted)]'
+                      }`}>
+                        {paymentMethod === 'ecash' && <div className="w-2.5 h-2.5 rounded-full bg-[#FF6600]" />}
+                      </div>
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FF6600] to-[#FF8C00] flex items-center justify-center flex-shrink-0 shadow-md">
+                        <span className="text-white font-black text-[11px] leading-none">e&</span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-black text-xs text-[var(--color-text-primary)]">e& Cash</div>
+                        <div className="text-[10px] text-[var(--color-text-secondary)] font-semibold mt-0.5">
+                          {isRtl ? 'تحويل من محفظة e& (اتصالات) Cash' : 'Transfer from your e& (Etisalat) Cash wallet'}
+                        </div>
+                        <div className="text-[10px] text-[#FF6600] font-black mt-1">01115160947</div>
+                      </div>
+                      {paymentMethod === 'ecash' && (
+                        <span className="text-[9px] font-black uppercase bg-orange-500/10 text-[#FF6600] border border-orange-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
+                          {isRtl ? 'محدد' : 'Selected'}
+                        </span>
+                      )}
+                    </button>
+
                   </div>
 
-                  {/* COD Informative alerts */}
-                  {paymentMethod === 'cod' && (
-                    <div
-                      className="p-4 rounded-xl mb-6 text-xs bg-amber-500/5 border border-amber-500/10"
-                    >
-                      <p className="text-amber-600 font-black mb-1 flex items-center gap-1">
-                        <span>💵</span> {isRtl ? 'الدفع نقدًا عند التوصيل' : 'Cash on Delivery Information'}
+                  {/* Dynamic transfer instructions per method */}
+                  <div className={`p-4 rounded-xl mb-6 text-[11px] leading-relaxed border ${
+                    paymentMethod === 'instapay' ? 'bg-purple-500/5 border-purple-500/15' :
+                    paymentMethod === 'vodafone' ? 'bg-red-500/5 border-red-500/15' :
+                    'bg-orange-500/5 border-orange-500/15'
+                  }`}>
+                    <p className={`font-black mb-2 flex items-center gap-1.5 ${
+                      paymentMethod === 'instapay' ? 'text-purple-700' :
+                      paymentMethod === 'vodafone' ? 'text-red-600' :
+                      'text-[#FF6600]'
+                    }`}>
+                      {paymentMethod === 'instapay' && '⚡ InstaPay Transfer Instructions'}
+                      {paymentMethod === 'vodafone' && '📱 Vodafone Cash Transfer Instructions'}
+                      {paymentMethod === 'ecash' && '🟠 e& Cash Transfer Instructions'}
+                    </p>
+                    <ol className="text-[var(--color-text-secondary)] font-semibold space-y-1.5 list-decimal list-inside">
+                      {paymentMethod === 'instapay' && (<>
+                        <li>{isRtl ? 'افتح تطبيق البنك الخاص بك أو تطبيق InstaPay' : 'Open your bank app or InstaPay app'}</li>
+                        <li>{isRtl ? 'اختر «تحويل» ثم «InstaPay»' : 'Select "Transfer" then "InstaPay"'}</li>
+                        <li>{isRtl ? <>حول المبلغ <strong className="text-[var(--color-text-primary)]">EGP {total.toLocaleString()}</strong> إلى <strong className="text-purple-700">@2mpharmacy</strong></> : <>Transfer <strong className="text-[var(--color-text-primary)]">EGP {total.toLocaleString()}</strong> to <strong className="text-purple-700">@2mpharmacy</strong></>}</li>
+                        <li>{isRtl ? <>اكتب رقم طلبك <strong>{orderNumber}</strong> في خانة الملاحظات</> : <>Write your order number <strong>{orderNumber}</strong> in the notes</>}</li>
+                        <li>{isRtl ? 'احتفظ بلقطة شاشة الإيصال وأرسله عبر واتساب' : 'Screenshot the receipt and send via WhatsApp'}</li>
+                      </>)}
+                      {paymentMethod === 'vodafone' && (<>
+                        <li>{isRtl ? 'افتح تطبيق Vodafone Cash أو اتصل بـ *9#' : 'Open Vodafone Cash app or dial *9#'}</li>
+                        <li>{isRtl ? 'اختر «تحويل» ثم «إلى محفظة»' : 'Select "Transfer" then "To Wallet"'}</li>
+                        <li>{isRtl ? <>حول <strong className="text-[var(--color-text-primary)]">EGP {total.toLocaleString()}</strong> إلى <strong className="text-red-600">01115160947</strong></> : <>Transfer <strong className="text-[var(--color-text-primary)]">EGP {total.toLocaleString()}</strong> to <strong className="text-red-600">01115160947</strong></>}</li>
+                        <li>{isRtl ? <>اكتب رقم الطلب <strong>{orderNumber}</strong> في الوصف</> : <>Write order number <strong>{orderNumber}</strong> in the description</>}</li>
+                        <li>{isRtl ? 'أرسل لقطة شاشة التأكيد عبر واتساب' : 'Send confirmation screenshot via WhatsApp'}</li>
+                      </>)}
+                      {paymentMethod === 'ecash' && (<>
+                        <li>{isRtl ? 'افتح تطبيق e& Cash (اتصالات مصر)' : 'Open e& Cash app (Etisalat Egypt)'}</li>
+                        <li>{isRtl ? 'اختر «تحويل إلى محفظة»' : 'Select "Transfer to Wallet"'}</li>
+                        <li>{isRtl ? <>حول <strong className="text-[var(--color-text-primary)]">EGP {total.toLocaleString()}</strong> إلى <strong className="text-[#FF6600]">01115160947</strong></> : <>Transfer <strong className="text-[var(--color-text-primary)]">EGP {total.toLocaleString()}</strong> to <strong className="text-[#FF6600]">01115160947</strong></>}</li>
+                        <li>{isRtl ? <>اكتب رقم الطلب <strong>{orderNumber}</strong> في خانة الرسالة</> : <>Write order number <strong>{orderNumber}</strong> in the message field</>}</li>
+                        <li>{isRtl ? 'أرسل إيصال التحويل عبر واتساب لتأكيد الطلب' : 'Send transfer receipt via WhatsApp to confirm order'}</li>
+                      </>)}
+                    </ol>
+                  </div>
+
+                  {/* WhatsApp confirmation CTA */}
+                  <div className="p-4 rounded-xl mb-5 bg-emerald-500/5 border border-emerald-500/15 flex items-start gap-3">
+                    <span className="text-xl flex-shrink-0">📲</span>
+                    <div>
+                      <p className="text-xs font-black text-emerald-700 mb-1">
+                        {isRtl ? 'بعد إتمام التحويل — أرسل الإيصال عبر واتساب' : 'After transfer — send receipt on WhatsApp'}
                       </p>
-                      <p className="text-[var(--color-text-secondary)] font-semibold leading-relaxed">
-                        {isRtl 
-                          ? <>ستقوم بدفع مبلغ <strong className="text-[var(--color-brand-primary)]">EGP {total.toLocaleString()}</strong> عند التوصيل لمنزلك. يرجى تجهيز المبلغ المطلوب بدقة لتسريع التسليم.</>
-                          : <>You will pay <strong className="text-[var(--color-brand-primary)]">EGP {total.toLocaleString()}</strong> in cash when the delivery personnel arrives. Please prepare the exact amount.</>
-                        }
+                      <p className="text-[10px] text-[var(--color-text-secondary)] font-semibold leading-relaxed">
+                        {isRtl
+                          ? 'أرسل صورة إيصال التحويل ورقم طلبك للتأكيد الفوري. لن يُشحن الطلب إلا بعد التحقق من التحويل.'
+                          : 'Send a screenshot of your transfer receipt and your order number for instant confirmation. Orders only ship after payment is verified.'}
                       </p>
                     </div>
-                  )}
+                  </div>
 
                   {/* Action step buttons */}
                   <div className="flex gap-3">
-                    <button 
+                    <button
                       type="button"
-                      onClick={() => setStep(2)} 
+                      onClick={() => setStep(2)}
                       className="btn border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-2)] text-[var(--color-text-primary)] text-xs font-black uppercase tracking-wider px-5 py-3 rounded-xl flex-1 transition-all"
                     >
                       {isRtl ? 'السابق' : 'Back'}
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setStep(4)}
-                      className="btn btn-primary text-xs font-black uppercase tracking-wider py-4 rounded-xl flex-1 flex items-center justify-center gap-1.5 btn-shimmer btn-elevated"
+                    <a
+                      href={`https://wa.me/201115160947?text=${encodeURIComponent(`Hi! I placed order ${orderNumber} for EGP ${total.toLocaleString()} via ${paymentMethod === 'instapay' ? 'InstaPay (@2mpharmacy)' : paymentMethod === 'vodafone' ? 'Vodafone Cash (01115160947)' : 'e& Cash (01115160947)'}. Attaching transfer receipt now.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setTimeout(() => setStep(4), 300)}
+                      className="btn text-xs font-black uppercase tracking-wider py-4 rounded-xl flex-1 flex items-center justify-center gap-1.5 btn-shimmer btn-elevated text-white bg-emerald-600 hover:bg-emerald-700 transition-all"
                     >
-                      <span>{isRtl ? 'تأكيد الطلب الآن' : 'Place Order'} — EGP {total.toLocaleString()}</span>
-                      <Check size={14} />
-                    </button>
+                      <Phone size={13} />
+                      <span>{isRtl ? 'تأكيد وإرسال الإيصال' : 'Confirm & Send Receipt'} — EGP {total.toLocaleString()}</span>
+                    </a>
                   </div>
 
                   <p className="text-center text-[10px] text-[var(--color-text-muted)] font-semibold mt-4 flex items-center justify-center gap-2">

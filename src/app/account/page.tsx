@@ -86,7 +86,7 @@ export default function AccountPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pb-20 pt-8" style={{ background: 'var(--color-page-bg)' }}>
+      <main className="min-h-screen pb-20 pt-8 bg-gray-50 dark:bg-[var(--color-page-bg)]">
         <div className="max-w-6xl mx-auto px-4">
           
           {/* Main User Dashboard Header */}

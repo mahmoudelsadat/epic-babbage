@@ -204,9 +204,12 @@ export default function CartPage() {
 
                   {/* Payment logos */}
                   <div className="flex items-center justify-center gap-3 pt-2 border-t border-white/6">
-                    {['💵 COD', '💳 Visa', '💳 MC', '⚡ InstaPay'].map((p) => (
-                      <span key={p} className="text-[10px] text-gray-600">{p}</span>
-                    ))}
+                    <span className="text-[10px] text-gray-500 font-bold">Pay via:</span>
+                    <span className="text-[10px] text-purple-400 font-black">⚡ InstaPay</span>
+                    <span className="text-[10px] text-gray-500">·</span>
+                    <span className="text-[10px] text-red-400 font-black">📱 Vodafone Cash</span>
+                    <span className="text-[10px] text-gray-500">·</span>
+                    <span className="text-[10px] text-orange-400 font-black">🟠 e& Cash</span>
                   </div>
                 </div>
               </div>

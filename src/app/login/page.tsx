@@ -94,15 +94,15 @@ export default function LoginPage() {
   return (
     <>
       <Navbar />
-      <main className="flex-grow flex items-center justify-center min-h-[85vh] py-16 px-4" style={{ background: 'var(--color-page-bg)' }}>
+      <main className="flex-grow flex items-center justify-center min-h-[85vh] py-16 px-4 bg-gray-50 dark:bg-[#060700]">
         <div className="w-full max-w-[460px] relative">
           
           {/* Decorative ambient blobs */}
-          <div className="absolute -top-12 -left-12 w-64 h-64 bg-[var(--color-brand-primary)]/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-[var(--color-brand-gold)]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-12 -left-12 w-64 h-64 bg-slate-200 rounded-full blur-3xl pointer-events-none opacity-50" />
+          <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-gray-200 rounded-full blur-3xl pointer-events-none opacity-50" />
 
           {/* Portal Card */}
-          <div className="card shadow-2xl rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]/90 backdrop-blur-xl relative z-10 overflow-hidden">
+          <div className="shadow-xl rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-[#0a0a0a] relative z-10 overflow-hidden">
             
             {/* Top decorative branding tag */}
             <div className="h-1.5 w-full bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-gold)]" />
@@ -174,74 +174,79 @@ export default function LoginPage() {
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="relative">
-                        <User size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-                        <input
-                          type="text"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder={t('fullName')}
-                          className={`w-full h-12 bg-[var(--color-surface)] border ${
-                            errors.name ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
-                          } rounded-xl ps-11 pe-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
-                        />
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{isRtl ? 'الاسم بالكامل' : 'Full Name'}</label>
+                        <div className="relative">
+                          <User size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
+                          <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder={t('fullName')}
+                            className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
+                              errors.name ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
+                            } rounded-lg ps-11 pe-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
+                          />
+                        </div>
+                        {errors.name && (
+                          <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                            <span>⚠️</span> {errors.name}
+                          </div>
+                        )}
                       </div>
-                      {errors.name && (
-                        <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
-                          ⚠️ {errors.name}
-                        </p>
-                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>
 
                 {/* Email Address */}
-                <div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{t('email')}</label>
                   <div className="relative">
-                    <Mail size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
+                    <Mail size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={t('email')}
-                      className={`w-full h-12 bg-[var(--color-surface)] border ${
-                        errors.email ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
-                      } rounded-xl ps-11 pe-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
+                      className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
+                        errors.email ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
+                      } rounded-lg ps-11 pe-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
                     />
                   </div>
                   {errors.email && (
-                    <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
-                      ⚠️ {errors.email}
-                    </p>
+                    <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                      <span>⚠️</span> {errors.email}
+                    </div>
                   )}
                 </div>
 
                 {/* Password */}
-                <div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{isRtl ? 'كلمة المرور' : 'Password'}</label>
                   <div className="relative">
-                    <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
+                    <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder={isRtl ? 'كلمة المرور' : 'Password'}
-                      className={`w-full h-12 bg-[var(--color-surface)] border ${
-                        errors.password ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
-                      } rounded-xl ps-11 pe-11 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
+                      placeholder="••••••••"
+                      className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
+                        errors.password ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
+                      } rounded-lg ps-11 pe-11 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute end-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
+                      className="absolute end-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
                       aria-label="Toggle password view"
                     >
                       {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
                   {errors.password && (
-                    <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
-                      ⚠️ {errors.password}
-                    </p>
+                    <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                      <span>⚠️</span> {errors.password}
+                    </div>
                   )}
                 </div>
 
@@ -255,23 +260,26 @@ export default function LoginPage() {
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="relative">
-                        <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-                        <input
-                          type={showPassword ? 'text' : 'password'}
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          placeholder={isRtl ? 'تأكيد كلمة المرور' : 'Confirm Password'}
-                          className={`w-full h-12 bg-[var(--color-surface)] border ${
-                            errors.confirmPassword ? 'border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/10' : 'border-[var(--color-border)] focus:border-[var(--color-brand-primary)] focus:ring-[var(--color-brand-primary)]/5'
-                          } rounded-xl ps-11 pe-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-4 transition-all`}
-                        />
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{isRtl ? 'تأكيد كلمة المرور' : 'Confirm Password'}</label>
+                        <div className="relative">
+                          <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
+                          <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="••••••••"
+                            className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
+                              errors.confirmPassword ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
+                            } rounded-lg ps-11 pe-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
+                          />
+                        </div>
+                        {errors.confirmPassword && (
+                          <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                            <span>⚠️</span> {errors.confirmPassword}
+                          </div>
+                        )}
                       </div>
-                      {errors.confirmPassword && (
-                        <p className="text-[11px] text-[var(--color-brand-primary)] font-bold mt-1.5 flex items-center gap-1">
-                          ⚠️ {errors.confirmPassword}
-                        </p>
-                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

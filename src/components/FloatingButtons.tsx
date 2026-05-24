@@ -90,7 +90,7 @@ export function MobileBottomNav() {
             href={item.href}
             id={`mobile-nav-${item.id}`}
             onClick={() => setActive(item.id)}
-            className={`flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl transition-all duration-200 relative ${active === item.id ? 'opacity-100' : 'opacity-40'}`}
+            className={`flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-0.5 px-4 py-1.5 rounded-xl transition-all duration-200 relative ${active === item.id ? 'opacity-100' : 'opacity-40'}`}
           >
             <span className={`text-lg transition-transform duration-200 ${active === item.id ? 'scale-110' : 'scale-100'}`}>
               {item.icon}

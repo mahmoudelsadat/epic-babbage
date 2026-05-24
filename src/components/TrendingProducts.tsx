@@ -72,7 +72,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
           alt={product.name}
           width={300}
           height={300}
-          className="w-full h-full object-contain p-2"
+          className="w-full h-full object-contain p-2 transition-transform duration-300 group-hover:scale-110"
           loading="lazy"
           sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
         />
@@ -105,7 +105,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
         <div className="product-card-actions flex gap-2">
           <motion.button
             onClick={handleAddToCart}
-            className={`btn flex-1 text-xs py-2.5 ${added ? 'bg-[var(--color-sage)] border-[var(--color-sage)] text-white' : 'btn-primary'}`}
+            className={`btn flex-1 text-xs py-2.5 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-200 ${added ? 'bg-emerald-500 border-emerald-500 text-white' : 'btn-primary'}`}
             whileTap={{ scale: 0.96 }}
           >
             {added ? <><Check size={12} /> Added!</> : <><ShoppingCart size={12} /> Add to Cart</>}
