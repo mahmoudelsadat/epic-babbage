@@ -123,77 +123,147 @@ function OverviewPanel() {
   const pending  = orders.filter(o => o.status === 'pending').length;
   const lowStock = products.filter(p => p.stockCount <= 10 && p.inStock);
 
+  // Sparkline data generator
+  const genSparkline = () => Array.from({ length: 12 }, () => Math.floor(Math.random() * 40) + 10);
+
   const kpis = [
-    { label: 'Total Revenue', value: `EGP ${revenue.toLocaleString()}`, icon: <DollarSign size={18} />, color: '#1E3A8A', bg: '#EBF0FB', change: '+14.2%' },
-    { label: 'Total Orders',  value: orders.length,                      icon: <ShoppingBag size={18} />, color: '#4A7C59', bg: '#EDF3EE', change: `${pending} pending` },
-    { label: 'Products',      value: products.length,                    icon: <Package size={18} />,     color: '#B5742A', bg: '#FDF3E5', change: `${lowStock.length} low stock` },
-    { label: 'Customers',     value: customers.length,                   icon: <UserCheck size={18} />,   color: '#9B1239', bg: '#FEF2F2', change: '+3 this week' },
+    { label: 'Total Revenue', value: `EGP ${revenue.toLocaleString()}`, icon: <DollarSign size={18} />, color: '#1E3A8A', bg: '#EBF0FB', change: '+14.2%', data: genSparkline() },
+    { label: 'Total Orders',  value: orders.length,                      icon: <ShoppingBag size={18} />, color: '#4A7C59', bg: '#EDF3EE', change: `${pending} pending`, data: genSparkline() },
+    { label: 'Products',      value: products.length,                    icon: <Package size={18} />,     color: '#B5742A', bg: '#FDF3E5', change: `${lowStock.length} low stock`, data: genSparkline() },
+    { label: 'Customers',     value: customers.length,                   icon: <UserCheck size={18} />,   color: '#9B1239', bg: '#FEF2F2', change: '+3 this week', data: genSparkline() },
   ];
 
   const recent = [...orders].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
 
+  // Kanban buckets
+  const statuses = ['pending', 'processing', 'shipped', 'delivered'] as const;
+  
+  // Mock monthly revenue data
+  const revenueData = [
+    { month: 'Jan', val: 12000 }, { month: 'Feb', val: 15000 }, { month: 'Mar', val: 11000 },
+    { month: 'Apr', val: 22000 }, { month: 'May', val: 18000 }, { month: 'Jun', val: 26000 },
+    { month: 'Jul', val: 30000 },
+  ];
+  const maxRev = Math.max(...revenueData.map(d => d.val));
+
   return (
     <div className="space-y-6">
-      {/* KPI Cards */}
+      {/* KPI Cards with Sparklines */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {kpis.map(k => (
-          <div key={k.label} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-start justify-between mb-4">
+          <div key={k.label} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+            <div className="flex items-start justify-between mb-4 relative z-10">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: k.bg, color: k.color }}>{k.icon}</div>
               <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">{k.change}</span>
             </div>
-            <div className="text-2xl font-black text-gray-900">{k.value}</div>
-            <div className="text-xs text-gray-500 font-semibold mt-0.5">{k.label}</div>
+            <div className="text-2xl font-black text-gray-900 relative z-10">{k.value}</div>
+            <div className="text-xs text-gray-500 font-semibold mt-0.5 relative z-10">{k.label}</div>
+            
+            {/* Sparkline */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 opacity-20 group-hover:opacity-40 transition-opacity">
+              <svg viewBox="0 0 100 50" preserveAspectRatio="none" className="w-full h-full">
+                <path
+                  d={`M0,50 ${k.data.map((v, i) => `L${(i / (k.data.length - 1)) * 100},${50 - v}`).join(' ')} L100,50 Z`}
+                  fill={k.color}
+                  stroke="none"
+                />
+                <path
+                  d={`M0,${50 - k.data[0]} ${k.data.map((v, i) => `L${(i / (k.data.length - 1)) * 100},${50 - v}`).join(' ')}`}
+                  fill="none"
+                  stroke={k.color}
+                  strokeWidth="2"
+                />
+              </svg>
+            </div>
           </div>
         ))}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Recent Orders */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-50">
-            <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider">Recent Orders</h3>
-            <TrendingUp size={14} className="text-[#1E3A8A]" />
+        {/* Revenue Chart */}
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider">Revenue Overview</h3>
+            <span className="text-[10px] font-black text-[#1E3A8A] bg-[#1E3A8A]/10 px-2 py-0.5 rounded-md">YTD</span>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs">
-              <thead><tr className="bg-gray-50/60">
-                {['Order ID','Customer','Amount','Status','Date'].map(h => (
-                  <th key={h} className="px-4 py-2.5 text-left font-black text-gray-500 uppercase tracking-wider text-[10px] whitespace-nowrap">{h}</th>
-                ))}
-              </tr></thead>
-              <tbody>
-                {recent.map((o, i) => (
-                  <tr key={o.id} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50/40'}>
-                    <td className="px-4 py-3 font-black text-[#1E3A8A]">{o.id}</td>
-                    <td className="px-4 py-3 font-semibold text-gray-800 whitespace-nowrap">{o.customer}</td>
-                    <td className="px-4 py-3 font-black text-gray-900">EGP {o.total.toLocaleString()}</td>
-                    <td className="px-4 py-3"><StatusBadge status={o.status} /></td>
-                    <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{o.date}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex-1 flex items-end gap-3 h-48">
+            {revenueData.map((d) => (
+              <div key={d.month} className="flex-1 flex flex-col items-center gap-2 group">
+                <div className="w-full bg-[#1E3A8A]/10 rounded-t-lg relative flex items-end group-hover:bg-[#1E3A8A]/20 transition-colors">
+                  <div
+                    className="w-full bg-[#1E3A8A] rounded-t-lg transition-all duration-500 group-hover:bg-[#2B52C1]"
+                    style={{ height: `${(d.val / maxRev) * 100}%` }}
+                  />
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
+                    EGP {(d.val / 1000).toFixed(1)}k
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold text-gray-400 uppercase">{d.month}</span>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Low Stock Alerts */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-50">
             <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider">Low Stock</h3>
             <AlertTriangle size={14} className="text-amber-500" />
           </div>
           {lowStock.length === 0
-            ? <p className="px-5 py-8 text-xs text-gray-400 text-center font-semibold">All products well stocked ✅</p>
-            : <div className="divide-y divide-gray-50">
-                {lowStock.slice(0, 6).map(p => (
-                  <div key={p.id} className="px-5 py-3 flex items-center justify-between">
+            ? <p className="px-5 py-8 text-xs text-gray-400 text-center font-semibold m-auto">All products well stocked ✅</p>
+            : <div className="divide-y divide-gray-50 flex-1 overflow-y-auto max-h-[220px]">
+                {lowStock.map(p => (
+                  <div key={p.id} className="px-5 py-3 flex items-center justify-between hover:bg-gray-50/50 transition-colors">
                     <span className="text-xs font-semibold text-gray-800 truncate max-w-[60%]">{p.name}</span>
                     <span className="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">{p.stockCount} left</span>
                   </div>
                 ))}
               </div>
           }
+        </div>
+      </div>
+
+      {/* Kanban Pipeline */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 overflow-x-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="font-black text-gray-900 text-xs uppercase tracking-wider">Order Pipeline</h3>
+          <span className="text-[10px] font-semibold text-gray-500">{orders.length} Total Orders</span>
+        </div>
+        <div className="flex gap-4 min-w-[800px]">
+          {statuses.map(status => {
+            const bucket = orders.filter(o => o.status === status);
+            return (
+              <div key={status} className="flex-1 bg-gray-50/80 rounded-xl p-3 flex flex-col min-h-[300px]">
+                <div className="flex items-center justify-between mb-3 px-1">
+                  <h4 className="text-[10px] font-black uppercase tracking-wider text-gray-600">{status}</h4>
+                  <span className="text-[10px] font-black text-gray-400 bg-white shadow-sm border border-gray-100 px-1.5 py-0.5 rounded-md">{bucket.length}</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {bucket.slice(0, 5).map(o => (
+                    <div key={o.id} className="bg-white rounded-lg p-3 border border-gray-200 shadow-sm cursor-pointer hover:border-[#1E3A8A]/30 hover:shadow-md transition-all">
+                      <div className="flex justify-between items-start mb-1">
+                        <span className="text-[10px] font-black text-[#1E3A8A]">{o.id}</span>
+                        <span className="text-[10px] font-bold text-gray-400">{o.date.split('T')[0]}</span>
+                      </div>
+                      <div className="text-xs font-bold text-gray-800 mb-1">{o.customer}</div>
+                      <div className="text-xs font-black text-emerald-600">EGP {o.total.toLocaleString()}</div>
+                    </div>
+                  ))}
+                  {bucket.length > 5 && (
+                    <div className="text-center py-2">
+                      <span className="text-[10px] font-bold text-gray-400 uppercase">+{bucket.length - 5} more</span>
+                    </div>
+                  )}
+                  {bucket.length === 0 && (
+                    <div className="text-center py-6 text-gray-400 text-xs font-semibold border-2 border-dashed border-gray-200 rounded-lg">
+                      Empty
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

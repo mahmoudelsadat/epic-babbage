@@ -12,11 +12,12 @@ import { toast } from 'sonner';
 import QuickViewModal from './QuickViewModal';
 
 const TABS = [
-  { label: 'All Products', value: 'all' },
-  { label: '💊 Pharmacy', value: 'pharmacy' },
-  { label: '✨ Beauty', value: 'beauty' },
-  { label: '🌿 Wellness', value: 'wellness' },
-  { label: '🔖 On Sale', value: 'sale' },
+  { label: 'All Products',   value: 'all' },
+  { label: '💊 Pharmacy',   value: 'pharmacy' },
+  { label: '✨ Beauty',     value: 'beauty' },
+  { label: '🌿 Wellness',   value: 'wellness' },
+  { label: '🧴 Personal',   value: 'personal-care' },
+  { label: '🔖 On Sale',    value: 'sale' },
 ];
 
 function StarRating({ rating, reviewCount }: { rating: number; reviewCount: number }) {

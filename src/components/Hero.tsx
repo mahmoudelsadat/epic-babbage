@@ -1,16 +1,51 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Truck, Star } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, ShieldCheck, Truck, Star, Timer, Zap } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '@/lib/LanguageContext';
+
+// ── Countdown Timer ────────────────────────────────────────────
+function useCountdown(targetHours = 5, targetMins = 48, targetSecs = 33) {
+  const [time, setTime] = useState({ h: targetHours, m: targetMins, s: targetSecs });
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTime(prev => {
+        let { h, m, s } = prev;
+        if (s > 0) return { h, m, s: s - 1 };
+        if (m > 0) return { h, m: m - 1, s: 59 };
+        if (h > 0) return { h: h - 1, m: 59, s: 59 };
+        return { h: 5, m: 48, s: 33 }; // reset
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${pad(time.h)}:${pad(time.m)}:${pad(time.s)}`;
+}
+
+// ── Trust brand logos ──────────────────────────────────────────
+const TRUST_BRANDS = [
+  'Now Foods', 'Nordic Naturals', 'The Ordinary', 'Optimum Nutrition',
+  'Garden of Life', 'Solgar', 'Altruist', 'Thorne', 'Skinceuticals', 'Life Extension',
+];
+
+// ── Floating stat cards ────────────────────────────────────────
+const STAT_CARDS = [
+  { value: '10K+', label: 'Happy Customers', labelAr: 'عميل سعيد', color: 'var(--color-brand-primary)', bg: 'var(--color-brand-primary-soft)', x: '-5rem', y: '25%', delay: 0 },
+  { value: '4.9★', label: 'Rating',          labelAr: 'تقييم',       color: '#B8922A',                  bg: '#FDF8EC',                     x: '2rem',   y: '80%', delay: 1.5 },
+  { value: '500+', label: 'Brands',           labelAr: 'علامة',       color: 'var(--color-brand-accent)', bg: 'var(--color-brand-accent-soft)', x: '3rem', y: '10%', delay: 1.0 },
+];
 
 export default function Hero() {
   const { t, isRtl } = useTranslation();
-  const animFrameRef = useRef<number>(0);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const countdown = useCountdown();
+  const canvasRef  = useRef<HTMLCanvasElement>(null);
+  const animRef    = useRef<number>(0);
 
-  /* Soft floating blobs on canvas */
+  /* Soft floating blobs */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -22,79 +57,83 @@ export default function Hero() {
     const resize = () => { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; };
     window.addEventListener('resize', resize);
 
-    const blobs = Array.from({ length: 6 }, (_, i) => ({
+    const blobs = Array.from({ length: 7 }, (_, i) => ({
       x: Math.random() * W, y: Math.random() * H,
-      r: 80 + Math.random() * 120,
-      dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
-      hue: [200, 16, 46, 107, 146, 30][i % 6],
-      alpha: 0.04 + Math.random() * 0.04,
+      r: 100 + Math.random() * 160,
+      dx: (Math.random() - 0.5) * 0.35, dy: (Math.random() - 0.5) * 0.35,
+      hue: [181, 190, 195, 46, 160, 210, 170][i % 7],
+      alpha: 0.055 + Math.random() * 0.045,
     }));
 
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
       blobs.forEach((b) => {
         const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-        g.addColorStop(0, `hsla(${b.hue},60%,75%,${b.alpha})`);
+        g.addColorStop(0, `hsla(${b.hue},65%,72%,${b.alpha})`);
         g.addColorStop(1, 'transparent');
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-        ctx.fillStyle = g;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fillStyle = g; ctx.fill();
         b.x += b.dx; b.y += b.dy;
-        if (b.x < -b.r) b.x = W + b.r;
-        if (b.x > W + b.r) b.x = -b.r;
-        if (b.y < -b.r) b.y = H + b.r;
-        if (b.y > H + b.r) b.y = -b.r;
+        if (b.x < -b.r) b.x = W + b.r; if (b.x > W + b.r) b.x = -b.r;
+        if (b.y < -b.r) b.y = H + b.r; if (b.y > H + b.r) b.y = -b.r;
       });
-      animFrameRef.current = requestAnimationFrame(draw);
+      animRef.current = requestAnimationFrame(draw);
     };
     draw();
-    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animFrameRef.current); };
-  }, []);
-
-  /* Scroll reveal */
-  useEffect(() => {
-    const items = document.querySelectorAll('.hero-reveal');
-    setTimeout(() => items.forEach((el) => { el.classList.add('reveal', 'visible'); }), 60);
+    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(animRef.current); };
   }, []);
 
   return (
-    <section
-      className="relative overflow-hidden"
-      style={{ background: '#FAFBFC', minHeight: '88vh' }}
-    >
+    <section className="relative overflow-hidden" style={{ background: 'var(--color-page-bg)', minHeight: '90vh' }}>
       <canvas ref={canvasRef} className="hero-canvas" aria-hidden="true" />
 
       {/* Decorative blobs */}
-      <div
-        aria-hidden="true"
-        className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-[0.03] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }}
-      />
-      <div
-        aria-hidden="true"
-        className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-[0.03] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, var(--color-brand-accent) 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }}
-      />
+      <div aria-hidden="true" className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, var(--color-brand-primary) 0%, transparent 70%)', opacity: 0.04, transform: 'translate(35%, -35%)' }} />
+      <div aria-hidden="true" className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, var(--color-brand-accent) 0%, transparent 70%)', opacity: 0.04, transform: 'translate(-35%, 35%)' }} />
 
       <div className="container-2m relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[88vh] py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[90vh] py-16">
 
-          {/* LEFT — Copy */}
-          <div className="max-w-xl text-start">
-            {/* Trust chip */}
-            <div className="hero-reveal flex items-center gap-2 mb-6" style={{ transitionDelay: '0ms' }}>
-              <span className="badge badge-primary-soft text-[11px] px-3 py-1 flex items-center">
-                <Star size={9} className="inline me-1 fill-[var(--color-brand-primary)] text-[var(--color-brand-primary)]" />
+          {/* ─── LEFT COPY ─── */}
+          <div className="max-w-xl">
+
+            {/* Flash sale banner */}
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.0 }}
+              className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full border text-xs font-bold"
+              style={{ background: 'var(--color-brand-gold-soft)', borderColor: 'rgba(201,168,76,0.3)', color: 'var(--color-brand-gold-dark)' }}
+            >
+              <Zap size={12} className="fill-current" />
+              {isRtl ? 'عرض سريع — ينتهي في' : 'Flash Sale — ends in'}
+              <span className="font-black tabular-nums" style={{ color: 'var(--color-brand-gold-dark)' }}>{countdown}</span>
+              <Timer size={12} />
+            </motion.div>
+
+            {/* Trust chips */}
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="flex items-center gap-2 mb-6"
+            >
+              <span className="badge badge-primary-soft text-[11px] px-3 py-1 flex items-center gap-1">
+                <Star size={9} className="fill-[var(--color-brand-primary)] text-[var(--color-brand-primary)]" />
                 {isRtl ? 'الأكثر ثقة في مصر' : "Egypt's Most Trusted"}
               </span>
               <span className="badge badge-light text-[11px] px-3 py-1">{isRtl ? 'القاهرة 🇪🇬' : '🇪🇬 Cairo'}</span>
-            </div>
+            </motion.div>
 
             {/* Headline */}
-            <h1
-              className="hero-reveal text-[2.6rem] sm:text-[3.2rem] lg:text-[3.6rem] xl:text-[4rem] 2xl:text-[4.5rem] font-black leading-[1.05] tracking-tight text-[var(--color-text-primary)] mb-5 text-start"
-              style={{ transitionDelay: '60ms' }}
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.14 }}
+              className="text-[2.6rem] sm:text-[3.2rem] lg:text-[3.6rem] xl:text-[4rem] font-black leading-[1.05] tracking-tight mb-5"
+              style={{ color: 'var(--color-text-primary)' }}
             >
               {isRtl ? (
                 <>
@@ -113,84 +152,143 @@ export default function Hero() {
                   <span style={{ color: 'var(--color-brand-primary)', fontStyle: 'italic' }}>Delivered.</span>
                 </>
               )}
-            </h1>
+            </motion.h1>
 
             {/* Subheading */}
-            <p
-              className="hero-reveal text-[1.1rem] text-[var(--color-text-secondary)] font-medium leading-relaxed mb-9 max-w-[40ch] text-start"
-              style={{ transitionDelay: '120ms' }}
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.22 }}
+              className="text-[1.05rem] font-medium leading-relaxed mb-8 max-w-[40ch]"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               {t('heroSubtitle')}
-            </p>
+            </motion.p>
 
             {/* CTAs */}
-            <div className="hero-reveal flex flex-wrap items-center gap-4 mb-10 text-start" style={{ transitionDelay: '180ms' }}>
-              <Link href="/pharmacy" id="hero-cta-shop" className="btn btn-primary text-[0.95rem] px-8 py-4 flex items-center gap-2 shadow-xl hover:scale-105 focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-300">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.30 }}
+              className="flex flex-wrap items-center gap-4 mb-9"
+            >
+              <Link
+                href="/pharmacy"
+                id="hero-cta-shop"
+                className="btn btn-primary btn-shimmer btn-elevated text-[0.95rem] px-8 py-4 flex items-center gap-2"
+              >
                 {t('shopNow')} <ArrowRight size={16} className={isRtl ? 'rotate-180' : ''} />
               </Link>
-              <Link href="/about" id="hero-cta-about" className="btn btn-ghost text-[0.95rem] px-8 py-4 hover:bg-slate-100 rounded-xl transition-all duration-300">
+              <Link href="/about" id="hero-cta-about" className="btn btn-ghost text-[0.95rem] px-8 py-4 rounded-xl">
                 {isRtl ? 'قصتنا' : 'Our Story'}
               </Link>
-            </div>
+            </motion.div>
 
             {/* Trust row */}
-            <div
-              className="hero-reveal flex flex-wrap items-center gap-5 text-[0.82rem] text-[var(--color-text-secondary)] text-start"
-              style={{ transitionDelay: '240ms' }}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.38 }}
+              className="flex flex-wrap items-center gap-5 text-[0.82rem]"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               {[
                 { icon: ShieldCheck, text: isRtl ? 'أصلي 100%' : '100% Authentic', color: 'var(--color-brand-primary)' },
-                { icon: Truck, text: isRtl ? 'توصيل لكافة أنحاء مصر' : 'Egypt-Wide Delivery', color: 'var(--color-brand-accent)' },
-                { icon: Star, text: isRtl ? 'تحت إشراف صيادلة' : 'Pharmacist Curated', color: 'var(--color-brand-primary)', fill: true },
+                { icon: Truck, text: isRtl ? 'توصيل لكافة مصر' : 'Egypt-Wide Delivery', color: 'var(--color-brand-accent)' },
+                { icon: Star, text: isRtl ? 'إشراف صيادلة' : 'Pharmacist Curated', color: 'var(--color-brand-gold)', fill: true },
               ].map(({ icon: Icon, text, color, fill }) => (
                 <div key={text} className="flex items-center gap-1.5">
                   <Icon size={14} style={{ color }} className={fill ? 'fill-current' : ''} />
                   <span>{text}</span>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
-          {/* RIGHT — Visual */}
-          <div className="hero-reveal hidden lg:flex items-center justify-center animate-fade-in" style={{ transitionDelay: '80ms' }}>
+          {/* ─── RIGHT VISUAL ─── */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.1, ease: 'easeOut' }}
+            className="hidden lg:flex items-center justify-center"
+          >
             <div className="relative">
-              {/* Central product showcase */}
+              {/* Main product image */}
               <div
-                className="w-80 h-80 rounded-[32px] flex items-center justify-center bg-gradient-to-br from-white to-[var(--color-surface-2)] shadow-xl border border-[var(--color-border-soft)]"
+                className="w-[340px] h-[340px] xl:w-[400px] xl:h-[400px] rounded-[40px] flex items-center justify-center overflow-hidden relative"
+                style={{
+                  background: 'linear-gradient(145deg, #ffffff 0%, var(--color-surface-2) 100%)',
+                  boxShadow: '0 32px 80px rgba(13,115,119,0.15), 0 8px 24px rgba(26,35,50,0.08)',
+                  border: '1px solid var(--color-border-soft)',
+                }}
               >
-                <img
-                  src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=85"
-                  alt="Premium health products"
-                  className="w-56 h-56 object-contain"
-                  style={{ filter: 'drop-shadow(0 8px 24px rgba(28,25,23,0.12))' }}
+                <Image
+                  src="/hero-products.png"
+                  alt="Premium health & wellness products — 2M Pharmacy Egypt"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 1280px) 340px, 400px"
                 />
+                {/* Inner glow */}
+                <div className="absolute inset-0 rounded-[40px] ring-1 ring-inset ring-white/40 pointer-events-none" />
               </div>
 
               {/* Floating stat cards */}
-              <div
-                className="absolute -start-14 top-1/4 bg-[var(--color-surface)] text-[var(--color-text-primary)] rounded-2xl px-4 py-3 shadow-lg border border-[var(--color-border)]"
-                style={{ animation: 'float 6s ease-in-out infinite' }}
-              >
-                <div className="text-xl font-black font-display">10K+</div>
-                <div className="text-[11px] text-[var(--color-text-secondary)] font-semibold">{isRtl ? 'عميل سعيد' : 'Happy Customers'}</div>
-              </div>
+              {STAT_CARDS.map((card) => (
+                <motion.div
+                  key={card.value}
+                  className="absolute bg-white rounded-2xl px-4 py-3 border"
+                  style={{
+                    [isRtl ? 'right' : 'left']: card.x.startsWith('-') ? 'auto' : undefined,
+                    [isRtl ? 'left' : 'right']: card.x.startsWith('-') ? undefined : 'auto',
+                    top: card.y,
+                    left: isRtl ? undefined : card.x,
+                    right: isRtl ? card.x : undefined,
+                    borderColor: 'var(--color-border)',
+                    boxShadow: '0 8px 32px rgba(26,35,50,0.12)',
+                    animation: `float ${6 + card.delay * 1.5}s ease-in-out infinite ${card.delay}s`,
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + card.delay * 0.2, duration: 0.4, type: 'spring', stiffness: 200 }}
+                >
+                  <div className="text-xl font-black leading-none" style={{ color: card.color }}>{card.value}</div>
+                  <div className="text-[11px] font-semibold mt-0.5" style={{ color: 'var(--color-text-secondary)' }}>
+                    {isRtl ? card.labelAr : card.label}
+                  </div>
+                </motion.div>
+              ))}
 
+              {/* Decorative ring */}
               <div
-                className="absolute -end-10 bottom-1/4 bg-[var(--color-surface)] text-[var(--color-text-primary)] rounded-2xl px-4 py-3 shadow-lg border border-[var(--color-border)]"
-                style={{ animation: 'float 8s ease-in-out infinite reverse' }}
-              >
-                <div className="flex items-center gap-1 mb-0.5">
-                  {[1,2,3,4,5].map(s => <Star key={s} size={10} className="fill-[var(--color-brand-primary)] text-[var(--color-brand-primary)]" />)}
-                </div>
-                <div className="text-[11px] text-[var(--color-text-secondary)] font-semibold">{isRtl ? 'تقييم 4.9' : '4.9 Rating'}</div>
-              </div>
+                className="absolute -inset-8 rounded-full border-2 border-dashed opacity-[0.08] pointer-events-none"
+                style={{ borderColor: 'var(--color-brand-primary)', animation: 'spin-slow 30s linear infinite' }}
+              />
+            </div>
+          </motion.div>
+        </div>
+      </div>
 
-              <div
-                className="absolute -top-6 end-8 bg-[var(--color-brand-accent-soft)] rounded-2xl px-4 py-3 border border-[var(--color-brand-accent)]/20"
-                style={{ animation: 'float 7s ease-in-out infinite 2s' }}
-              >
-                <div className="text-xl font-black text-[var(--color-brand-accent)] font-body">500+</div>
-                <div className="text-[11px] text-[var(--color-brand-accent)] font-semibold">{isRtl ? 'علامة تجارية' : 'Brands'}</div>
+      {/* ─── Brand trust logo strip ─── */}
+      <div className="relative z-10 border-t" style={{ borderColor: 'var(--color-border-soft)' }}>
+        <div className="container-2m py-4">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <span className="text-[10px] font-bold uppercase tracking-[0.12em] flex-shrink-0"
+              style={{ color: 'var(--color-text-muted)' }}>
+              {isRtl ? 'أشهر العلامات' : 'Top Brands'}
+            </span>
+            <div className="flex-1 overflow-hidden">
+              <div className="flex gap-6 items-center" style={{ animation: 'marquee 22s linear infinite' }}>
+                {[...TRUST_BRANDS, ...TRUST_BRANDS].map((brand, i) => (
+                  <span
+                    key={i}
+                    className="whitespace-nowrap text-[11px] font-bold flex-shrink-0 transition-colors"
+                    style={{ color: 'var(--color-text-muted)' }}
+                  >
+                    {brand}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -198,8 +296,8 @@ export default function Hero() {
       </div>
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
-        style={{ background: 'linear-gradient(to top, #FAFBFC, transparent)' }} aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
+        style={{ background: 'linear-gradient(to top, var(--color-page-bg), transparent)' }} aria-hidden="true" />
     </section>
   );
 }

@@ -1,29 +1,29 @@
 'use client';
 
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, Home, Search, ShoppingBag, ShoppingCart, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useCartStore } from '@/lib/store';
 
 export default function FloatingButtons() {
   const [visible, setVisible] = useState(false);
-  const [showLabel, setShowLabel] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
-    // Show after 2 seconds
     const t = setTimeout(() => setVisible(true), 2000);
     return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    // Pulse label every 8 seconds
     if (!visible) return;
-    const t = setTimeout(() => setShowLabel(true), 1200);
-    const t2 = setTimeout(() => setShowLabel(false), 5000);
-    const interval = setInterval(() => {
-      setShowLabel(true);
-      setTimeout(() => setShowLabel(false), 3500);
-    }, 8000);
-    return () => { clearTimeout(t); clearTimeout(t2); clearInterval(interval); };
+    const t  = setTimeout(() => setShowTooltip(true), 1200);
+    const t2 = setTimeout(() => setShowTooltip(false), 5000);
+    const iv = setInterval(() => {
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 3500);
+    }, 10000);
+    return () => { clearTimeout(t); clearTimeout(t2); clearInterval(iv); };
   }, [visible]);
 
   return (
@@ -32,33 +32,37 @@ export default function FloatingButtons() {
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
       }`}
     >
-      {/* WhatsApp label bubble */}
+      {/* Tooltip bubble */}
       <div
         className={`transition-all duration-300 ${
-          showLabel ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
+          showTooltip ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
         }`}
       >
         <div
-          className="text-xs font-bold text-white px-3 py-1.5 rounded-full shadow-lg"
-          style={{ background: '#25D366', whiteSpace: 'nowrap' }}
+          className="text-xs font-bold text-white px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5"
+          style={{ background: '#25D366', whiteSpace: 'nowrap', boxShadow: '0 4px 16px rgba(37,211,102,0.35)' }}
         >
+          <MessageCircle size={11} className="fill-white" />
           Chat with us on WhatsApp!
         </div>
+        {/* Arrow */}
+        <div className="w-0 h-0 ml-auto mr-5 mt-0.5 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px]" style={{ borderTopColor: '#25D366' }} />
       </div>
 
-      {/* WhatsApp Button */}
+      {/* WhatsApp Button with wa-pulse animation */}
       <a
         href="https://wa.me/201115160947?text=Hi%2C%20I%20have%20a%20question%20about%20a%20product%20at%202M%20Premium%20Pharmacy"
         target="_blank"
         rel="noopener noreferrer"
         id="whatsapp-float-btn"
-        className="w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95"
+        className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 wa-pulse"
         style={{
           background: 'linear-gradient(135deg, #25D366, #128C7E)',
           boxShadow: '0 8px 32px rgba(37,211,102,0.4)',
-          animation: 'pulse-glow 3s ease-in-out infinite',
         }}
         aria-label="Chat on WhatsApp"
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
       >
         <MessageCircle size={26} className="text-white fill-white" />
       </a>
@@ -66,48 +70,72 @@ export default function FloatingButtons() {
   );
 }
 
-// Mobile Bottom Navigation Bar
+// Mobile Bottom Navigation Bar — enhanced with real cart count
 export function MobileBottomNav() {
-  const [active, setActive] = useState('home');
+  const pathname = usePathname();
+  const cartCount = useCartStore((s) => s.totalItems());
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: '🏠', href: '/' },
-    { id: 'search', label: 'Search', icon: '🔍', href: '/pharmacy' },
-    { id: 'categories', label: 'Shop', icon: '🛍️', href: '/pharmacy' },
-    { id: 'cart', label: 'Cart', icon: '🛒', href: '/cart', badge: 0 },
-    { id: 'account', label: 'Account', icon: '👤', href: '/account' },
+    { id: 'home',    label: 'Home',    icon: Home,        href: '/' },
+    { id: 'search',  label: 'Search',  icon: Search,      href: '/pharmacy' },
+    { id: 'shop',    label: 'Shop',    icon: ShoppingBag, href: '/pharmacy' },
+    { id: 'cart',    label: 'Cart',    icon: ShoppingCart, href: '/cart', badge: cartCount },
+    { id: 'account', label: 'Account', icon: User,        href: '/account' },
   ];
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white border-t border-[#E4E0D8]"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom)', boxShadow: '0 -4px 20px rgba(28,25,23,0.08)' }}
+      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t"
+      style={{
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        boxShadow: '0 -4px 24px rgba(26,35,50,0.08)',
+        background: 'var(--color-surface)',
+        borderColor: 'var(--color-border)',
+      }}
     >
-      <div className="flex items-center justify-around py-2">
-        {navItems.map((item) => (
-          <Link
-            key={item.id}
-            href={item.href}
-            id={`mobile-nav-${item.id}`}
-            onClick={() => setActive(item.id)}
-            className={`flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-0.5 px-4 py-1.5 rounded-xl transition-all duration-200 relative ${active === item.id ? 'opacity-100' : 'opacity-40'}`}
-          >
-            <span className={`text-lg transition-transform duration-200 ${active === item.id ? 'scale-110' : 'scale-100'}`}>
-              {item.icon}
-            </span>
-            <span className={`text-[10px] font-semibold ${active === item.id ? 'text-[var(--color-brand-primary)]' : 'text-[#A8A39C]'}`}>
-              {item.label}
-            </span>
-            {item.badge !== undefined && item.badge > 0 && (
-              <span className="absolute -top-1 right-2 w-4 h-4 bg-[var(--color-brand-primary)] text-white text-[9px] font-black rounded-full flex items-center justify-center">
-                {item.badge}
+      <div className="flex items-center justify-around py-1.5">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
+          return (
+            <Link
+              key={item.id}
+              href={item.href}
+              id={`mobile-nav-${item.id}`}
+              className="flex flex-col items-center justify-center min-w-[48px] min-h-[48px] gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 relative"
+            >
+              <div className="relative">
+                <Icon
+                  size={20}
+                  strokeWidth={isActive ? 2.5 : 1.75}
+                  style={{ color: isActive ? 'var(--color-brand-primary)' : 'var(--color-text-muted)' }}
+                  className={`transition-transform duration-200 ${isActive ? 'scale-110' : 'scale-100'}`}
+                />
+                {item.badge !== undefined && item.badge > 0 && (
+                  <span
+                    className="absolute -top-1.5 -right-1.5 w-4 h-4 text-white text-[9px] font-black rounded-full flex items-center justify-center"
+                    style={{ background: 'var(--color-brand-primary)' }}
+                  >
+                    {item.badge > 9 ? '9+' : item.badge}
+                  </span>
+                )}
+              </div>
+              <span
+                className="text-[10px] font-semibold transition-colors"
+                style={{ color: isActive ? 'var(--color-brand-primary)' : 'var(--color-text-muted)' }}
+              >
+                {item.label}
               </span>
-            )}
-            {active === item.id && (
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[var(--color-brand-primary)] rounded-full" />
-            )}
-          </Link>
-        ))}
+              {/* Active indicator dot */}
+              {isActive && (
+                <div
+                  className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                  style={{ background: 'var(--color-brand-primary)' }}
+                />
+              )}
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

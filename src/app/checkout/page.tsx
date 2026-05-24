@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
-import { products } from '@/lib/data';
-import { Check, ChevronRight, MapPin, CreditCard, Truck, Shield, Phone, Sparkles } from 'lucide-react';
+import { Check, ChevronRight, MapPin, CreditCard, Truck, Shield, Phone, Sparkles, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '@/lib/LanguageContext';
+import { useCartStore } from '@/lib/store';
+import { formatEGP } from '@/lib/utils';
 
 const GOVERNORATES_EN = [
   'Cairo', 'Giza', 'Alexandria', 'Dakahlia', 'Red Sea', 'Beheira', 'Fayoum',
@@ -25,7 +27,7 @@ const GOVERNORATES_AR = [
   'قنا', 'شمال سيناء', 'سوهاج',
 ];
 
-const MOCK_CART = products.slice(0, 2);
+
 
 function StepIndicator({ current, step, label }: { current: number; step: number; label: string }) {
   const done = current > step;
@@ -46,7 +48,9 @@ function StepIndicator({ current, step, label }: { current: number; step: number
 
 export default function CheckoutPage() {
   const { t, isRtl } = useTranslation();
+  const { items, subtotal: getSubtotal, clearCart } = useCartStore();
   const [step, setStep] = useState(1);
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [form, setForm] = useState({
     name: '', phone: '', altPhone: '', email: '',
     governorate: '', city: '', address: '', notes: '',
@@ -54,9 +58,21 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<'instapay' | 'vodafone' | 'ecash'>('instapay');
   const [orderNumber] = useState(() => `2M-${Date.now().toString().slice(-6)}`);
 
-  const subtotal = MOCK_CART.reduce((s, p) => s + p.price, 0);
+  const cartItems = items;
+  const subtotal = getSubtotal();
   const deliveryFee = subtotal >= 500 ? 0 : 50;
   const total = subtotal + deliveryFee;
+
+  // Validate step 2 form fields
+  const validateDelivery = (): boolean => {
+    const errs: Record<string, string> = {};
+    if (!form.name.trim())       errs.name       = isRtl ? 'الاسم مطلوب' : 'Full name is required';
+    if (!form.phone.trim())      errs.phone      = isRtl ? 'رقم الهاتف مطلوب' : 'Phone number is required';
+    if (!form.governorate)       errs.governorate = isRtl ? 'المحافظة مطلوبة' : 'Governorate is required';
+    if (!form.address.trim())    errs.address    = isRtl ? 'العنوان مطلوب' : 'Address is required';
+    setFormErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
 
   const steps = [
     isRtl ? 'مراجعة السلة' : 'Cart Review',
@@ -71,15 +87,35 @@ export default function CheckoutPage() {
       <>
         <Navbar />
         <main className="min-h-screen flex items-center justify-center py-20" style={{ background: 'var(--color-page-bg)' }}>
+          {/* Confetti particles */}
+          <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 rounded-sm"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: '-20px',
+                  background: ['#0D7377','#C9A84C','#4facfe','#43e97b','#f093fb','#ff6b6b'][i % 6],
+                  animation: `confetti-fall ${2 + Math.random() * 3}s ease-in ${Math.random() * 2}s forwards`,
+                  transform: `rotate(${Math.random() * 360}deg)`,
+                }}
+              />
+            ))}
+          </div>
+
           <div className="container-2m max-w-lg text-center px-4">
-            
-            {/* Animated success visual */}
-            <div
-              className="w-20 h-20 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 shadow-xl shadow-emerald-500/20 flex items-center justify-center mx-auto mb-6 relative overflow-hidden"
+            {/* Animated success circle */}
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+              className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 relative"
+              style={{ background: 'linear-gradient(135deg, #10b981, #0D7377)', boxShadow: '0 16px 48px rgba(13,115,119,0.35)' }}
             >
-              <div className="absolute inset-0 bg-white/10 animate-pulse" />
-              <Check size={36} className="text-white relative z-10" strokeWidth={3} />
-            </div>
+              <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse" />
+              <Check size={40} className="text-white relative z-10" strokeWidth={3} />
+            </motion.div>
 
             <h1 className="text-3xl font-black text-[var(--color-text-primary)] mb-3 font-display">
               {isRtl ? 'تم تأكيد طلبك بنجاح! 🎉' : 'Order Confirmed! 🎉'}
@@ -183,7 +219,11 @@ export default function CheckoutPage() {
                   </h2>
                   
                   <div className="space-y-4 mb-6">
-                    {MOCK_CART.map((p) => (
+                    {cartItems.length === 0 ? (
+                      <p className="text-sm text-center py-4" style={{ color: 'var(--color-text-muted)' }}>
+                        No items in cart. <Link href="/pharmacy" style={{ color: 'var(--color-brand-primary)' }}>Shop now →</Link>
+                      </p>
+                    ) : cartItems.map((p) => (
                       <div key={p.id} className="flex gap-4 p-4 rounded-xl border border-[var(--color-border-soft)] bg-[var(--color-surface-2)]/30 hover:bg-[var(--color-surface-2)]/50 transition-colors">
                         <div className="w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden bg-white border border-[var(--color-border-soft)] p-0.5 shadow-sm">
                           <img src={p.image} alt={p.name} className="w-full h-full object-contain p-1" />
@@ -197,9 +237,14 @@ export default function CheckoutPage() {
                     ))}
                   </div>
 
-                  <button 
-                    onClick={() => setStep(2)} 
-                    className="btn btn-primary w-full py-4 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 rounded-xl btn-shimmer btn-elevated"
+                  <div className="mb-4 p-3 rounded-xl flex justify-between text-sm font-semibold" style={{ background: 'var(--color-surface-2)', borderColor: 'var(--color-border)' }}>
+                    <span style={{ color: 'var(--color-text-secondary)' }}>Total ({cartItems.reduce((s, i) => s + (i.qty || 1), 0)} items)</span>
+                    <span style={{ color: 'var(--color-text-primary)' }} className="font-black">{formatEGP(total)}</span>
+                  </div>
+                  <button
+                    onClick={() => setStep(2)}
+                    disabled={cartItems.length === 0}
+                    className="btn btn-primary w-full py-4 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 rounded-xl btn-shimmer btn-elevated disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span>{isRtl ? 'الاستمرار لتفاصيل الشحن' : 'Continue to Delivery'}</span>
                     <ChevronRight size={14} className={isRtl ? 'rotate-180' : ''} />
@@ -340,7 +385,7 @@ export default function CheckoutPage() {
                       </button>
                       <button 
                         type="button"
-                        onClick={() => setStep(3)} 
+                        onClick={() => { if (validateDelivery()) setStep(3); }} 
                         className="btn btn-primary text-xs font-black uppercase tracking-wider py-3.5 rounded-xl flex-1 flex items-center justify-center gap-1.5 btn-shimmer btn-elevated"
                       >
                         <span>{isRtl ? 'الاستمرار لطرق الدفع' : 'Continue to Payment'}</span>

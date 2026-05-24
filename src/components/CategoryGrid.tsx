@@ -26,7 +26,7 @@ export default function CategoryGrid() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 bg-[#FAFBFC]">
+    <section ref={sectionRef} className="py-16" style={{ background: 'var(--color-page-bg)' }}>
       <div className="container-2m">
         {/* Header */}
         <div className="flex items-end justify-between mb-8">

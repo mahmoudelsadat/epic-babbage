@@ -7,11 +7,11 @@ import { usePathname } from 'next/navigation';
 import {
   ShoppingCart, User, Menu, X, ChevronDown, Sun, Moon,
   ShieldCheck, Globe, Search, Pill, Sparkles, Leaf, Droplets,
-  Tag, Package, Phone, ArrowRight, Zap,
+  Tag, Package, Phone, ArrowRight, Zap, Heart
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '@/lib/data';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useWishlistStore } from '@/lib/store';
 import SearchAutocomplete from './SearchAutocomplete';
 import { useTranslation } from '@/lib/LanguageContext';
 
@@ -58,7 +58,7 @@ function DarkModeToggle({ compact = false }: { compact?: boolean }) {
       style={{
         background: dark ? 'rgba(255,255,255,0.06)' : 'var(--color-surface)',
         borderColor: dark ? 'rgba(255,255,255,0.1)' : 'var(--color-border)',
-        color: dark ? '#E0B84A' : '#475569',
+        color: dark ? 'var(--color-brand-gold)' : 'var(--color-text-secondary)',
       }}
       aria-label={dark ? 'Light mode' : 'Dark mode'}
     >
@@ -109,8 +109,12 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
   const pathname    = usePathname();
   const storeCount  = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
+  const wishlistCount = useWishlistStore((s) => s.items.length);
   const displayCount = cartCount ?? storeCount;
   const menuRef      = useRef<NodeJS.Timeout | null>(null);
+  
+  // Mobile accordion state
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
   // Scroll
   useEffect(() => {
@@ -142,11 +146,11 @@ export default function Navbar({ cartCount }: NavbarProps) {
     setSearchOpen(false);
   }, [pathname]);
 
-  // Announcement rotator
-  useEffect(() => {
-    const id = setInterval(() => setAnnoIdx(i => (i + 1) % ANNOUNCEMENTS_EN.length), 3500);
-    return () => clearInterval(id);
-  }, []);
+  // Announcement rotator (No longer used as we switched to continuous marquee, keeping for backwards compat if needed, but not actively used in JSX now)
+  // useEffect(() => {
+  //   const id = setInterval(() => setAnnoIdx(i => (i + 1) % ANNOUNCEMENTS_EN.length), 3500);
+  //   return () => clearInterval(id);
+  // }, []);
 
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
@@ -172,20 +176,19 @@ export default function Navbar({ cartCount }: NavbarProps) {
         style={{ background: 'var(--color-brand-primary)', minHeight: '36px' }}
       >
         <div className="container-2m flex items-center justify-between h-9 gap-4">
-          {/* Left: rotating announcement */}
-          <div className="flex-1 overflow-hidden relative h-full flex items-center">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={annoIdx}
-                initial={{ y: 12, opacity: 0 }}
-                animate={{ y: 0,  opacity: 1 }}
-                exit={{ y: -12,  opacity: 0 }}
-                transition={{ duration: 0.35 }}
-                className="text-[11px] font-semibold text-white/90 whitespace-nowrap absolute"
-              >
-                {isRtl ? ANNOUNCEMENTS_AR[annoIdx] : ANNOUNCEMENTS_EN[annoIdx]}
-              </motion.p>
-            </AnimatePresence>
+          {/* Left: scrolling announcement marquee */}
+          <div className="flex-1 overflow-hidden relative h-full flex items-center whitespace-nowrap mask-edges">
+            <div className="flex w-max" style={{ animation: 'marquee 40s linear infinite' }}>
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="flex gap-8 px-4 items-center">
+                  {(isRtl ? ANNOUNCEMENTS_AR : ANNOUNCEMENTS_EN).map((anno, idx) => (
+                    <span key={idx} className="text-[11px] font-semibold text-white/90">
+                      {anno}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Right: trust badges + admin pill */}
@@ -200,7 +203,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
             </a>
             <span className="hidden md:inline text-white/20">|</span>
             <span className="hidden sm:flex items-center gap-1 text-[11px] text-white/70 font-medium">
-              <ShieldCheck size={11} className="text-[#E0B84A]" />
+              <ShieldCheck size={11} style={{ color: 'var(--color-brand-gold)' }} />
               {isRtl ? 'أصلي 100%' : '100% Authentic'}
             </span>
             {adminLoggedIn && (
@@ -455,6 +458,29 @@ export default function Navbar({ cartCount }: NavbarProps) {
                   <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white" />
                 )}
               </Link>
+              
+              {/* Wishlist */}
+              <Link
+                href="/account?tab=wishlist"
+                id="nav-wishlist-btn"
+                className="w-9 h-9 rounded-lg hidden sm:flex items-center justify-center border transition-all duration-200 relative hover:bg-[var(--color-surface-2)]"
+                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+                aria-label="Wishlist"
+              >
+                <Heart size={15} />
+                <AnimatePresence>
+                  {wishlistCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      className="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center text-[8px] font-bold rounded-full bg-[var(--color-brand-primary)] text-white shadow-sm"
+                    >
+                      {wishlistCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </Link>
 
               {/* Cart */}
               <motion.div whileTap={{ scale: 0.93 }}>
@@ -587,36 +613,78 @@ export default function Navbar({ cartCount }: NavbarProps) {
                   const active  = isActive(link.href);
                   const meta    = CAT_META[link.label];
                   const isOffer = link.label === 'OFFERS';
+                  const hasSub  = link.submenu && link.submenu.length > 0;
+                  const isExpanded = openAccordion === link.label;
+
                   return (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-[12px] font-bold uppercase tracking-wider transition-all duration-150 ${
-                        isOffer
-                          ? 'text-[#9B1239] bg-red-50 border border-red-100'
-                          : active
-                          ? 'text-[var(--color-brand-primary)] bg-[var(--color-brand-primary-soft)] border border-[var(--color-brand-primary)]/15'
-                          : 'text-[var(--color-text-primary)] hover:bg-[var(--color-surface-2)] border border-transparent'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        {meta && (
-                          <span
-                            className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                            style={{ background: meta.bg, color: meta.color }}
-                          >
-                            {meta.icon}
-                          </span>
-                        )}
-                        <span>{isRtl ? link.labelAr : link.label}</span>
+                    <div key={link.label}>
+                      <div
+                        className={`flex items-center justify-between px-4 py-3 rounded-xl text-[12px] font-bold uppercase tracking-wider transition-all duration-150 ${
+                          isOffer
+                            ? 'text-[#9B1239] bg-red-50 border border-red-100'
+                            : active
+                            ? 'text-[var(--color-brand-primary)] bg-[var(--color-brand-primary-soft)] border border-[var(--color-brand-primary)]/15'
+                            : 'text-[var(--color-text-primary)] hover:bg-[var(--color-surface-2)] border border-transparent cursor-pointer'
+                        }`}
+                        onClick={() => {
+                          if (hasSub) {
+                            setOpenAccordion(isExpanded ? null : link.label);
+                          } else {
+                            window.location.href = link.href;
+                          }
+                        }}
+                      >
+                        <div className="flex items-center gap-3">
+                          {meta && (
+                            <span
+                              className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                              style={{ background: meta.bg, color: meta.color }}
+                            >
+                              {meta.icon}
+                            </span>
+                          )}
+                          <span>{isRtl ? link.labelAr : link.label}</span>
+                        </div>
+                        {isOffer
+                          ? <span className="text-[9px] font-black bg-[#9B1239] text-white px-1.5 py-0.5 rounded">HOT</span>
+                          : hasSub
+                          ? <ChevronDown size={14} className={`text-[var(--color-text-muted)] transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                          : <ArrowRight size={12} className={`text-[var(--color-text-muted)] ${isRtl ? 'rotate-180' : ''}`} />
+                        }
                       </div>
-                      {isOffer
-                        ? <span className="text-[9px] font-black bg-[#9B1239] text-white px-1.5 py-0.5 rounded">HOT</span>
-                        : active
-                        ? <div className="w-1.5 h-1.5 rounded-full bg-[var(--color-brand-primary)]" />
-                        : <ArrowRight size={12} className={`text-[var(--color-text-muted)] ${isRtl ? 'rotate-180' : ''}`} />
-                      }
-                    </Link>
+
+                      {/* Accordion content */}
+                      <AnimatePresence>
+                        {hasSub && isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden ml-4 mr-4 border-l border-[var(--color-border)] mt-1"
+                          >
+                            <div className="flex flex-col gap-1 py-2 pl-3">
+                              {link.submenu!.map((sub) => (
+                                <Link
+                                  key={sub.label}
+                                  href={sub.href}
+                                  onClick={() => setMobileOpen(false)}
+                                  className="text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] py-2"
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                              <Link
+                                href={link.href}
+                                onClick={() => setMobileOpen(false)}
+                                className="text-[10px] font-black text-[var(--color-brand-primary)] uppercase py-2 flex items-center gap-1 mt-1"
+                              >
+                                {isRtl ? 'عرض الكل' : 'View All'} <ArrowRight size={10} className={isRtl ? 'rotate-180' : ''} />
+                              </Link>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   );
                 })}
               </nav>
