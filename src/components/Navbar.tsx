@@ -109,7 +109,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
   const pathname    = usePathname();
   const storeCount  = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
-  const wishlistCount = useWishlistStore((s) => s.items.length);
+  const wishlistCount = useWishlistStore((s) => s.idsArr.length);
   const displayCount = cartCount ?? storeCount;
   const menuRef      = useRef<NodeJS.Timeout | null>(null);
   

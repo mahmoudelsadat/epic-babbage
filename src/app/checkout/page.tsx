@@ -604,7 +604,7 @@ export default function CheckoutPage() {
                 </div>
                 
                 <div className="p-4 space-y-4">
-                  {MOCK_CART.map((p) => (
+                  {cartItems.map((p) => (
                     <div key={p.id} className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg flex-shrink-0 overflow-hidden bg-white border border-[var(--color-border-soft)] p-0.5 shadow-sm">
                         <img src={p.image} alt={p.name} className="w-full h-full object-contain" />
